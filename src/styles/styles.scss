@@ -1,0 +1,19 @@
+@use "./index.scss" as *;
+
+body{
+    font-family: $system-font;
+    color: $font-color;
+    margin: 0px;
+}
+
+
+.main-wrapper{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+}
+
+.content-wrapper{
+    width: 100%;
+    max-width: $max-width;
+}
