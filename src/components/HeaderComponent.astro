@@ -2,12 +2,39 @@
 ---
 import HamburgerMenu from "./HamburgerMenu.astro"
 ---
+<div class="header-wrapper">
+    <header>
+        <div>
+            <a href="#start"><img src="./assets/pictures/logo.svg"></a>
+        </div>
+            <HamburgerMenu />
+    </header>
+</div>
 
-<header>
-    <div>
+<style lang="scss">
+    @use "../styles/index.scss" as *;
 
-    </div>
-    <div>
-        <HamburgerMenu />
-    </div>
-</header>
+    .header-wrapper{
+        --height:90px;
+
+        z-index: 999;
+        position: fixed;
+        top: 0px;
+        width: 100%;
+        left: 0px;
+        display: flex;
+        justify-content: center;
+    }
+
+    header{
+        display: flex;
+        width: 100%;
+        max-width: $max-width;
+        background-color: $dark-red;
+        height: var(--height);
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0px 6rem;
+        align-items: center;
+    }
+</style>

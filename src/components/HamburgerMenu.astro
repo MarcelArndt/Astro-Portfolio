@@ -5,8 +5,10 @@
         <span></span>
         <span></span>
     </label>
-    <div class="menu-content">
+    <nav class="menu-content">
+
         <!--  ADD MENU POINTS HERE   -->
+          
         <ul>
             <li>Skills</li>
             <li>About Me</li>
@@ -14,16 +16,17 @@
             <li>Kontakt</li>
         </ul>
 
-
-    </div>
+    </nav>
 </div>
 
 <style lang="scss">
+    @use "../styles/index.scss" as *;
+
     .hambuger-menu-wrapper{
 
-        --menu-icon-color:rgb(0, 0, 0);
-        --menu-background-color:rgb(16, 16, 16);
-        --font-size:1.25rem;
+        --menu-icon-color:rgb(255, 255, 255);
+        --menu-background-color:#290509;
+        --font-size:1.65rem;
         --font-color:rgb(255, 255, 255);
         --hover-font-color:#e44064;
         --text-transform: uppercase;
@@ -45,7 +48,7 @@
 
     .hambuger-menu-checkbox{
         position: absolute;
-        z-index: 3;
+        z-index: 993;
         width: 100%;
         height: 100%;
         opacity: 0;
@@ -79,7 +82,7 @@
 
     .menu-content{
         position: fixed;
-        z-index: 1;
+        z-index: 991;
         top: 0px;
         left: 0px;
         height: 100vh;
@@ -96,7 +99,7 @@
             padding-inline-start: 0px;
             margin-block-start: 0px;
             margin-block-end: 0px;
-            padding-left: 2rem;
+            padding-left: 6rem;
             box-sizing: border-box;
             list-style: none;
             position: absolute;
@@ -122,7 +125,7 @@
 
     .hambuger-menu-icon{
         position: absolute;
-        z-index: 2;
+        z-index: 992;
         top: 0px;
         left: 0px;
         width: 100%;
