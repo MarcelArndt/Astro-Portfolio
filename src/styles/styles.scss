@@ -9,7 +9,9 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    scroll-behavior: smooth;
 }
+
 p{
    color: $font-white-color;
    font-size: $font-size-200;
@@ -20,7 +22,6 @@ p{
     box-sizing: border-box;
     line-height: 2.5rem;
 }
-
 
 h1 {
     white-space: pre-line;
@@ -39,6 +40,27 @@ h1 {
     margin-inline-end: 0px;
     margin: 0.6rem 0px 1rem;
     width: max-content;
+}
+
+h2{
+    white-space: pre-line;
+    font-family: RedditSans;
+    line-height: 110%;
+    color: $main-color;
+    font-size: clamp(1.5rem, 12vw, 7.75rem);
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    margin: 0.6rem 0px 1rem;
+}
+
+
+h3{
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 button{

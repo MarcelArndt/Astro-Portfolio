@@ -1,21 +1,35 @@
 <div class="hambuger-menu-wrapper">
-    <input type="checkbox" class="hambuger-menu-checkbox">
-    <label class="hambuger-menu-icon">
+    <input name="menu-checkbox" type="checkbox" class="hambuger-menu-checkbox" id="menu-checkbox">
+    <label class="hambuger-menu-icon" for="menu-checkbox" aria-label="Navigation öffnen" role="button">
+        <div class="sr-only">Navigation öffnen</div>
         <span></span>
         <span></span>
         <span></span>
     </label>
-    <nav class="menu-content">
+    
+    <nav class="menu-content" id="menu-nav">
+        <div class="text-container">
+        <h3>Navigation:</h3>
 
         <!--  ADD MENU POINTS HERE   -->
           
         <ul>
-            <li>Skills</li>
-            <li>About Me</li>
-            <li>Projekte</li>
-            <li>Kontakt</li>
+            <li><a href="#start">Start</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#about_me">Über Mich</a></li>
+            <li><a href="#projects">Projekte</a></li>
+            <li><a href="#testimonial">Testimonial</a></li>
+            <li><a href="#contact">Kontakt</a></li>
         </ul>
 
+        <div class="sub-navigation">
+            <ul>
+                <li><a href="data-protection">Datenschutz</a></li>
+                <li><a href="imprint">Impressum</a></li>
+            </ul>
+        </div>
+
+        </div>
     </nav>
 </div>
 
@@ -25,16 +39,22 @@
     .hambuger-menu-wrapper{
 
         --menu-icon-color:rgb(255, 255, 255);
-        --menu-background-color:#290509;
-        --font-size:1.65rem;
-        --font-color:rgb(255, 255, 255);
+        --menu-active-icon-color:#290509;
+        --menu-background-curtain-infront-color:#fff;
+        --menu-background-curtain-behint-color:#e44064;
+
+        --nav-font-size: clamp(1.3rem, 5vw, 2rem);
+        --headline-font-size: clamp(1.5rem, 5vw, 2.5rem);
+        --headline-font-color: #e44064;
+        --subline-font-size: clamp(1rem, 5vw, 1.125rem);
+        --font-color:#290509;
         --hover-font-color:#e44064;
         --text-transform: uppercase;
         --hover-transformY:-2px;
         --hover-transformX:4px;
-        --menu-max-width:1920px;
-        --open-menu-opacity:0.95;
-        --menu-active-icon-color:rgb(255, 255, 255);
+
+        --menu-max-width:1440px;
+
 
         position: relative;
         z-index: 999;
@@ -60,15 +80,15 @@
                 background-color:var(--menu-active-icon-color);
             }
 
-            span:nth-child(1) { 
+            span:nth-child(2) { 
                 transform: rotate(45deg) translate(12%,12%); 
                 margin: 0px;
             }
-            span:nth-child(2) { 
+            span:nth-child(3) { 
                 opacity: 0; 
                 margin: 0px;
             }
-            span:nth-child(3) { 
+            span:nth-child(4) { 
                 margin: 0px;
                 transform: rotate(-45deg) translate(12%,12%); 
             }
@@ -76,39 +96,78 @@
 
             &:checked ~ .menu-content{
                 width: 100vw;
-                opacity: var(--open-menu-opacity);
+                pointer-events: all;
+            }
+
+            &:checked ~ .menu-content::before, &:checked ~ .menu-content::after{
+                transform: translateX(0%);   
+            }
+
+            &:checked ~ .menu-content .text-container{
+                pointer-events: all;
+                visibility:visible; 
+                opacity: 1;
+            }
+
+            &:not(:checked) ~ .menu-content::before{
+                transition: transform 0.50s cubic-bezier(.42,.1,.52,.97);
+            }
+
+            &:not(:checked) ~ .menu-content::after{
+                transition: transform 0.45s ease-out;  
             }
     }
 
     .menu-content{
+        pointer-events: none;
         position: fixed;
         z-index: 991;
         top: 0px;
         left: 0px;
         height: 100vh;
-        width: 100px;
-        background-color: var(--menu-background-color);
-        opacity: 0;
-        transition: width 0.25s ease-in-out, opacity 0.20s ease-in-out;
+        width: 100vw;
         display: flex;
         justify-content: center;
+        overflow: hidden;
+
+        &::before{
+            content: "";
+            position: absolute;
+            top: 0px;
+            right: -3rem;
+            width: calc(100% + 3rem);
+            height: 100%;
+            z-index: -1;
+            background-color: var(--menu-background-curtain-behint-color);
+            transform: translateX(calc(-100% - 3rem));
+            transition: transform 0.45s ease-out;
+        }
+
+        &::after{
+            content: "";
+            z-index: -1;
+            position: absolute;
+            top: 0px;
+            right: 0rem;
+            width: 100%;
+            height: 100%;
+            transform: translateX(-100%);
+            background-color: var(--menu-background-curtain-infront-color);
+            transition: transform 0.50s cubic-bezier(.42,.1,.52,.97);
+        }
 
         ul{
             width: 100%;
-            max-width: var(--menu-max-width);
             padding-inline-start: 0px;
             margin-block-start: 0px;
             margin-block-end: 0px;
-            padding-left: 6rem;
-            box-sizing: border-box;
             list-style: none;
-            position: absolute;
-            top: 50%;
-            transform: translate(0%,-50%);
-            font-size: var(--font-size);
-            color: var(--font-color);
 
-            li{
+            li a{
+                display: block;
+                font-size: var(--nav-font-size);
+                color: var(--font-color);
+                text-decoration: none;
                 width: max-content;
                 margin: 0.5rem 0px;
                 text-transform: var(--text-transform);
@@ -120,7 +179,6 @@
                 }
             }
         }
-
     }
 
     .hambuger-menu-icon{
@@ -141,8 +199,75 @@
             width: 34px;
             background-color: var(--menu-icon-color);
             height: 3px;
-            transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out, margin 0.25s ease-in-out;
+            transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out, margin 0.25s ease-in-out, background-color 0.5s ease-in;
         }
     }
 
+    .text-container{
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        max-width: var(--menu-max-width);
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        box-sizing: border-box;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.25s ease-in-out, visibility 0.25s ease-in-out; 
+    }
+
+    h3{
+        font-size: var(--headline-font-size);
+        color: var(--headline-font-color);
+        text-transform: var(--text-transform);
+        margin-bottom: 1rem;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .sub-navigation ul{
+        margin-top: 2rem;
+        display: flex;
+
+        li:not(:first-child){
+            margin-left: 1.5rem;
+            position: relative;
+
+            &::before{
+                content: "";
+                height: 50%;
+                width: 2px;
+                position: absolute;
+                left: calc(1.5rem / 2 * -1);
+                top: 50%;
+                transform: translateY(-50%);
+                background-color: var(--font-color);
+            }
+        }
+
+        li a{
+            font-size: var(--subline-font-size);
+        }
+
+    }
 </style>
+
+<script>
+  function closeMenu() {
+    const checkbox = document.getElementById('menu-checkbox') as HTMLInputElement;
+    if(!checkbox) return;
+    checkbox.checked = false;
+  }
+  document.getElementById('menu-nav')?.addEventListener('click', closeMenu);
+</script>
