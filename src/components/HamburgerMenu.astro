@@ -74,8 +74,12 @@
         opacity: 0;
         cursor: pointer;
 
-          &:checked + .hambuger-menu-icon {
+        &:hover +.hambuger-menu-icon{
+            transform: translate(1px,-2px);
+            scale: 1.03;
+        }
 
+        &:checked + .hambuger-menu-icon {
             span{
                 background-color:var(--menu-active-icon-color);
             }
@@ -94,28 +98,28 @@
             }
         }
 
-            &:checked ~ .menu-content{
-                width: 100vw;
-                pointer-events: all;
-            }
+        &:checked ~ .menu-content{
+            width: 100vw;
+            pointer-events: all;
+        }
 
-            &:checked ~ .menu-content::before, &:checked ~ .menu-content::after{
-                transform: translateX(0%);   
-            }
+        &:checked ~ .menu-content::before, &:checked ~ .menu-content::after{
+            transform: translateX(0%);   
+        }
 
-            &:checked ~ .menu-content .text-container{
-                pointer-events: all;
-                visibility:visible; 
-                opacity: 1;
-            }
+        &:checked ~ .menu-content .text-container{
+            pointer-events: all;
+            visibility:visible; 
+            opacity: 1;
+        }
 
-            &:not(:checked) ~ .menu-content::before{
-                transition: transform 0.50s cubic-bezier(.42,.1,.52,.97);
-            }
+        &:not(:checked) ~ .menu-content::before{
+            transition: transform 0.50s cubic-bezier(.42,.1,.52,.97);
+        }
 
-            &:not(:checked) ~ .menu-content::after{
-                transition: transform 0.45s ease-out;  
-            }
+        &:not(:checked) ~ .menu-content::after{
+            transition: transform 0.45s ease-out;  
+        }
     }
 
     .menu-content{
@@ -192,6 +196,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        transition: transform 0.25s ease-in-out, scale 0.25s ease-in-out,;
 
         span{
             margin: 5px;
@@ -201,6 +206,7 @@
             height: 3px;
             transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out, margin 0.25s ease-in-out, background-color 0.5s ease-in;
         }
+
     }
 
     .text-container{

@@ -12,6 +12,12 @@ body{
     scroll-behavior: smooth;
 }
 
+ul{
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    padding-inline-start: 0px;
+}
+
 p{
    color: $font-white-color;
    font-size: $font-size-200;
@@ -92,4 +98,54 @@ button{
 .content-wrapper{
     width: 100%;
     max-width: $max-width;
+}
+
+.curtain-wrapper{
+    pointer-events: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 77;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.curtain{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transform: translateY(100%);
+
+    &::before{
+        content: "";
+        position: absolute;
+        top: -24%;
+        left: 0%;
+        width: 200%;
+        height: 100%;
+        rotate: -6deg;
+    }
+}
+
+.inner{
+    transform: translateY(calc(100% - 32px));
+}
+
+.white{
+    background-color: white;
+
+    &::before{
+        background-color: white; 
+    }
+}
+
+.red{
+    background-color: $main-color;
+
+    &::before{
+        background-color: $main-color; 
+    }
 }
