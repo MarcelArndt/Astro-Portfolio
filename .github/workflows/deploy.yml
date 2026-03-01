@@ -26,7 +26,7 @@ jobs:
       - name: Deploy via rsync
         uses: burnett01/rsync-deployments@7.0.1
         with:
-          switches: -avzr --delete
+          switches: -avzr --delete --no-group
           path: dist/
           remote_path: /var/www/testserver-web/
           remote_host: ${{ secrets.SERVER_HOST }}
