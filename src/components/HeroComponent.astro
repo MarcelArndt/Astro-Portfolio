@@ -1,21 +1,21 @@
 ---
 ---
-<section id="start">
+<section id="start" hero-section>
     <div class="background">
         <img src="./assets/pictures/background.webp">
     </div>
-    <div class="text-container">
+    <div class="text-container" text-container>
         <p>Hi, ich bin Marcel Arndt</p>
         <h1>Web & App<br>Entwickler</h1>
         <p>Mit Angular und Django setze ich meine Projekte in die Realität um. Dabei ist Programmieren längst mehr geworden als nur ein Hobby.</p>
         <button>Mehr über mich!</button>
     </div>
-    <div class="image-container">
+    <div class="image-container" image-container>
           <img src="./assets/pictures/about-me.png">
     </div>
     <div class="curtain-wrapper">
-        <div class="curtain inner red"></div>
-        <div class="curtain white"></div>
+        <div class="curtain inner red" red-curtain></div>
+        <div class="curtain white" white-curtain></div>
     </div>
 </section>
 
@@ -78,3 +78,53 @@
         }
     }
 </style>
+
+<script>
+import { gsap, ScrollTrigger } from "../lip/gsap";
+const redCurtain = document.querySelectorAll("[red-curtain]");
+const whiteCurtain = document.querySelectorAll("[white-curtain]");
+const heroSection = document.querySelectorAll("[hero-section]");
+const textBlock = document.querySelectorAll("[text-container]");
+const imageBlock = document.querySelectorAll("[image-container]");
+
+gsap.set(whiteCurtain,{
+    y:"+=100vh"
+})
+
+gsap.set(redCurtain,{
+    y:"+=100vh"
+})
+
+
+let tlOne = gsap.timeline({
+        scrollTrigger: {
+            trigger: heroSection,
+            start: 'top top',
+            end: 'bottom 30%',
+            scrub: 1, 
+        }
+    });
+
+    tlOne
+    .to(whiteCurtain,{
+        y:"-=60vh",
+        ease: "power1.out",
+    },"<")
+    .to(redCurtain,{
+        y:"-=80vh",
+        ease: "power4.out",
+    },"<")
+    .to(textBlock,{
+        y:"+=30%",
+        opacity:0,
+        ease: "power3.out",
+    },"<")
+    .to(imageBlock,{
+        y:"-=20vh",
+        opacity:0,
+        ease: "power3.out",
+    },"<")
+
+
+
+</script>
