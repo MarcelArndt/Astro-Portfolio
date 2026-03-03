@@ -1,0 +1,168 @@
+---
+---
+<section skill-section id="skills">
+    <div class="content-box">
+        <div class="textblock" text-block>  
+            <p>Dies sind</p>      
+            <h2>Meine Skills</h2>
+
+
+        <div skill-section-box class="skill-category-wrapper">
+                <h3>Frontend</h3>
+                <div class="skill-category-container">
+                    <ul frontend-stack >
+                        <li><img src="./assets/icons/technology/angular.svg">Angular</li>
+                        <li><img src="./assets/icons/technology/astro.svg">Astro</li>
+                        <li><img src="./assets/icons/technology/javascript.svg">JavaScript</li>
+                        <li><img src="./assets/icons/technology/typescript.svg">TypeScript</li>
+                        <li><img src="./assets/icons/technology/gsap.png">GSAP</li>
+                        <li><img src="./assets/icons/technology/sass.svg">SASS</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div skill-section-box class="skill-category-wrapper">
+                <h3>Backend</h3>
+                <div class="skill-category-container">
+                    <ul backend-stack >
+                        <li><img src="./assets/icons/technology/django.svg">Django</li>
+                        <li><img src="./assets/icons/technology/python.svg">Python</li>
+                        <li><img src="./assets/icons/technology/firebase.svg">Firebase</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div skill-section-box class="skill-category-wrapper">
+                <h3>Tools</h3>
+                <div class="skill-category-container">
+                    <ul tools-stack >
+                        <li><img src="./assets/icons/technology/figma.svg">Figma</li>
+                        <li><img src="./assets/icons/technology/git.svg">Git</li>
+                        <li><img src="./assets/icons/technology/docker.svg">Docker</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div skill-section-box class="flex-box" id="portfolio">
+            <p> Du vermisst eine bestimmte Technologie in meinem Stack?<br>Ich bin offen für neue Tools und lerne schnell dazu.</p>
+            <button>Schreib mir</button>
+
+        </div>
+    </div>
+</section>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    section{
+        width: 100%;
+        background-color: $grey-background;
+    }
+
+    .content-box{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: start;
+        padding: 0px 6rem;
+        box-sizing: border-box;
+
+        @media screen and (max-width:1020px) {
+        padding: 0px 2rem;
+        text-align: center;
+        justify-content: center;
+        }
+    }
+
+    .textblock{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .skill-category-wrapper{
+        display: grid;
+        margin: 4rem 0rem;
+        grid-template-columns: 250px 1fr;
+
+        @media screen and (max-width:1020px) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+
+        h3{
+            color: #ffffff;
+            width: max-content;
+
+        }
+    }
+
+    button{
+        color: white;
+    }
+
+    .skill-category-container{
+        width: 100%;
+        display: flex;
+
+        @media screen and (max-width:1020px) {
+            justify-content: center;
+            margin-top: 3rem;
+        }
+    }
+
+    .skill-category-container ul{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 3.5rem;
+        gap: 3.5rem;
+
+        @media screen and (max-width:1020px) {
+            padding-left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    }
+
+
+    .skill-category-container li{
+        display: flex;
+        align-items: center;
+        color:white;
+        font-size: $font-size-200;
+        box-sizing: border-box;
+        line-height: 2.5rem;
+
+        img{
+            margin-right: 1rem;
+            max-height: 43px;
+            width: 43px;
+            object-position: center;
+        }
+    }
+
+</style>
+
+<script>
+    import { gsap, ScrollTrigger } from "../lip/gsap";
+const skillSection = document.querySelectorAll("[skill-section]");
+const textBlock = document.querySelectorAll("[text-block]");
+const sectionsList = document.querySelectorAll("[skill-section-box]");
+const technologyList = document.querySelectorAll("[skill-category-containe]");
+
+
+
+let tlOne = gsap.timeline({
+        scrollTrigger: {
+            trigger: skillSection,
+            start: 'top 60%',
+            end: 'bottom bottom',
+            scrub: 1, 
+        }
+    });
+
+</script>

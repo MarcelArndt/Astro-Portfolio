@@ -1,6 +1,6 @@
 $system-font: "RedditSans";
 $font-size-100: 1.125rem;
-$font-size-200: clamp(1.125rem, 5vw, 1.75rem);
+$font-size-200: clamp(1.125rem, 5vw, 1.5rem);
 $font-color: #290509;
 $font-white-color:#fff;
 $main-color: #e44064;
@@ -9,3 +9,8 @@ $dark-red:#290509;
 $max-width:1920px;
 $button-color:#14c587;
 $button-color-hover:#2be67f;
+$grey-background:#11131D;
+
+$h1 : clamp(1.5rem, 12vw, 7.75rem);
+$h2 : clamp(1.5rem, 12vw, 7.75rem);
+$h3 : clamp(1.5rem, 12vw, 2.625rem);

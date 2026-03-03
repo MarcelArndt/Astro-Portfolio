@@ -4,7 +4,7 @@ import HamburgerMenu from "./HamburgerMenu.astro"
 ---
 <div class="header-wrapper">
     <header>
-        <div>
+        <div class="logo">
             <a href="#start"><img src="./assets/pictures/logo.svg"></a>
         </div>
             <div class="flex-nav">
@@ -53,8 +53,7 @@ import HamburgerMenu from "./HamburgerMenu.astro"
     @use "../styles/index.scss" as *;
 
     .header-wrapper{
-        --height:90px;
-
+        --height:92px;
         z-index: 999;
         position: fixed;
         top: 0px;
@@ -74,6 +73,23 @@ import HamburgerMenu from "./HamburgerMenu.astro"
         box-sizing: border-box;
         padding: 0px 6rem;
         align-items: center;
+
+        @media screen and (max-width:1020px){
+            padding: 0px 2rem;    
+            width: 100%;
+            .logo{
+                max-width: 33%;
+                min-width: 180px;
+
+                img{
+                    width: 100%;
+                }
+            }
+        }
+
+        @media screen and (max-width:600px) {
+            padding: 0px 1rem;   
+        }
     }
 
     .flex-nav{
@@ -85,6 +101,12 @@ import HamburgerMenu from "./HamburgerMenu.astro"
 
     .icon-fill{
         fill:white;
+    }
+
+    .social {
+        @media screen and (max-width:600px) {
+            display: none;
+        }
     }
 
     .social ul{
