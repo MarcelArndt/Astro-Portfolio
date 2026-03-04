@@ -2,10 +2,16 @@
 ---
 <section skill-section id="skills">
     <div class="content-box">
-        <div class="textblock" text-block>  
-            <p>Dies sind</p>      
-            <h2>Meine Skills</h2>
 
+        <div picture-container class="picture-container"> 
+            <img picture-content src="./assets/pictures/vs-background.webp">
+        </div>
+
+        <div class="textblock" text-block>  
+            <div skill-section-box>            
+                <p>Dies sind</p>      
+                <h2>Meine Skills</h2>
+            </div>
 
         <div skill-section-box class="skill-category-wrapper">
                 <h3>Frontend</h3>
@@ -43,11 +49,12 @@
                 </div>
             </div>
 
-            <div skill-section-box class="flex-box" id="portfolio">
-            <p> Du vermisst eine bestimmte Technologie in meinem Stack?<br>Ich bin offen für neue Tools und lerne schnell dazu.</p>
-            <button>Schreib mir</button>
-
-        </div>
+            <div skill-section-box>
+                <p> Du vermisst eine bestimmte Technologie in meinem Stack?<br>Ich bin offen für neue Tools und lerne schnell dazu.</p>
+            </div>
+             <div skill-section-box>
+                <button>Schreib mir</button>
+            </div>
     </div>
 </section>
 
@@ -57,6 +64,8 @@
     section{
         width: 100%;
         background-color: $grey-background;
+        padding: 124px 0px;
+        position: relative;
     }
 
     .content-box{
@@ -144,25 +153,103 @@
             object-position: center;
         }
     }
+    .picture-container{
+        width: 50%;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0.4;
+
+        img{
+  
+            filter: blur(6px);
+        }
+
+    }
 
 </style>
 
 <script>
-    import { gsap, ScrollTrigger } from "../lip/gsap";
-const skillSection = document.querySelectorAll("[skill-section]");
-const textBlock = document.querySelectorAll("[text-block]");
-const sectionsList = document.querySelectorAll("[skill-section-box]");
-const technologyList = document.querySelectorAll("[skill-category-containe]");
+    import { gsap } from "../lip/gsap";
 
+    const skillSection = document.querySelector<HTMLElement>("[skill-section]");
+    const sectionBoxes = gsap.utils.toArray("[skill-section-box]");
+    const textBox = document.querySelector<HTMLElement>("[text-block]");
+    const pictureContent = document.querySelector<HTMLElement>("[picture-content]");
 
+    gsap.set(textBox,{
+        y:"-=20%",
+    })
 
-let tlOne = gsap.timeline({
+    gsap.set(pictureContent,{
+        y:"+=55%",
+        x: "+=1050px",
+        opacity:0,
+    })
+
+    const tlTextbox = gsap.timeline({
         scrollTrigger: {
             trigger: skillSection,
-            start: 'top 60%',
-            end: 'bottom bottom',
-            scrub: 1, 
-        }
+            start: "top 75%",
+            end:"95% bottom",
+            scrub:1,
+            toggleActions: "play none none none",
+        },
     });
+
+    tlTextbox.to(textBox,{
+        y:"+=20%"
+    })
+
+
+    const tlImage = gsap.timeline({
+    scrollTrigger: {
+        trigger: skillSection,
+        start: "top 50%",
+        end:"95% bottom",
+        scrub:1,
+        toggleActions: "play none none none",
+        },
+    });
+
+    tlImage.to(pictureContent ,{
+        x:"-=1045px",
+        opacity:1,
+    })
+    .to(pictureContent,{
+        y:"-=33%"
+    })
+
+    const tlOne = gsap.timeline({
+        scrollTrigger: {
+            trigger: skillSection,
+            start: "top 65%",
+            end:"bottom bottom",
+            scrub:1,
+            toggleActions: "play none none none",
+
+        },
+    });
+
+    (sectionBoxes as HTMLElement[]).forEach((section, i) => {
+
+    tlOne.from(section, {
+        opacity: 0,
+        y: "+=70",
+        ease: "power2.out"
+    })
+
+    const lis = section.querySelectorAll('.skill-category-wrapper ul li');
+    if (lis.length > 0) {
+        tlOne.from(lis, {
+        opacity: 0,
+        y: "+=70",
+        stagger: 1,
+        ease: "power2.out"
+        }, ">");
+    }
+    })
 
 </script>
