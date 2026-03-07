@@ -26,7 +26,7 @@ p{
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     box-sizing: border-box;
-    line-height: 2.5rem;
+    line-height: clamp(0.75rem, 12vw, 2.5rem);
 }
 
 h1 {
@@ -36,7 +36,7 @@ h1 {
     box-sizing: border-box;
     font-size: $h1;
     font-weight: 800;
-    background: linear-gradient(125deg, #ffaa92, #bd0048);
+    background: $bright-gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -104,12 +104,13 @@ button{
 .content-wrapper{
     width: 100%;
     max-width: $max-width;
+    background-color: #fff;
 }
 
 .curtain-wrapper{
     pointer-events: none;
     position: absolute;
-    top: 0px;
+    top: 400px;
     left: 0px;
     z-index: 77;
     height: 100%;
@@ -121,7 +122,6 @@ button{
     width: 100%;
     height: 100%;
     position: absolute;
- 
     left: 0px;
 
     &::before{
@@ -136,7 +136,7 @@ button{
 }
 
 .inner{
-       top: -32px;
+       top: -36px;
 }
 
 .white{

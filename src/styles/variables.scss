@@ -1,15 +1,18 @@
 $system-font: "RedditSans";
 $font-size-100: 1.125rem;
 $font-size-200: clamp(1.125rem, 5vw, 1.5rem);
-$font-color: #290509;
+$font-color: #300105;
 $font-white-color:#fff;
 $main-color: #e44064;
 $light-orange:#fb877f;
-$dark-red:#290509;
+$dark-red:#300105;
 $max-width:1920px;
 $button-color:#14c587;
 $button-color-hover:#2be67f;
 $grey-background:#11131D;
+$bright-gradient: linear-gradient(125deg, #ffc171, #e44064,#e44064);
+$inner-padding: clamp(1rem, 8vw, 11.25rem);
+
 
 $h1 : clamp(1.5rem, 12vw, 7.75rem);
 $h2 : clamp(1.5rem, 12vw, 7.75rem);
