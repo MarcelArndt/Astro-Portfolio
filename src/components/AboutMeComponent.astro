@@ -1,10 +1,14 @@
 ---
 ---
-<section id="about_me">
+<section id="about_me" about-me-section>
+    <div class="white-box" curtain-white ></div>
     <div class="content-box">
         <p>Dies sind</p>
         <h2>About Me</h2>
         <ul></ul>
+    </div>
+    <div class="curtain-wrapper">
+        <div class="black-box" curtain-black ></div>
     </div>
 </section>
 
@@ -18,7 +22,6 @@
         height: 100vh;
         position: relative;
         z-index: 200;
-
     }
 
     .content-box{
@@ -29,8 +32,78 @@
         justify-content: center;
     }
 
+    .white-box{
+        width: 100%;
+        height: 600px;
+        position: absolute;
+        top: 100px;
+        left: 0px;
+        background-color: white;
+        z-index: -1;
+    }
+
+    .curtain-wrapper{
+        position: absolute;
+        top: -500px;
+        left: 0px;
+        width: 100%;
+        height: calc(100% + 500px);
+        overflow: hidden;
+    }
+
+    .black-box{
+        z-index: 222;
+        position: absolute;
+        bottom: calc(-100% - 300px);
+        height: 100%;
+        width: 100%;
+        background-color: $grey-background;
+
+        &::before{
+        content: "";
+        position: absolute;
+        top: -24%;
+        right: 0px;
+        width: 200%;
+        height: 100%;
+        rotate: 6deg;
+        background-color: $grey-background;;
+    }
+    }
+
 </style>
 
 <script>
+    import { gsap } from "../lip/gsap";
+    const whiteCurtain = document.querySelectorAll("[curtain-white]");
+    const blackCurtain = document.querySelectorAll("[curtain-black]");
+    const aboutMeSection = document.querySelectorAll("[about-me-section]");
+
+    let tlWhiteCurtain = gsap.timeline({
+        scrollTrigger: {
+            trigger: aboutMeSection,
+            start: 'top 80%',
+            end: 'bottom 50%',
+            scrub: 1, 
+        }
+    });
+
+    tlWhiteCurtain.to(whiteCurtain,{
+        y:"-=400px"
+    })
+
+    let tlBlackCurtain = gsap.timeline({
+        scrollTrigger: {
+            trigger: aboutMeSection,
+            start: '70% 80%',
+            end: 'bottom 50%',
+            scrub: 1, 
+        }
+    });
+
+    tlBlackCurtain.to(blackCurtain,{
+        y:"-=100vh"
+    })
+
 
 </script>

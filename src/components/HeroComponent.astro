@@ -21,7 +21,6 @@
     </div>
 </section>
 
-
 <style lang="scss">
     @use "../styles/index.scss" as *;
 
@@ -53,8 +52,6 @@
                 bottom: 0px;
             }
         }
-
-
 
         &::before{
             content: "";
@@ -97,7 +94,7 @@
 
         @media screen and (max-width:1365px) and (orientation: landscape) {
 
-            p{
+            p,button{
                 font-size: 1.125rem;
                 line-height: 1.75rem;
             }
@@ -117,8 +114,6 @@
             }
 
         }
-
-
     }
 
 
@@ -153,57 +148,53 @@
 </style>
 
 <script>
-import { gsap } from "../lip/gsap";
-const redCurtain = document.querySelectorAll("[red-curtain]");
-const whiteCurtain = document.querySelectorAll("[white-curtain]");
-const heroSection = document.querySelectorAll("[hero-section]");
-const textBlock = document.querySelectorAll("[text-container]");
-const imageBlock = document.querySelectorAll("[image-container]");
-const curtainWrapper = document.querySelectorAll("[curtain-wrapper]");
+    import { gsap } from "../lip/gsap";
+    const redCurtain = document.querySelectorAll("[red-curtain]");
+    const whiteCurtain = document.querySelectorAll("[white-curtain]");
+    const heroSection = document.querySelectorAll("[hero-section]");
+    const textBlock = document.querySelectorAll("[text-container]");
+    const imageBlock = document.querySelectorAll("[image-container]");
+    const curtainWrapper = document.querySelectorAll("[curtain-wrapper]");
 
-gsap.set(whiteCurtain,{
-    y:"+=100vh",
-})
+    gsap.set(whiteCurtain,{
+        y:"+=100vh",
+    })
 
-gsap.set(redCurtain,{
-    y:"+=100vh"
-})
-
-
-let tlOne = gsap.timeline({
-        scrollTrigger: {
-            trigger: heroSection,
-            start: 'top top',
-            end: 'bottom 30%',
-            scrub: 1, 
-        }
-    });
-
-    tlOne
-    .to(whiteCurtain,{
-        y:"-=100vh",
-        ease: "power1.out",
-    },"<")
-    .to(redCurtain,{
-        y:"-=100vh",
-        ease: "power4.out",
-    },"<")
-    .to(curtainWrapper,{
-        y:"-=500px",
-        height:"200%",
-        ease: "power1.out",
-    },"<")
-    .to(textBlock,{
-        y:"+=30%",
-        opacity:0,
-        ease: "power3.out",
-    },"<")
-    .to(imageBlock,{
-        y:"-=20vh",
-        opacity:0,
-        ease: "power3.out",
-    },"<")
+    gsap.set(redCurtain,{
+        y:"+=100vh"
+    })
 
 
+    let tlOne = gsap.timeline({
+            scrollTrigger: {
+                trigger: heroSection,
+                start: 'top top',
+                end: 'bottom 30%',
+                scrub: 1, 
+            }
+        });
 
+        tlOne
+        .to(whiteCurtain,{
+            y:"-=100vh",
+            ease: "power1.out",
+        },"<")
+        .to(redCurtain,{
+            y:"-=100vh",
+            ease: "power4.out",
+        },"<")
+        .to(curtainWrapper,{
+            y:"-=500px",
+
+        },"<")
+        .to(textBlock,{
+            y:"+=30%",
+            opacity:0,
+            ease: "power3.out",
+        },"<")
+        .to(imageBlock,{
+            y:"-=20vh",
+            opacity:0,
+            ease: "power3.out",
+        },"<")
 </script>
