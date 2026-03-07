@@ -1,6 +1,12 @@
 ---
 ---
 <section skill-section id="skills">
+
+    <div class="curtain-wrapper" curtain-skill-wrapper>
+        <div class="curtain inner red" red-skill-curtain></div>
+        <div class="curtain white" white-skill-curtain></div>
+    </div>
+
     <div class="content-box">
 
         <div picture-container class="picture-container"> 
@@ -55,7 +61,9 @@
              <div skill-section-box>
                 <button>Schreib mir</button>
             </div>
+
     </div>
+
 </section>
 
 <style lang="scss">
@@ -64,21 +72,20 @@
     section{
         width: 100%;
         background-color: $grey-background;
-        padding: 124px 0px;
+        padding: 124px 0px 0px 0px;
         position: relative;
         z-index: 300;
+        padding-bottom: 696px;
     }
 
     .content-box{
         width: 100%;
-        height: 100%;
         display: flex;
         align-items: start;
-        padding: 0px 6rem;
+        padding: 0px $inner-padding;
         box-sizing: border-box;
 
         @media screen and (max-width:1020px) {
-        padding: 0px 2rem;
         text-align: center;
         justify-content: center;
         }
@@ -105,7 +112,6 @@
         h3{
             color: #ffffff;
             width: max-content;
-
         }
     }
 
@@ -170,6 +176,57 @@
 
     }
 
+    .curtain-wrapper{
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .curtain{
+        --bottom-margin: 150px;
+        --red-curtain-puffer: 16px;
+        z-index: 99;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        bottom: calc(-100% - var(--bottom-margin));
+        left: 0px;
+
+        &::before{
+            content: "";
+            position: absolute;
+            top:-24%;
+            left: 0%;
+            width: 200%;
+            height: 100%;
+            rotate: -6deg;
+        }
+    }
+
+    .inner{
+        bottom: calc(-100% - var(--bottom-margin) + 36px - var(--red-curtain-puffer) );
+    }
+
+    .white{
+       background-color: white;
+
+        &::before{
+           background-color: white; 
+        }
+    }
+
+    .red{
+        background-color: $main-color; 
+
+        &::before{
+            background-color: $main-color; 
+        }
+    }
+
 </style>
 
 <script>
@@ -179,6 +236,8 @@
     const sectionBoxes = gsap.utils.toArray("[skill-section-box]");
     const textBox = document.querySelector<HTMLElement>("[text-block]");
     const pictureContent = document.querySelector<HTMLElement>("[picture-content]");
+    const whiteCurtain = document.querySelector<HTMLElement>("[white-skill-curtain]");
+    const redCurtain = document.querySelector<HTMLElement>("[red-skill-curtain]");
 
     gsap.set(textBox,{
         y:"-=20%",
@@ -227,7 +286,7 @@
         scrollTrigger: {
             trigger: skillSection,
             start: "top 65%",
-            end:"bottom bottom",
+            end:"60% bottom",
             scrub:1,
             toggleActions: "play none none none",
 
@@ -252,5 +311,25 @@
         }, ">");
     }
     })
+
+        const tlcurtain = gsap.timeline({
+        scrollTrigger: {
+            trigger: skillSection,
+            start: "80% bottom",
+            end:"bottom 50%",
+            scrub:1,
+        },
+    });
+
+
+        tlcurtain
+        .to(whiteCurtain,{
+            y:"-=100vh",
+            ease: "power1.out",
+        },"<")
+        .to(redCurtain,{
+            y:"-=100vh",
+            ease: "power4.out",
+        },"<")
 
 </script>

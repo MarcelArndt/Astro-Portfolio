@@ -145,6 +145,54 @@
             }
         }
     }
+
+    .curtain-wrapper{
+    pointer-events: none;
+    position: absolute;
+    top: 400px;
+    left: 0px;
+    z-index: 77;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+    .curtain{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px;
+
+        &::before{
+            content: "";
+            position: absolute;
+            top: -24%;
+            left: 0%;
+            width: 200%;
+            height: 100%;
+            rotate: -6deg;
+        }
+    }
+
+    .inner{
+        top: -36px;
+    }
+
+    .white{
+        background-color: white;
+
+        &::before{
+            background-color: white; 
+        }
+    }
+
+    .red{
+        background-color: $main-color;
+
+        &::before{
+            background-color: $main-color; 
+        }
+    }
 </style>
 
 <script>
