@@ -54,6 +54,7 @@ h2{
     line-height: 110%;
     color: $main-color;
     font-size: $h2;
+    font-weight: 600;
     margin-block-start: 0em;
     margin-block-end: 0em;
     margin-inline-start: 0px;
@@ -75,6 +76,15 @@ h3{
     margin-inline-end: 0px;
 }
 
+h5{
+    font-family: RedditSans;
+    font-weight: 300;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
 button{
     width: max-content;
     font-family: RedditSans;
@@ -87,13 +97,22 @@ button{
     margin: 24px 0;
     transition: background-color .25s ease-in-out, scale .25s ease-in-out;
 
+    &.github{
+        background-color:$github-button-color;
+    }
 
     &:hover{
         cursor: pointer;
         scale: 1.05;
         background-color: $button-color-hover;
     }
+
+    &.github:hover{
+        background-color:$github-button-color-hover;
+    }
 }
+
+
 
 
 .main-wrapper{

@@ -1,9 +1,79 @@
+---
+import angular from "../../public/assets/icons/technology/angular.svg"
+import astro from "../../public/assets/icons/technology/astro.svg"
+import cScharp from "../../public/assets/icons/technology/c_scharp.svg"
+import css from "../../public/assets/icons/technology/css.svg"
+import django from "../../public/assets/icons/technology/django.svg"
+import docker from "../../public/assets/icons/technology/docker.svg"
+import figma from "../../public/assets/icons/technology/figma.svg"
+import firebase from "../../public/assets/icons/technology/firebase.svg"
+import git from "../../public/assets/icons/technology/git.svg"
+import gsap from "../../public/assets/icons/technology/gsap.png"
+import html from "../../public/assets/icons/technology/html.svg"
+import javascript from "../../public/assets/icons/technology/javascript.svg"
+import python from "../../public/assets/icons/technology/python.svg"
+import sass from "../../public/assets/icons/technology/sass.svg"
+import typescript from "../../public/assets/icons/technology/typescript.svg"
+import unity from "../../public/assets/icons/technology/unity.svg"
+
+import projectPictureOne from "../../public/assets/pictures/projects/project-one.jpg"
+import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
+import projectPictureThree from "../../public/assets/pictures/projects/project-three.jpg"
+import projectPictureFour from "../../public/assets/pictures/projects/project-four.jpg"
+
+---
+
+
 <section>
         <div class="content-box"> 
+            <p>Eine Auswahl meiner Projekte, die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
+            <h2>Meine Projekte</h2>
             <div>
-                <ul>
-                    <li></li>
-                    <li></li>
+                <ul class="projects-list">
+                    <li>
+                         <input type="checkbox" name="first-project" id="first-project">
+                        <label for="first-project" data-preview={projectPictureOne.src}>Project Join <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg"></span></label>
+
+                        <div class="project-content-wrapper">
+                            <div class="project-content-inner">
+                                <p>Verwalte Aufgaben in</p>
+                                <h3>Join</h3>
+                                <p>Join ist ein selbst entwickeltes Kanban-Board-System, mit dem sich Aufgaben und Kontakte effizient verwalten lassen. Das Projekt wurde vollständig in Vanilla JavaScript umgesetzt. Ohne Frameworks oder Bibliotheken und war für mich eine meiner bisher größten Herausforderungen.</p>
+                                <p>Meine Hauptaufgabe bestand darin, das Board selbst zu entwickeln, inklusive der Darstellung, der Interaktionslogik und der Datenverarbeitung. Überraschenderweise waren nicht die Drag-and-Drop- oder Touch-Funktionen die schwierigsten Teile, sondern vielmehr das aktualisieren der Benutzeroberfläche und der Umgang mit asynchronen Daten. Oft war es sprichwörtlich die „Nadel im Heuhaufen", um den entscheidenden Fehler zu finden.</p>
+                                <p>Optisch zählt Join bis heute zu meinen Lieblingsprojekten. Nicht nur wegen des klaren Designs, sondern auch, weil es eines meiner ersten großen Softwareprojekte war. Dadurch verbinde ich mit ihm eine besondere persönliche Bedeutung und viele lehrreiche Momente.</p>
+                                <div class="thump-container"><img src={projectPictureOne.src}></div>
+                                <strong>Techstack:</strong>
+                                <ul class="technology-list">
+                                    <li><img src={javascript.src} alt="JavaScript" /></li>
+                                    <li><img src={html.src} alt="HTML 5" /></li>
+                                    <li><img src={css.src} alt="CSS 3" /></li>
+                                </ul>
+                                <div class="button-box"><button>Demo</button> <button class="github">GitHub</button></div>
+                            </div>
+                        </div>
+                    </li>
+                  <li>
+                        <input type="checkbox" name="second-project" id="second-project">
+                        <label for="second-project" data-preview={projectPictureTwo.src}>Project Join <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg"></span></label>
+
+                        <div class="project-content-wrapper">
+                            <div class="project-content-inner">
+                                <p>Verwalte Aufgaben in</p>
+                                <h3>Join</h3>
+                                <p>Join ist ein selbst entwickeltes Kanban-Board-System, mit dem sich Aufgaben und Kontakte effizient verwalten lassen. Das Projekt wurde vollständig in Vanilla JavaScript umgesetzt. Ohne Frameworks oder Bibliotheken und war für mich eine meiner bisher größten Herausforderungen.</p>
+                                <p>Meine Hauptaufgabe bestand darin, das Board selbst zu entwickeln, inklusive der Darstellung, der Interaktionslogik und der Datenverarbeitung. Überraschenderweise waren nicht die Drag-and-Drop- oder Touch-Funktionen die schwierigsten Teile, sondern vielmehr das aktualisieren der Benutzeroberfläche und der Umgang mit asynchronen Daten. Oft war es sprichwörtlich die „Nadel im Heuhaufen", um den entscheidenden Fehler zu finden.</p>
+                                <p>Optisch zählt Join bis heute zu meinen Lieblingsprojekten. Nicht nur wegen des klaren Designs, sondern auch, weil es eines meiner ersten großen Softwareprojekte war. Dadurch verbinde ich mit ihm eine besondere persönliche Bedeutung und viele lehrreiche Momente.</p>
+                                <div class="thump-container"><img src={projectPictureOne.src}></div>
+                                <strong>Techstack:</strong>
+                                <ul class="technology-list">
+                                    <li><img src={javascript.src} alt="JavaScript" /></li>
+                                    <li><img src={html.src} alt="HTML 5" /></li>
+                                    <li><img src={css.src} alt="CSS 3" /></li>
+                                </ul>
+                                <div class="button-box"><button>Demo</button> <button class="github">GitHub</button></div>
+                            </div>
+                        </div>
+                    </li>
                     <li></li>
                     <li></li>
                     <li></li>
@@ -12,14 +82,12 @@
         </div>
 </section>
 
+<div class="project-preview" id="project-preview">
+    <img id="project-preview-img" src="" alt="Projekt Vorschau" />
+</div>
+
 <style lang="scss">
     @use "../styles/index.scss" as *;
-
-    section{
-        height: 100vh;
-        width: 100%;
-        
-    }
 
     .content-box{
         box-sizing: border-box;
@@ -29,4 +97,235 @@
         padding: 96px $inner-padding; 
     }
 
+    .project-preview{
+        box-sizing:border-box;
+        padding: 1rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: clamp(300px, 24vw, 460px);
+        aspect-ratio: 16 / 9;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        pointer-events: none;
+        border: 1px solid #f6f6f6;
+        z-index: 9999;
+        opacity: 0;
+        scale: 0.85;
+        transition: opacity 0.2s ease-in-out, scale 0.2s ease-in-out;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        backdrop-filter: blur(4px);
+
+        &.visible{
+            opacity: 1;
+            scale: 1;
+        }
+
+        img{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+    }
+
+    .projects-list{
+        list-style: none;
+
+         li:not(:first-child){
+            margin-top: 1.5rem;
+        }
+
+        p,ul,li{
+            color:$font-color
+        }
+
+        input[type="checkbox"]{
+            display: none;
+        }
+
+        h3{
+            margin: 0.5rem 0px;
+        }
+
+        strong{
+            font-weight: 300;
+            font-size: clamp(1.5rem, 12vw, 3.25rem);
+            display: block;
+            margin: 0.5rem 0px 1rem 0px;
+        }
+
+        button{
+            color: $font-white-color;
+        }
+
+        label {
+            position: relative;
+            width: 100%;
+            font-size: $h4;
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 0.75rem 2rem;
+            border-radius: 1rem;
+            border: 1px solid #ececec;
+            gap: 1.5rem;
+
+            &:hover{
+                color:$main-color;
+                cursor: pointer;
+                background-color: #f6f6f6;
+            }
+        }
+
+        span{
+            display: flex;
+            height: clamp(16px, 6vw, 32px);
+            aspect-ratio: 1 / 1;
+        }
+
+        span > img{
+            object-position: center;
+            transform: rotate(-90deg);
+            transition: transform 0.25s ease-in-out;
+        }
+
+        .button-box{
+            display: flex;
+            button:not(:first-child){
+                margin-left: 1.25rem;
+            }
+        }
+
+        .project-content-wrapper{
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .project-content-inner{
+            overflow: hidden;
+            box-sizing: border-box;
+            padding: 0rem 2rem;
+            transition: padding 0.4s ease-in-out;
+
+            p{
+                max-width: 75ch;
+            }
+
+            p:not(:first-child){
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        input[type="checkbox"]:checked ~ .project-content-wrapper{
+            grid-template-rows: 1fr;
+            opacity: 1;
+        }
+
+        input[type="checkbox"]:checked ~ label{
+            background-color: #ececec;
+
+            span > img{
+                transform: rotate(90deg);
+            }
+        }
+
+        input[type="checkbox"]:checked ~ .project-content-wrapper .project-content-inner{
+            padding: 4rem 2rem;
+        }
+
+        .technology-list{
+            list-style: none;
+            display: flex;
+            align-items: center;
+            li:not(:first-child){
+                margin-left: 1.5rem;
+            }
+            li{
+                margin-top: 0px;
+                filter: brightness(15%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+        }
+
+        .thump-container{
+            width: 100%;
+            max-width: 678px;
+            img{
+                width: 100%;
+                object-fit: contain;
+                object-position: center;
+            }
+        }
+    }
+
+
+
+
 </style>
+
+<script>
+    // Accordion
+    const checkboxes = document.querySelectorAll<HTMLInputElement>('.projects-list input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                checkboxes.forEach(other => {
+                    if (other !== checkbox) other.checked = false;
+                });
+            }
+        });
+    });
+
+    // Cursor Preview
+    const preview = document.getElementById('project-preview') as HTMLDivElement;
+    const previewImg = document.getElementById('project-preview-img') as HTMLImageElement;
+    const labels = document.querySelectorAll<HTMLLabelElement>('.projects-list label[data-preview]');
+    
+    const mouseOffsetX = 15;
+    const mouseOffsetY = 15;
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let animating = false;
+
+    function lerp(a: number, b: number, t: number) {
+        return a + (b - a) * t;
+    }
+
+    function animate() {
+        currentX = lerp(currentX, mouseX, 0.7);
+        currentY = lerp(currentY, mouseY, 0.7);
+        preview.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        animating = true;
+        requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX + mouseOffsetX;
+        mouseY = e.clientY + mouseOffsetY;
+        if (!animating) animate();
+    });
+
+    labels.forEach(label => {
+        label.addEventListener('mouseenter', () => {
+            const src = label.dataset.preview;
+            if (src) previewImg.src = src;
+            preview.classList.add('visible');
+        });
+        label.addEventListener('mouseleave', () => {
+            preview.classList.remove('visible');
+        });
+    });
+</script>

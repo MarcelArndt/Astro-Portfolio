@@ -1,6 +1,6 @@
-<div class="hambuger-menu-wrapper">
-    <input name="menu-checkbox" type="checkbox" class="hambuger-menu-checkbox" id="menu-checkbox">
-    <label class="hambuger-menu-icon" for="menu-checkbox" aria-label="Navigation öffnen" role="button">
+<div class="hamburger-menu-wrapper">
+    <input name="menu-checkbox" type="checkbox" class="hamburger-menu-checkbox" id="menu-checkbox">
+    <label class="hamburger-menu-icon" for="menu-checkbox" aria-label="Navigation öffnen" role="button">
         <div class="sr-only">Navigation öffnen</div>
         <span></span>
         <span></span>
@@ -9,7 +9,7 @@
     
     <nav class="menu-content" id="menu-nav">
         <div class="text-container">
-        <h3>Navigation:</h3>
+        <strong>Navigation:</strong>
 
         <!--  ADD MENU POINTS HERE   -->
           
@@ -36,7 +36,7 @@
 <style lang="scss">
     @use "../styles/index.scss" as *;
 
-    .hambuger-menu-wrapper{
+    .hamburger-menu-wrapper{
 
         --menu-icon-color:rgb(255, 255, 255);
         --menu-active-icon-color:#290509;
@@ -66,7 +66,7 @@
     }
 
 
-    .hambuger-menu-checkbox{
+    .hamburger-menu-checkbox{
         position: absolute;
         z-index: 993;
         width: 100%;
@@ -74,25 +74,25 @@
         opacity: 0;
         cursor: pointer;
 
-        &:hover +.hambuger-menu-icon{
+        &:hover +.hamburger-menu-icon{
             transform: translate(1px,-2px);
             scale: 1.03;
         }
 
-        &:checked + .hambuger-menu-icon {
+        &:checked + .hamburger-menu-icon {
             span{
                 background-color:var(--menu-active-icon-color);
             }
 
-            span:nth-child(2) { 
+            span:nth-of-type(1) { 
                 transform: rotate(45deg) translate(12%,12%); 
                 margin: 0px;
             }
-            span:nth-child(3) { 
+            span:nth-of-type(2) { 
                 opacity: 0; 
                 margin: 0px;
             }
-            span:nth-child(4) { 
+            span:nth-of-type(3) { 
                 margin: 0px;
                 transform: rotate(-45deg) translate(12%,12%); 
             }
@@ -193,7 +193,7 @@
         }
     }
 
-    .hambuger-menu-icon{
+    .hamburger-menu-icon{
         position: absolute;
         z-index: 992;
         top: 0px;
@@ -204,7 +204,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        transition: transform 0.25s ease-in-out, scale 0.25s ease-in-out,;
+        transition: transform 0.25s ease-in-out, scale 0.25s ease-in-out;
 
         span{
             margin: 5px;
@@ -241,7 +241,7 @@
         }
     }
 
-    h3{
+    strong{
         font-size: var(--headline-font-size);
         color: var(--headline-font-color);
         text-transform: var(--text-transform);
@@ -289,6 +289,16 @@
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', init)
+    document.addEventListener('astro:page-load', init)
+
+    function init(){
+        document.getElementById('menu-nav')?.addEventListener('click', (e) => {
+            closeMenu();
+        });
+        document.getElementById('menu-checkbox')?.addEventListener('click', toggleFixedBody);
+    }
+
   function closeMenu() {
     const checkbox = document.getElementById('menu-checkbox') as HTMLInputElement;
     if(!checkbox) return;
@@ -302,7 +312,7 @@
     if(checkbox.checked){
         lockScroll();
     }
-    if(!checkbox.checked){
+    if(!checkbox.checked) {
         unlockScroll();
     }
   }
@@ -321,7 +331,4 @@ function unlockScroll() {
     document.body.style.width = '';
     window.scrollTo(0, scrollY);
 }
-
-    document.getElementById('menu-nav')?.addEventListener('click', closeMenu);
-    document.getElementById('menu-checkbox')?.addEventListener('click', toggleFixedBody);
 </script>

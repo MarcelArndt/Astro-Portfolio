@@ -11,9 +11,14 @@ $button-color:#14c587;
 $button-color-hover:#2be67f;
 $grey-background:#11131D;
 $bright-gradient: linear-gradient(125deg, #ffc171, #e44064,#e44064);
+$github-button-color:#253257;
+$github-button-color-hover:#365472;
+
 $inner-padding: clamp(1rem, 8vw, 11.25rem);
 
 
 $h1 : clamp(1.5rem, 12vw, 7.75rem);
 $h2 : clamp(1.5rem, 12vw, 7.75rem);
-$h3 : clamp(1.5rem, 12vw, 2.625rem);
+$h3 : clamp(1.5rem, 12vw, 5.5rem);
+$h4 : clamp(1.5rem, 12vw, 3em);
+$h5 : clamp(1.3rem, 2vw, 1.75rem);
