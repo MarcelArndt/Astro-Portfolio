@@ -1,0 +1,51 @@
+[
+    {
+        "id": "join",
+        "label": "Project Join",
+        "previewImage": "project-one",
+        "subtitle": "Verwalte Aufgaben in",
+        "title": "Join",
+        "descriptions": [
+            "Join ist ein selbst entwickeltes Kanban-Board-System, mit dem sich Aufgaben und Kontakte effizient verwalten lassen. Das Projekt wurde vollständig in Vanilla JavaScript umgesetzt. Ohne Frameworks oder Bibliotheken und war für mich eine meiner bisher größten Herausforderungen.",
+            "Meine Hauptaufgabe bestand darin, das Board selbst zu entwickeln, inklusive der Darstellung, der Interaktionslogik und der Datenverarbeitung. Überraschenderweise waren nicht die Drag-and-Drop- oder Touch-Funktionen die schwierigsten Teile, sondern vielmehr das aktualisieren der Benutzeroberfläche und der Umgang mit asynchronen Daten. Oft war es sprichwörtlich die „Nadel im Heuhaufen\", um den entscheidenden Fehler zu finden.",
+            "Optisch zählt Join bis heute zu meinen Lieblingsprojekten. Nicht nur wegen des klaren Designs, sondern auch, weil es eines meiner ersten großen Softwareprojekte war. Dadurch verbinde ich mit ihm eine besondere persönliche Bedeutung und viele lehrreiche Momente."
+        ],
+        "techstack": ["javascript", "html", "css"],
+        "demo": "https://arndt-marcel.de/join/",
+        "github": "https://github.com/MarcelArndt/Project-Join",
+        "mainColor":"#3A5AF8"
+    },
+    {
+        "id": "second-project",
+        "label": "Videoflix",
+        "previewImage": "project-two",
+        "subtitle": "Watch it first on",
+        "title": "Videoflix",
+        "descriptions": [
+            "Videoflix ist ein Streamingdienst- oder Mediathek-Klon, der ähnlich wie Netflix oder Jellyfin ist.",
+            "Doch der Weg dahin war alles andere als einfach. Videoflix hat mich vor zahlreiche Herausforderungen gestellt, vom effizienten Management großer Datenmengen in PostgreSQL, über die Integration von Simple JWT und HTTPS-Cookies, bis hin zum Eintauchen in die tiefen Gewässer von Django.Es war eine intensive, manchmal frustrierende, aber unglaublich lehrreiche Erfahrung und spannender als jede Doku über den Marianengraben.",
+            "Am Ende ist daraus ein Projekt geworden, das fast schon filmreif ist:Ich konnte Docker für das Deployment einsetzen, Redis für Caching integrieren, eine Benutzerauthentifizierung umsetzen und viele neue Technologien praxisnah anwenden."
+        ],
+        "techstack": ["python","django","docker"],
+        "demo": "https://arndt-marcel.de/da_videoflix/",
+        "github": "https://github.com/MarcelArndt/DAVideoflix",
+        "mainColor":"#7b04d1"
+    },
+    {
+        "id": "third-project",
+        "label": "DABubble",
+        "previewImage": "project-three",
+        "subtitle": "Schreib mir auf",
+        "title": "DABubble",
+        "descriptions": [
+            "DABubble ist eine Echtzeit-Chat-Webanwendung, die sich an Plattformen wie Slack oder Discord orientiert. Nutzer können Gruppen beitreten und gemeinsam in verschiedenen Channels chatten.",
+            "Meine Hauptaufgabe in diesem Projekt war die Implementierung des gesamten Login-und Registrierungsprozesses. Dafür arbeitete ich intensiv mit Firebase und dessen umfangreicher Dokumentation. Das Ergebnis: Nutzer können sich entweder mit ihrem Google-Account anmelden oder einen eigenen Account registrieren - inklusive sicherer Datenverifizierung und Kommunikation über die Firebase API.",
+            "Im Laufe des Projekts konnte ich außerdem mein Verständnis für Angular deutlich vertiefen. Besonders spannend war der Vergleich zwischen Template-driven Forms und Reactive Forms. Letztlich entschied ich mich für die Reactive-Form-Variante, da sie mehr Flexibilität bietet – etwa beim Einbinden eigener Validatoren und beim Umgang mit asynchronen Daten.",
+            "Zum Abschluss habe ich die Benutzererfahrung noch durch fließende Animationen verfeinert. Beim Navigieren durch den Anmeldeprozess bewegen sich die Fenster sanft in die jeweilige Richtung, was den Ablauf für den Nutzer natürlicher und angenehmer wirken lässt."
+        ],
+        "techstack": ["angular","firebase","sass"],
+        "demo": "https://arndt-marcel.de/dabubble",
+        "github": "https://github.com/MarcelArndt/DABubble",
+        "mainColor":"#ed8e12"
+    }
+]

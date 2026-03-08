@@ -1,82 +1,51 @@
 ---
-import angular from "../../public/assets/icons/technology/angular.svg"
-import astro from "../../public/assets/icons/technology/astro.svg"
-import cScharp from "../../public/assets/icons/technology/c_scharp.svg"
-import css from "../../public/assets/icons/technology/css.svg"
-import django from "../../public/assets/icons/technology/django.svg"
-import docker from "../../public/assets/icons/technology/docker.svg"
-import figma from "../../public/assets/icons/technology/figma.svg"
-import firebase from "../../public/assets/icons/technology/firebase.svg"
-import git from "../../public/assets/icons/technology/git.svg"
-import gsap from "../../public/assets/icons/technology/gsap.png"
-import html from "../../public/assets/icons/technology/html.svg"
-import javascript from "../../public/assets/icons/technology/javascript.svg"
-import python from "../../public/assets/icons/technology/python.svg"
-import sass from "../../public/assets/icons/technology/sass.svg"
-import typescript from "../../public/assets/icons/technology/typescript.svg"
-import unity from "../../public/assets/icons/technology/unity.svg"
+import SingleProjectComponent from "./SingleProjectComponent.astro"
+import projects from "../data/projects.json"
 
 import projectPictureOne from "../../public/assets/pictures/projects/project-one.jpg"
 import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
-import projectPictureThree from "../../public/assets/pictures/projects/project-three.jpg"
-import projectPictureFour from "../../public/assets/pictures/projects/project-four.jpg"
+import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
+import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
+
+const previewImageMap: Record<string, string> = {
+    "project-one": projectPictureOne.src,
+    "project-two": projectPictureTwo.src,
+    "project-three": projectPictureThree.src,
+    "project-four": projectPictureFour.src,
+};
 
 ---
 
-
 <section>
-        <div class="content-box"> 
-            <p>Eine Auswahl meiner Projekte, die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
+        <div class="content-box">
+            <p>Dies ist eine Auswahl</p>
             <h2>Meine Projekte</h2>
+            <p class="sub-text">die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
             <div>
                 <ul class="projects-list">
-                    <li>
-                         <input type="checkbox" name="first-project" id="first-project">
-                        <label for="first-project" data-preview={projectPictureOne.src}>Project Join <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg"></span></label>
-
-                        <div class="project-content-wrapper">
-                            <div class="project-content-inner">
-                                <p>Verwalte Aufgaben in</p>
-                                <h3>Join</h3>
-                                <p>Join ist ein selbst entwickeltes Kanban-Board-System, mit dem sich Aufgaben und Kontakte effizient verwalten lassen. Das Projekt wurde vollständig in Vanilla JavaScript umgesetzt. Ohne Frameworks oder Bibliotheken und war für mich eine meiner bisher größten Herausforderungen.</p>
-                                <p>Meine Hauptaufgabe bestand darin, das Board selbst zu entwickeln, inklusive der Darstellung, der Interaktionslogik und der Datenverarbeitung. Überraschenderweise waren nicht die Drag-and-Drop- oder Touch-Funktionen die schwierigsten Teile, sondern vielmehr das aktualisieren der Benutzeroberfläche und der Umgang mit asynchronen Daten. Oft war es sprichwörtlich die „Nadel im Heuhaufen", um den entscheidenden Fehler zu finden.</p>
-                                <p>Optisch zählt Join bis heute zu meinen Lieblingsprojekten. Nicht nur wegen des klaren Designs, sondern auch, weil es eines meiner ersten großen Softwareprojekte war. Dadurch verbinde ich mit ihm eine besondere persönliche Bedeutung und viele lehrreiche Momente.</p>
-                                <div class="thump-container"><img src={projectPictureOne.src}></div>
-                                <strong>Techstack:</strong>
-                                <ul class="technology-list">
-                                    <li><img src={javascript.src} alt="JavaScript" /></li>
-                                    <li><img src={html.src} alt="HTML 5" /></li>
-                                    <li><img src={css.src} alt="CSS 3" /></li>
-                                </ul>
-                                <div class="button-box"><button>Demo</button> <button class="github">GitHub</button></div>
+                    {projects.map((project, index) => (
+                        <li style={{ "--project-color": project.mainColor }}>
+                            <input type="checkbox" name={project.id} id={project.id} />
+                            <label for={project.id} data-preview={previewImageMap[project.previewImage]}>
+                                {project.label}
+                                <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" /></span>
+                            </label>
+                            <div class="project-content-wrapper">
+                                <div class="project-content-inner">
+                                    <SingleProjectComponent
+                                        subtitle={project.subtitle}
+                                        title={project.title}
+                                        descriptions={project.descriptions}
+                                        previewImage={project.previewImage}
+                                        techstack={project.techstack}
+                                        demo={project.demo}
+                                        github={project.github}
+                                        mainColor={project.mainColor}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                  <li>
-                        <input type="checkbox" name="second-project" id="second-project">
-                        <label for="second-project" data-preview={projectPictureTwo.src}>Project Join <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg"></span></label>
-
-                        <div class="project-content-wrapper">
-                            <div class="project-content-inner">
-                                <p>Verwalte Aufgaben in</p>
-                                <h3>Join</h3>
-                                <p>Join ist ein selbst entwickeltes Kanban-Board-System, mit dem sich Aufgaben und Kontakte effizient verwalten lassen. Das Projekt wurde vollständig in Vanilla JavaScript umgesetzt. Ohne Frameworks oder Bibliotheken und war für mich eine meiner bisher größten Herausforderungen.</p>
-                                <p>Meine Hauptaufgabe bestand darin, das Board selbst zu entwickeln, inklusive der Darstellung, der Interaktionslogik und der Datenverarbeitung. Überraschenderweise waren nicht die Drag-and-Drop- oder Touch-Funktionen die schwierigsten Teile, sondern vielmehr das aktualisieren der Benutzeroberfläche und der Umgang mit asynchronen Daten. Oft war es sprichwörtlich die „Nadel im Heuhaufen", um den entscheidenden Fehler zu finden.</p>
-                                <p>Optisch zählt Join bis heute zu meinen Lieblingsprojekten. Nicht nur wegen des klaren Designs, sondern auch, weil es eines meiner ersten großen Softwareprojekte war. Dadurch verbinde ich mit ihm eine besondere persönliche Bedeutung und viele lehrreiche Momente.</p>
-                                <div class="thump-container"><img src={projectPictureOne.src}></div>
-                                <strong>Techstack:</strong>
-                                <ul class="technology-list">
-                                    <li><img src={javascript.src} alt="JavaScript" /></li>
-                                    <li><img src={html.src} alt="HTML 5" /></li>
-                                    <li><img src={css.src} alt="CSS 3" /></li>
-                                </ul>
-                                <div class="button-box"><button>Demo</button> <button class="github">GitHub</button></div>
-                            </div>
-                        </div>
-                    </li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>
@@ -88,6 +57,15 @@ import projectPictureFour from "../../public/assets/pictures/projects/project-fo
 
 <style lang="scss">
     @use "../styles/index.scss" as *;
+
+    p{
+        color: $font-color;
+        max-width: 75ch;
+    }
+
+    .sub-text{
+        margin-bottom: 3rem;
+    }
 
     .content-box{
         box-sizing: border-box;
@@ -139,27 +117,8 @@ import projectPictureFour from "../../public/assets/pictures/projects/project-fo
             margin-top: 1.5rem;
         }
 
-        p,ul,li{
-            color:$font-color
-        }
-
         input[type="checkbox"]{
             display: none;
-        }
-
-        h3{
-            margin: 0.5rem 0px;
-        }
-
-        strong{
-            font-weight: 300;
-            font-size: clamp(1.5rem, 12vw, 3.25rem);
-            display: block;
-            margin: 0.5rem 0px 1rem 0px;
-        }
-
-        button{
-            color: $font-white-color;
         }
 
         label {
@@ -173,13 +132,14 @@ import projectPictureFour from "../../public/assets/pictures/projects/project-fo
             box-sizing: border-box;
             padding: 0.75rem 2rem;
             border-radius: 1rem;
-            border: 1px solid #ececec;
+            border: 1px solid #f2f2f2;
             gap: 1.5rem;
 
             &:hover{
-                color:$main-color;
+                color: var(--project-color);
                 cursor: pointer;
                 background-color: #f6f6f6;
+                border-color:#ececec
             }
         }
 
@@ -195,12 +155,6 @@ import projectPictureFour from "../../public/assets/pictures/projects/project-fo
             transition: transform 0.25s ease-in-out;
         }
 
-        .button-box{
-            display: flex;
-            button:not(:first-child){
-                margin-left: 1.25rem;
-            }
-        }
 
         .project-content-wrapper{
             display: grid;
@@ -241,37 +195,7 @@ import projectPictureFour from "../../public/assets/pictures/projects/project-fo
             padding: 4rem 2rem;
         }
 
-        .technology-list{
-            list-style: none;
-            display: flex;
-            align-items: center;
-            li:not(:first-child){
-                margin-left: 1.5rem;
-            }
-            li{
-                margin-top: 0px;
-                filter: brightness(15%);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-            }
-        }
-
-        .thump-container{
-            width: 100%;
-            max-width: 678px;
-            img{
-                width: 100%;
-                object-fit: contain;
-                object-position: center;
-            }
-        }
     }
-
-
-
-
 </style>
 
 <script>

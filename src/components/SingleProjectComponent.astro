@@ -1,0 +1,172 @@
+---
+import angular from "../../public/assets/icons/technology/angular.svg"
+import astro from "../../public/assets/icons/technology/astro.svg"
+import cScharp from "../../public/assets/icons/technology/c_scharp.svg"
+import css from "../../public/assets/icons/technology/css.svg"
+import django from "../../public/assets/icons/technology/django.svg"
+import docker from "../../public/assets/icons/technology/docker.svg"
+import figma from "../../public/assets/icons/technology/figma.svg"
+import firebase from "../../public/assets/icons/technology/firebase.svg"
+import git from "../../public/assets/icons/technology/git.svg"
+import gsap from "../../public/assets/icons/technology/gsap.png"
+import html from "../../public/assets/icons/technology/html.svg"
+import javascript from "../../public/assets/icons/technology/javascript.svg"
+import python from "../../public/assets/icons/technology/python.svg"
+import sass from "../../public/assets/icons/technology/sass.svg"
+import typescript from "../../public/assets/icons/technology/typescript.svg"
+import unity from "../../public/assets/icons/technology/unity.svg"
+
+import projectPictureOne from "../../public/assets/pictures/projects/project-one.jpg"
+import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
+import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
+import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
+
+interface Props {
+    subtitle: string;
+    title: string;
+    descriptions: string[];
+    previewImage: string;
+    techstack: string[];
+    demo: string;
+    github: string;
+    mainColor: string;
+}
+
+const { subtitle, title, descriptions, previewImage, techstack, demo, github, mainColor } = Astro.props;
+
+const iconMap: Record<string, string> = {
+    angular: angular.src,
+    astro: astro.src,
+    cscharp: cScharp.src,
+    css: css.src,
+    django: django.src,
+    docker: docker.src,
+    figma: figma.src,
+    firebase: firebase.src,
+    git: git.src,
+    gsap: gsap.src,
+    html: html.src,
+    javascript: javascript.src,
+    python: python.src,
+    sass: sass.src,
+    typescript: typescript.src,
+    unity: unity.src,
+};
+
+const imageMap: Record<string, string> = {
+    "project-one": projectPictureOne.src,
+    "project-two": projectPictureTwo.src,
+    "project-three": projectPictureThree.src,
+    "project-four": projectPictureFour.src,
+};
+---
+
+<p>{subtitle}</p>
+<h3 style={{ color: mainColor }}>{title}</h3>
+{descriptions.map(desc => <p class="description-text">{desc}</p>)}
+<div class="thump-container"><img src={imageMap[previewImage]} alt={title} /></div>
+<strong>Techstack:</strong>
+<ul class="technology-list">
+    {techstack.map(tech => (
+        <li><img src={iconMap[tech]} alt={tech} /></li>
+    ))}
+</ul>
+<div class="button-box" style={{"--button-color": mainColor}}>
+    {demo && <a href={demo} target="_blank">Demo</a>}
+    {github && <a class="github" href={github} target="_blank">GitHub</a>}
+</div>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    p,ul,li{
+        color:$font-color;
+    }
+
+
+
+    strong{
+        font-weight: 300;
+        font-size: clamp(1.5rem, 12vw, 3.25rem);
+        display: block;
+        margin: 0.5rem 0px 1rem 0px;
+    }
+
+    button{
+        color: $font-white-color;
+    }
+
+    h3{
+        margin: 0.5rem 0px;
+    }
+
+    .description-text{
+        margin-bottom: 2rem;
+        max-width: 75ch;
+    }
+
+    .button-box{
+        display: flex;
+        margin-top: 3rem;
+        button:not(:first-child){
+            margin-left: 1.25rem;
+        }
+    
+        a{
+            text-decoration: none;
+            color: white;
+            background-color:var(--button-color);
+            padding: 1.25rem 2.5em;
+            font-size: $font-size-200;
+            margin: 1.5rem 0rem;
+            transition: scale 0.25s ease-in-out, background-color 0.25s ease-in-out;
+
+            &:hover{
+                 background-color: color-mix(in srgb, var(--button-color)  70%, white);
+                 scale: 1.05;
+            }
+        }
+
+        a:not(:first-child){
+            margin-left: 1.5rem;
+        }
+
+        a.github {
+            background-color: $github-button-color;
+
+            &:hover{
+              background-color: $github-button-color-hover;  
+            }
+        }
+
+
+    }
+
+    .technology-list{
+        list-style: none;
+        display: flex;
+        align-items: center;
+        li:not(:first-child){
+            margin-left: 1.5rem;
+        }
+
+        li{
+            margin-top: 0px;
+            filter: brightness(15%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    }
+
+    .thump-container{
+        width: 100%;
+        max-width: 678px;
+        img{
+            width: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+    }
+</style>
