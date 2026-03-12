@@ -199,7 +199,7 @@ const previewImageMap: Record<string, string> = {
 </style>
 
 <script>
-    // Accordion
+    // ## Accordion
     const checkboxes = document.querySelectorAll<HTMLInputElement>('.projects-list input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
@@ -211,11 +211,11 @@ const previewImageMap: Record<string, string> = {
         });
     });
 
-    // Cursor Preview
+    // ## Cursor Preview
     const preview = document.getElementById('project-preview') as HTMLDivElement;
     const previewImg = document.getElementById('project-preview-img') as HTMLImageElement;
     const labels = document.querySelectorAll<HTMLLabelElement>('.projects-list label[data-preview]');
-    
+
     const mouseOffsetX = 15;
     const mouseOffsetY = 15;
     let mouseX = 0;
@@ -224,11 +224,17 @@ const previewImageMap: Record<string, string> = {
     let currentY = 0;
     let animating = false;
 
-    function lerp(a: number, b: number, t: number) {
-        return a + (b - a) * t;
+
+    function lerp(currentValue: number, targetValue: number, time: number) {
+        return currentValue + (targetValue - currentValue) * time;
+    }
+
+    function checkForMobilDevice():boolean{
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches
     }
 
     function animate() {
+        if (checkForMobilDevice()) return;
         currentX = lerp(currentX, mouseX, 0.7);
         currentY = lerp(currentY, mouseY, 0.7);
         preview.style.transform = `translate(${currentX}px, ${currentY}px)`;
@@ -244,6 +250,7 @@ const previewImageMap: Record<string, string> = {
 
     labels.forEach(label => {
         label.addEventListener('mouseenter', () => {
+            if (checkForMobilDevice()) return;
             const src = label.dataset.preview;
             if (src) previewImg.src = src;
             preview.classList.add('visible');
