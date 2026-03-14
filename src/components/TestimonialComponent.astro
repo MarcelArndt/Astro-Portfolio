@@ -10,14 +10,13 @@ import Text from "../data/testimonial.json"
     <div class="layout">
         <div class="flow-text">
             <p>Was gute Arbeit ist, darüber lässt sich streiten. Aber ob jemand zuverlässig ist und ehrlich mit dir umgeht, das merkt man schnell. Hier ist, was meine Kollegen dazu sagen:</p>
-            
         </div>
 
         <div class="carousel-area">
            
-            <div class="carousel-viewport">
+            <div class="carousel-inside-wrapper">
                 {Text.map((item, i) => (
-                    <div class="card-slide" data-index={i}>
+                    <div class="card-card" data-index={i}>
                         <TestimonialCardTemplate text={item.text} name={item.name} position={item.position} />
                     </div>
                 ))}
@@ -28,18 +27,36 @@ import Text from "../data/testimonial.json"
                     <button class:list={["dot", { active: i === 0 }]} data-index={i} aria-label={`Testimonial ${i + 1}`} />
                 ))}
             </div>
+
+            <div class="carousel-nav">
+                <ul>
+                    <li ><button previous-button><span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" /></span></button></li>
+                    <li ><button next-button><span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" /></span></button></li>
+                </ul>
+            </div>
+
+
         </div>
     </div>
 </section>
 
 <script>
 
-    const slides = Array.from(document.querySelectorAll<HTMLElement>('.card-slide'));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.card-card'));
+    const carouselInsideWrapper = document.querySelector<HTMLElement>('.carousel-inside-wrapper')
     const dots = Array.from(document.querySelectorAll<HTMLElement>('.dot'));
-    const middle = Math.floor(slides.length / 2)
+    const middleOfCardsLenght = Math.floor(cards.length / 2)
+    const previousButton = document.querySelector<HTMLButtonElement>('[previous-button]');
+    const nextButton = document.querySelector<HTMLButtonElement>('[next-button]');
 
-    function scrollToSlide(index: number, smooth = true) {
-        slides[index].scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'center' });
+    function init(){
+        scrollTocard(middleOfCardsLenght, false);
+        checkDotPosition();
+        setButtons();
+    }
+
+    function scrollTocard(index: number, smooth = true) {
+        cards[index].scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'center' });
         setActiveDot(index)
     }
 
@@ -47,16 +64,63 @@ import Text from "../data/testimonial.json"
         dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
     }
 
-
     dots.forEach((dot, i) => {
         dot.addEventListener('click', () => {
-            scrollToSlide(i);
+            scrollTocard(i);
         });
     });
 
+    function getActiveIndex(){
+         if(!carouselInsideWrapper || !cards) return 0;
+            const cardWidth = cards[0].getBoundingClientRect().width;
+            const scrollLeft =  carouselInsideWrapper.scrollLeft; 
+            const activeIndex = Math.round((scrollLeft) / cardWidth);
+        return activeIndex || 0;
+    }
 
+    function checkDotPosition(){
+         if(!carouselInsideWrapper || !cards) return;
+         carouselInsideWrapper.addEventListener('scroll', () => {
+            setActiveDot(getActiveIndex());
+            checkButtons();
+         });
+    }
 
-    scrollToSlide(middle, false);
+    function findIndexForButtons(){
+        const nextIndex = getActiveIndex() + 1 >= cards.length? null : getActiveIndex() + 1;
+        const previousIndex =  getActiveIndex() - 1 >= 0? getActiveIndex() - 1 : null ;
+        return {nextId : nextIndex, previousId: previousIndex}
+    }
+
+    function setButtons(){
+        previousButton?.addEventListener('click', (event)=> {
+            event.preventDefault();
+            const previousId = findIndexForButtons().previousId
+            if(previousId !== null){
+                scrollTocard(previousId, true)
+            }
+
+        });
+
+        nextButton?.addEventListener('click', (event)=> {
+            event.preventDefault();
+            const nextId = findIndexForButtons().nextId
+            if(nextId){
+                scrollTocard(nextId, true)
+            }
+        });
+    }
+
+    function checkButtons() {
+      const { nextId, previousId } = findIndexForButtons();
+            if (nextButton) nextButton.disabled = nextId === 
+        null;
+            if (previousButton) previousButton.disabled =    
+        previousId === null;
+  }
+
+    init()
+
 </script>
 
 <style lang="scss">
@@ -82,13 +146,12 @@ import Text from "../data/testimonial.json"
     .carousel-area {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
         width: 100%;
     }
 
-    .carousel-viewport {
+    .carousel-inside-wrapper {
         box-sizing: border-box;
-        --card-width: 320px;
+        --card-width: 342px;
         display: flex;
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
@@ -98,9 +161,6 @@ import Text from "../data/testimonial.json"
         scrollbar-width: none;
         padding-inline: calc(50% - calc(var(--card-width) / 2));
         scroll-padding-inline: calc(50% - 160px);
-
-       
-
         mask-image: linear-gradient(
             to right,
             transparent 0%,
@@ -114,7 +174,7 @@ import Text from "../data/testimonial.json"
             }
     }
 
-    .card-slide {
+    .card-card {
         flex: 0 0 320px;
         scroll-snap-align: center;
     }
@@ -141,4 +201,56 @@ import Text from "../data/testimonial.json"
             transform: scale(1.5);
         }
     }
+
+    .carousel-nav{
+        ul{
+            width: 100%;
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+
+        }
+
+        button{
+            display: flex;
+            align-items: center;
+            justify-content: center;    
+            width: 48px;
+            aspect-ratio:  1 / 1;
+            flex-shrink: 0;
+            background-color: #171622;
+            border: 2px solid #24283A;
+            border-radius: 50%;
+            padding: 0px;
+
+            span{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-left: 3px;
+                filter: saturate(0%) brightness(1000%);
+                opacity: 0.5;   
+            }
+
+            &:disabled{
+                opacity: 0.25;
+            }
+
+            &:not(:disabled):hover{
+                border-color: white;
+                scale: 1; 
+            }
+
+            &:not(:disabled):hover span{
+                opacity: 1; 
+            }
+        }
+        
+        li:first-child{
+            scale: (-1);
+        }
+    }
+
 </style>
