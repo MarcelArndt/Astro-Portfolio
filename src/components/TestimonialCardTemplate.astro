@@ -10,7 +10,7 @@ interface cardContent{
 const {text, name, position, cardMaxWidth, cardMinWidth} = Astro.props as cardContent
 ---
 
-<div class="testimonial-card-wrapper" style={{"--card-max-width": cardMaxWidth + "px", "--card-min-width": cardMinWidth + "px"}}>
+<div class="testimonial-card-wrapper" style={{"--card-max-width": cardMaxWidth + "px", "--card-min-width": cardMinWidth + "px"}} id="testimonial">
      <div class="quotes-icon"><img src="./assets/icons/social/quotes.svg"></div>
     <div class="text">
        
