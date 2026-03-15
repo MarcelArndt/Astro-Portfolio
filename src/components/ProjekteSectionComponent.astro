@@ -6,6 +6,7 @@ import projectPictureOne from "../../public/assets/pictures/projects/project-one
 import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
 import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
 import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
+import { iconMap } from "../types/types-icon-map"
 
 const previewImageMap: Record<string, string> = {
     "project-one": projectPictureOne.src,
@@ -16,7 +17,7 @@ const previewImageMap: Record<string, string> = {
 
 ---
 
-<section>
+<section project-section>
         <div class="content-box">
             <p>Dies ist eine Auswahl</p>
             <h2>Meine Projekte</h2>
@@ -27,8 +28,19 @@ const previewImageMap: Record<string, string> = {
                         <li style={{ "--project-color": project.mainColor }}>
                             <input type="checkbox" name={project.id} id={project.id} />
                             <label for={project.id} data-preview={previewImageMap[project.previewImage]}>
-                                {project.label}
+                                <div class="titel-box">
+                                    <div class="cloumn-box">
+                                        {project.label}
+                                        <ul class="technology-list">
+                                            {project.techstack.map( tech => (<li><img src={iconMap[tech].src}alt={iconMap[tech].alt} /></li>))}
+                                        </ul>
+                                        
+                                    </div>
+                                    <hr>
+                                    <p>{project.descriptions[0]}</p>
+                                </div>
                                 <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" /></span>
+
                             </label>
                             <div class="project-content-wrapper">
                                 <div class="project-content-inner">
@@ -121,6 +133,45 @@ const previewImageMap: Record<string, string> = {
             display: none;
         }
 
+        .titel-box{
+            display: flex;
+            width: 100%;
+
+            hr{
+                opacity: 0.5;
+                margin: 0px 1.75rem; 
+
+                @media screen and (max-width:767px) {
+                    display: none;
+                }
+            }
+
+            p{
+                max-width: 60ch;
+                box-sizing: border-box;
+                padding-right: 3rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden; 
+                opacity: 0.6;
+
+                @media screen and (max-width:767px) {
+                    display: none;
+                }
+            }
+        }
+
+        .cloumn-box{
+            display: flex;
+            flex-direction: column;
+            align-items: start; 
+            min-width: 260px;
+            @media screen and (max-width:767px) {
+                min-width: auto;
+            }
+        }
+
         label {
             position: relative;
             width: 100%;
@@ -139,8 +190,34 @@ const previewImageMap: Record<string, string> = {
                 color: var(--project-color);
                 cursor: pointer;
                 background-color: #f6f6f6;
-                border-color:#ececec
+                border-color:#ececec;
+
+                .titel-box{
+                    p{
+                        opacity: 1;
+                    }
+
+                }
             }
+        }
+
+        .technology-list{
+            margin-top: 1rem;
+            opacity: 0.5;
+
+            li{
+                width: 32px;
+                height: 32px;
+
+                img{
+                    height: 100%;
+                }
+            }
+
+            li:not(:first-child){
+                margin-left: 1rem;
+            }
+            
         }
 
         span{
@@ -258,5 +335,18 @@ const previewImageMap: Record<string, string> = {
         label.addEventListener('mouseleave', () => {
             preview.classList.remove('visible');
         });
+    });
+
+    // ## GSAP Animation
+        import { gsap } from "../lip/gsap";
+        const porjectsSection = document.querySelector(`[ project-section]`);
+
+        const tlBlackCurtain = gsap.timeline({
+        scrollTrigger: {
+            trigger: porjectsSection,
+            start: 'top 80%',
+            end: 'bottom 50%',
+            scrub: 1, 
+        }
     });
 </script>

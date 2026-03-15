@@ -126,3 +126,29 @@ button{
     max-width: $max-width;
     background-color: #fff;
 }
+
+.technology-list{
+        list-style: none;
+        display: flex;
+
+        align-items: center;
+        li:not(:first-child){
+            margin-left: 1.5rem;
+        }
+
+        li{
+            height: 100%;
+            margin-top: 0px !important;
+            filter: brightness(15%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+
+            img{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
