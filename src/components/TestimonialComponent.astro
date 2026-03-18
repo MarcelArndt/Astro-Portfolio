@@ -14,9 +14,9 @@ const cardMinWidth:number = 260;
             <p>Was gute Arbeit ist, darüber lässt sich streiten. Aber ob jemand zuverlässig ist und ehrlich mit dir umgeht, das merkt man schnell. Hier ist, was meine Kollegen dazu sagen:</p>
         </div>
 
-        <div class="carousel-area">
-           
-            <div class="carousel-inside-wrapper" style={{"--card-width": `clamp(${cardMinWidth}px, 36vw, ${cardMaxWidth}px)`}}>
+        <div class="carousel-area" role="region" aria-label="Testimonials">
+
+            <div class="carousel-inside-wrapper" tabindex="0" style={{"--card-width": `clamp(${cardMinWidth}px, 36vw, ${cardMaxWidth}px)`}}>
                 {Text.map((item, i) => (
                     <div class="card-card" data-index={i}>
                         <TestimonialCardTemplate text={item.text} name={item.name} position={item.position} cardMinWidth={cardMinWidth} cardMaxWidth={cardMaxWidth}/>
@@ -54,6 +54,17 @@ const cardMinWidth:number = 260;
         scrollTocard(middleOfCardsLenght, false);
         checkDotPosition();
         setButtons();
+        carouselInsideWrapper?.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                const previousId = findIndexForButtons().previousId;
+                if (previousId !== null) scrollTocard(previousId, true);
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                const nextId = findIndexForButtons().nextId;
+                if (nextId !== null) scrollTocard(nextId, true);
+            }
+        });
     }
 
     function scrollTocard(index: number, smooth = true) {

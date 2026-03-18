@@ -6,14 +6,20 @@
   import SkillsComponent from '../components/SkillsComponent.astro';
   import ProjekteSectionComponent from '../components/ProjekteSectionComponent.astro';
   import TestimonialComponent from '../components/TestimonialComponent.astro';
+  import ContactComponent from '../components/ContactComponent.astro';
+  import FooterComponent from '../components/FooterComponent.astro';
+
   const pageTitle = "Marcel Arndt Web-Developer";
+  const pageDescription = "Marcel Arndt – Freelance Web Developer aus Deutschland. Spezialisiert auf moderne Webentwicklung mit Fokus auf Performance und Design."
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} description={pageDescription}>
   <HeaderComponent />
   <HeroComponent />
   <AboutMeComponent  />
   <SkillsComponent />
   <ProjekteSectionComponent />
   <TestimonialComponent />
+  <ContactComponent />
+  <FooterComponent />
 </BaseLayout>

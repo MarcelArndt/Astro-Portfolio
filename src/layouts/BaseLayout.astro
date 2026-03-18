@@ -1,7 +1,7 @@
 ---
 import "../styles/styles.scss";
 
-const { pageTitle } = Astro.props;
+const { pageTitle, description } = Astro.props;
 ---
 
 <html lang="de">
@@ -12,6 +12,7 @@ const { pageTitle } = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
+		{description && <meta name="description" content={description} />}
 	</head>
 	<body>
 		<div class="main-wrapper">

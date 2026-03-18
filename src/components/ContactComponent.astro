@@ -1,0 +1,141 @@
+---
+---
+<section id="contact">
+
+    <div class="text-aera">
+    <div>
+        <p>Komm mit mir in</p>
+        <h2>Kontakt</h2>
+        <p>Kontaktiere mich gern, wenn du Unterstützung bei deinem Webprojekt brauchst oder Fragen hast.</br></br>Ich freue mich auf deine Nachricht.</p>
+   
+            <div class="box-gird">
+
+                <div class="info-box" info-box role="button">
+                    <div class="icon">
+                        <img loading="lazy" src="./assets/icons/ui/mail.svg" alt="">
+                    </div>
+                    <div>
+                        <p>Sende eine E-Mail an</p>
+                        <p class="impotent">info@arndt-macrel.de</p>
+                    </div>
+                </div>
+
+                <div class="info-box" info-box role="button">
+                    <div class="icon">
+                        <img loading="lazy" src="./assets/icons/ui/phone.svg" alt="">
+                    </div>
+                    <div>
+                        <p>Oder ruf an unter</p>
+                        <p class="impotent">(0) 176 636 268 61</p>
+                    </div>
+                </div>
+
+                <div class="info-box" info-box role="button">
+                    <div class="icon">
+                        <img loading="lazy" src="./assets/icons/ui/github.svg" alt="">
+                    </div>
+                    <div>
+                        <p>sende eine E-Mail an</p>
+                        <p class="impotent">info@arndt-macrel.de</p>
+                    </div>
+                </div>
+
+                <div class="info-box" info-box role="button">
+                    <div class="icon">
+                        <img loading="lazy" src="./assets/icons/ui/linkedin.svg" alt="">
+                    </div>
+                    <div>
+                        <p>sende eine E-Mail an</p>
+                        <p class="impotent">info@arndt-macrel.de</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+    </div>
+
+    <div class="from-aera">
+
+    </div>
+
+
+</section>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    section{
+        box-sizing: border-box;
+        padding: 96px $inner-padding;
+    }
+
+    .text-aera{
+        max-width: 50%;
+    }
+
+    p{
+        color: $dark-red;
+        max-width: 40ch;
+    }
+
+    .box-gird{
+        box-sizing: border-box;
+        padding: 1rem 1rem;
+        padding-left: 0px;
+        display: flex;
+        width: 100%;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: start;
+        align-items: center;
+    }
+
+
+
+    .info-box{
+        cursor: pointer;
+        width: 320px;
+        box-sizing: border-box;
+        padding: 0.75rem 3rem 0.75rem 1.25rem;
+        background-color: $box-grey-100;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        margin: 1rem 0px;
+        border-radius: 4px;
+        gap: 1rem;
+        box-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+        border: 1px solid $box-grey-200;
+
+        .icon{
+            width: 56px;
+            height: 56px;
+            aspect-ratio:  1 / 1;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $box-grey-300;
+            border-radius: 4px;
+            border: 1px solid $box-grey-400;
+
+            img{
+                height: 80%;
+                max-height: 42px;
+                object-fit: contain;
+
+            }
+        }
+
+        p{
+            color: $dark-red;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+        }
+
+        .impotent{
+            color: $main-color;
+        }
+    }
+</style>
