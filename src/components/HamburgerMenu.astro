@@ -7,25 +7,25 @@
         <span></span>
     </label>
     
-    <nav class="menu-content" id="menu-nav">
+    <nav class="menu-content" id="menu-nav" aria-hidden="true">
         <div class="text-container">
         <strong>Navigation:</strong>
 
         <!--  ADD MENU POINTS HERE   -->
           
         <ul>
-            <li><a href="#start">Start</a></li>
-            <li><a href="#about_me">Über Mich</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projekte</a></li>
-            <li><a href="#testimonial">Testimonial</a></li>
-            <li><a href="#contact">Kontakt</a></li>
+            <li><a href="#start" aria-label="Startseite">Start</a></li>
+            <li><a href="#about_me" aria-label="Über_mich">Über Mich</a></li>
+            <li><a href="#skills" aria-label="Skills">Skills</a></li>
+            <li><a href="#projects" aria-label="Projekte">Projekte</a></li>
+            <li><a href="#testimonial" aria-label="Testimonial">Testimonial</a></li>
+            <li><a href="#contact" aria-label="Kontakt">Kontakt</a></li>
         </ul>
 
         <div class="sub-navigation">
             <ul>
-                <li><a href="data-protection">Datenschutz</a></li>
-                <li><a href="imprint">Impressum</a></li>
+                <li><a href="data-protection" aria-label="Datenschutz">Datenschutz</a></li>
+                <li><a href="imprint" aria-label="Impressum">Impressum</a></li>
             </ul>
         </div>
 
@@ -291,6 +291,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', init)
     document.addEventListener('astro:page-load', init)
+    const nav = document.getElementById('menu-nav');
+    const checkbox = document.getElementById('menu-checkbox') as HTMLInputElement;
 
     function init(){
         document.getElementById('menu-nav')?.addEventListener('click', (e) => {
@@ -300,21 +302,23 @@
     }
 
   function closeMenu() {
-    const checkbox = document.getElementById('menu-checkbox') as HTMLInputElement;
     if(!checkbox) return;
     unlockScroll();
     checkbox.checked = false;
+    nav?.setAttribute('aria-hidden', 'true');
   }
 
   function toggleFixedBody(){
-    const checkbox = document.getElementById('menu-checkbox') as HTMLInputElement;
     if (!checkbox ) return;
     if(checkbox.checked){
         lockScroll();
+        nav?.setAttribute('aria-hidden', 'false'); 
     }
     if(!checkbox.checked) {
         unlockScroll();
+        nav?.setAttribute('aria-hidden', 'true');
     }
+    
   }
 
   function lockScroll() {

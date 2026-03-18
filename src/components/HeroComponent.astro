@@ -1,9 +1,12 @@
 ---
+import Image from "astro/components/Image.astro"
+import background from "../../public/assets/pictures/background-dots.png"
+import portrait from "../../public/assets/pictures/portrait.webp"
 ---
 <section id="start" hero-section>
     <div class="background">
-        <div class="background-element">        
-            <img src="./assets/pictures/background-dots.png">
+        <div class="background-element">  
+            <Image loading="eager" fetchpriority="high" src={background} alt="" />      
         </div>
     </div>
     <div class="text-container" text-container>
@@ -13,7 +16,7 @@
         <button>Mehr über mich!</button>
     </div>
     <div class="image-container" image-container>
-          <img src="./assets/pictures/portrait.webp">
+          <Image loading="eager" fetchpriority="high" alt="Portraitbild" src={portrait}/>
     </div>
     <div class="curtain-wrapper" curtain-wrapper>
         <div class="curtain inner red" red-curtain></div>

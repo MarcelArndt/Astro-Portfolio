@@ -23,7 +23,7 @@ const previewImageMap: Record<string, string> = {
             <div>
                 <p  project-head-aera>Dies ist eine Auswahl</p>
                 <h2  project-head-aera>Meine Projekte</h2>
-                <p class="sub-text"  project-head-aera>die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
+                <p class="sub-text"  project-head-aera >die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
             </div>
 
             <div>
@@ -31,22 +31,22 @@ const previewImageMap: Record<string, string> = {
                     {projects.map((project, index) => (
                         <li style={{ "--project-color": project.mainColor }} single-project>
                             <input type="checkbox" name={project.id} id={project.id} />
-                            <label for={project.id} data-preview={previewImageMap[project.previewImage]}>
+                            <label for={project.id} data-preview={previewImageMap[project.previewImage]} role="button" id={`${project.id}-label`} aria-expanded="false" aria-controls={`${project.id}-content`}>
                                 <div class="titel-box">
                                     <div class="cloumn-box">
                                         {project.label}
                                         <ul class="technology-list">
-                                            {project.techstack.map( tech => (<li><img src={iconMap[tech].src}alt={iconMap[tech].alt} /></li>))}
+                                            {project.techstack.map( tech => (<li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>))}
                                         </ul>
-                                        
+
                                     </div>
                                     <hr>
                                     <p>{project.descriptions[0]}</p>
                                 </div>
-                                <span><img src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" /></span>
+                                <span aria-hidden="true"><img loading="lazy" src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" alt="" /></span>
 
                             </label>
-                            <div class="project-content-wrapper">
+                            <div class="project-content-wrapper" id={`${project.id}-content`} role="region" aria-labelledby={`${project.id}-label`}>
                                 <div class="project-content-inner">
                                     <SingleProjectComponent
                                         subtitle={project.subtitle}
@@ -331,13 +331,17 @@ const previewImageMap: Record<string, string> = {
         checkbox.addEventListener('change', () => {
             if (checkbox.checked) {
                 checkboxes.forEach(other => {
-                    if (other !== checkbox) other.checked = false;
+                    if (other !== checkbox) {
+                        other.checked = false;
+                        document.getElementById(`${other.id}-label`)?.setAttribute('aria-expanded', 'false');
+                    }
                 });
             }
-            // Nur den Vorhang-Trigger neu berechnen, tlContent bleibt unangetastet
+            const label = document.getElementById(`${checkbox.id}-label`);
+            label?.setAttribute('aria-expanded', checkbox.checked ? 'true' : 'false');
             setTimeout(() => {
                 ScrollTrigger.getById('curtain')?.refresh();
-            }, 420); // nach der CSS-Transition (0.4s)
+            }, 420); 
         });
     });
 

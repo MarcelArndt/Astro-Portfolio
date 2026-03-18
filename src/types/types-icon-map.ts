@@ -22,8 +22,8 @@ export interface technology {
 }
 
 export const iconMap: Record<string, technology> = {
-    angular:    {src:angular.src,      alt:"Angular Logo" },
-    astro:      {src:astro.src,        alt:"Astro Logo" },
+    angular:    { src:angular.src,      alt:"Angular Logo" },
+    astro:      { src:astro.src,        alt:"Astro Logo" },
     cscharp:    { src: cScharp.src,    alt: "C# Logo" },
     css:        { src: css.src,        alt: "CSS Logo" },
     django:     { src: django.src,     alt: "Django Logo" },

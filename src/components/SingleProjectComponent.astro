@@ -5,6 +5,7 @@ import projectPictureTwo from "../../public/assets/pictures/projects/project_two
 import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
 import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
 import { iconMap } from "../types/types-icon-map"
+import { Image } from "astro:assets"
 
 interface Props {
     subtitle: string;
@@ -21,22 +22,22 @@ const { subtitle, title, descriptions, previewImage, techstack, demo, github, ma
 
 
 
-const imageMap: Record<string, string> = {
-    "project-one": projectPictureOne.src,
-    "project-two": projectPictureTwo.src,
-    "project-three": projectPictureThree.src,
-    "project-four": projectPictureFour.src,
+const imageMap: Record<string, ImageMetadata> = {
+    "project-one": projectPictureOne,
+    "project-two": projectPictureTwo,
+    "project-three": projectPictureThree,
+    "project-four": projectPictureFour,
 };
 ---
 
 <p>{subtitle}</p>
 <h3 style={{ color: mainColor }}>{title}</h3>
 {descriptions.map(desc => <p class="description-text">{desc}</p>)}
-<div class="thump-container"><img src={imageMap[previewImage]} alt={title} /></div>
+<div class="thumb-container"><Image src={imageMap[previewImage]} alt={title} /></div>
 <strong>Techstack:</strong>
 <ul class="technology-list">
     {techstack.map(tech => (
-        <li><img src={iconMap[tech].src}alt={iconMap[tech].alt} /></li>
+        <li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>
     ))}
 </ul>
 <div class="button-box" style={{"--button-color": mainColor}}>
@@ -113,7 +114,7 @@ const imageMap: Record<string, string> = {
 
     }
 
-    .thump-container{
+    .thumb-container{
         width: 100%;
         max-width: 678px;
         img{

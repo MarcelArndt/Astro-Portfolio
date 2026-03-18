@@ -1,4 +1,7 @@
 ---
+import { iconMap } from "../types/types-icon-map"
+import vsBg from '../../public/assets/pictures/vs-background.webp';
+import { Image } from 'astro:assets';
 ---
 <section skill-section id="skills">
 
@@ -10,7 +13,7 @@
     <div class="content-box">
 
         <div picture-container class="picture-container"> 
-            <img picture-content src="./assets/pictures/vs-background.webp">
+            <Image src={vsBg} alt="" picture-content width={1920} height={1080} />
         </div>
 
         <div class="textblock" text-block>  
@@ -20,37 +23,37 @@
             </div>
 
         <div skill-section-box class="skill-category-wrapper">
-                <h5>Frontend</h5>
+                <h2>Frontend</h2>
                 <div class="skill-category-container">
                     <ul frontend-stack >
-                        <li><img src="./assets/icons/technology/angular.svg">Angular</li>
-                        <li><img src="./assets/icons/technology/astro.svg">Astro</li>
-                        <li><img src="./assets/icons/technology/javascript.svg">JavaScript</li>
-                        <li><img src="./assets/icons/technology/typescript.svg">TypeScript</li>
-                        <li><img src="./assets/icons/technology/gsap.png">GSAP</li>
-                        <li><img src="./assets/icons/technology/sass.svg">SASS</li>
+                        <li><img loading="lazy" src={iconMap.angular.src} alt={iconMap.angular.alt} width="43" height="43">Angular</li>
+                        <li><img loading="lazy" src={iconMap.astro.src} alt={iconMap.angular.alt} width="43" height="43">Astro</li>
+                        <li><img loading="lazy" src={iconMap.javascript.src} alt={iconMap.javascript.alt} width="43" height="43">JavaScript</li>
+                        <li><img loading="lazy" src={iconMap.typescript.src} alt={iconMap.typescript.alt} width="43" height="43">TypeScript</li>
+                        <li><img loading="lazy" src={iconMap.gsap.src} alt={iconMap.gsap.alt} width="43" height="43">GSAP</li>
+                        <li><img loading="lazy" src={iconMap.sass.src} alt={iconMap.sass.alt} width="43" height="43">SASS</li>
                     </ul>
                 </div>
             </div>
 
             <div skill-section-box class="skill-category-wrapper">
-                <h5>Backend</h5>
+                <h2>Backend</h2>
                 <div class="skill-category-container">
                     <ul backend-stack >
-                        <li><img src="./assets/icons/technology/django.svg">Django</li>
-                        <li><img src="./assets/icons/technology/python.svg">Python</li>
-                        <li><img src="./assets/icons/technology/firebase.svg">Firebase</li>
+                        <li><img loading="lazy" src={iconMap.django.src} alt={iconMap.django.alt} width="43" height="43">Django</li>
+                        <li><img loading="lazy" src={iconMap.python.src} alt={iconMap.python.alt} width="43" height="43">Python</li>
+                        <li><img loading="lazy" src={iconMap.firebase.src} alt={iconMap.firebase.alt} width="43" height="43">Firebase</li>
                     </ul>
                 </div>
             </div>
 
             <div skill-section-box class="skill-category-wrapper">
-                <h5>Tools</h5>
+                <h2>Tools</h2>
                 <div class="skill-category-container">
                     <ul tools-stack >
-                        <li><img src="./assets/icons/technology/figma.svg">Figma</li>
-                        <li><img src="./assets/icons/technology/git.svg">Git</li>
-                        <li><img src="./assets/icons/technology/docker.svg">Docker</li>
+                        <li><img loading="lazy" src={iconMap.figma.src} alt={iconMap.figma.alt} width="43" height="43">Figma</li>
+                        <li><img loading="lazy" src={iconMap.git.src} alt={iconMap.git.alt} width="43" height="43">Git</li>
+                        <li><img loading="lazy" src={iconMap.docker.src} alt={iconMap.docker.alt} width="43" height="43">Docker</li>
                     </ul>
                 </div>
             </div>
@@ -109,7 +112,7 @@
         }
         
 
-        h5{
+        h2{
             color: #ffffff;
             width: max-content;
             font-size: clamp(1.5rem, 12vw, 2.75rem);

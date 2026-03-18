@@ -11,7 +11,7 @@ const {text, name, position, cardMaxWidth, cardMinWidth} = Astro.props as cardCo
 ---
 
 <div class="testimonial-card-wrapper" style={{"--card-max-width": cardMaxWidth + "px", "--card-min-width": cardMinWidth + "px"}} id="testimonial">
-     <div class="quotes-icon"><img src="./assets/icons/social/quotes.svg"></div>
+     <div class="quotes-icon"><img loading="lazy" src="./assets/icons/social/quotes.svg" alt=""></div>
     <div class="text">
        
         <p>
