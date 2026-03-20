@@ -5,18 +5,28 @@ const cardMaxWidth:number = 372;
 const cardMinWidth:number = 260;
 ---
 
-<section>
-    <p>Aus meinen</p>
-    <h2>Testimonial</h2>
+<section id="testimonial" testimonial-section>
 
-    <div class="layout">
-        <div class="flow-text">
+    
+    
+    <div class="curtain-wrapper" curtain-testimonial-wrapper>
+        <div class="curtain inner red" red-testimonial-curtain></div>
+        <div class="curtain white" white-testimonial-curtain></div>
+    </div>
+
+    <div testimonial-headline>
+        <p>Aus meinen</p>
+        <h2>Testimonial</h2>
+    </div>
+
+    <div class="layout" >
+        <div class="flow-text" testimonial-text>
             <p>Was gute Arbeit ist, darüber lässt sich streiten. Aber ob jemand zuverlässig ist und ehrlich mit dir umgeht, das merkt man schnell. Hier ist, was meine Kollegen dazu sagen:</p>
         </div>
 
-        <div class="carousel-area" role="region" aria-label="Testimonials">
+        <div class="carousel-area" role="region" aria-label="Testimonials" testimonial-carousel-section>
 
-            <div class="carousel-inside-wrapper" tabindex="0" style={{"--card-width": `clamp(${cardMinWidth}px, 36vw, ${cardMaxWidth}px)`}}>
+            <div class="carousel-inside-wrapper" testimonial-carousel tabindex="0" style={{"--card-width": `clamp(${cardMinWidth}px, 36vw, ${cardMaxWidth}px)`}}>
                 {Text.map((item, i) => (
                     <div class="card-card" data-index={i}>
                         <TestimonialCardTemplate text={item.text} name={item.name} position={item.position} cardMinWidth={cardMinWidth} cardMaxWidth={cardMaxWidth}/>
@@ -38,15 +48,16 @@ const cardMinWidth:number = 260;
             </div>
 
         </div>
-    </div>
+
 </section>
+
 
 <script>
 
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.card-card'));
+    const testimoinalCards = Array.from(document.querySelectorAll<HTMLElement>('[testimoinal-card]'));
     const carouselInsideWrapper = document.querySelector<HTMLElement>('.carousel-inside-wrapper')
     const dots = Array.from(document.querySelectorAll<HTMLElement>('.dot'));
-    const middleOfCardsLenght = Math.floor(cards.length / 2)
+    const middleOfCardsLenght = Math.floor(testimoinalCards.length / 2)
     const previousButton = document.querySelector<HTMLButtonElement>('[previous-button]');
     const nextButton = document.querySelector<HTMLButtonElement>('[next-button]');
 
@@ -68,7 +79,7 @@ const cardMinWidth:number = 260;
     }
 
     function scrollTocard(index: number, smooth = true) {
-        cards[index].scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'center' });
+        testimoinalCards[index].scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'center' });
         setActiveDot(index)
     }
 
@@ -83,15 +94,15 @@ const cardMinWidth:number = 260;
     });
 
     function getActiveIndex(){
-         if(!carouselInsideWrapper || !cards) return 0;
-            const cardWidth = cards[0].getBoundingClientRect().width;
+         if(!carouselInsideWrapper || !testimoinalCards) return 0;
+            const cardWidth = testimoinalCards[0].getBoundingClientRect().width;
             const scrollLeft =  carouselInsideWrapper.scrollLeft; 
             const activeIndex = Math.round((scrollLeft) / cardWidth);
         return activeIndex || 0;
     }
 
     function checkDotPosition(){
-         if(!carouselInsideWrapper || !cards) return;
+         if(!carouselInsideWrapper || !testimoinalCards) return;
          carouselInsideWrapper.addEventListener('scroll', () => {
             setActiveDot(getActiveIndex());
             checkButtons();
@@ -99,7 +110,7 @@ const cardMinWidth:number = 260;
     }
 
     function findIndexForButtons(){
-        const nextIndex = getActiveIndex() + 1 >= cards.length? null : getActiveIndex() + 1;
+        const nextIndex = getActiveIndex() + 1 >= testimoinalCards.length? null : getActiveIndex() + 1;
         const previousIndex =  getActiveIndex() - 1 >= 0? getActiveIndex() - 1 : null ;
         return {nextId : nextIndex, previousId: previousIndex}
     }
@@ -133,6 +144,59 @@ const cardMinWidth:number = 260;
 
     init()
 
+
+    // GSAP
+    import { gsap } from "../lip/gsap";
+
+    const testimonialSection = document.querySelector<HTMLElement>(`[testimonial-section]`);
+    const testimonialHeadline = document.querySelector<HTMLElement>(`[testimonial-headline]`);
+    const testimonialText = document.querySelector<HTMLElement>(`[testimonial-text]`);
+    const testimonialCarouselSection = document.querySelector<HTMLElement>(`[testimonial-carousel-section]`);
+    const redTestimonialCurtain = document.querySelector<HTMLElement>(`[red-testimonial-curtain]`);
+    const whiteTestimonialCurtain = document.querySelector<HTMLElement>(`[white-testimonial-curtain]`);
+    
+        const MainContentTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: testimonialSection,
+            start: 'top 50%',
+            end: '50% 75%',
+            scrub: 1,
+    } });
+
+    MainContentTl
+    .from(testimonialHeadline,{
+        opacity:0,
+        y:"+=100px"
+    })
+    .from(testimonialText,{
+        opacity:0,
+        y:"+=100px"
+    },"-=0.15")
+
+    .from(testimoinalCards,{
+        opacity:0,
+        y:"+=75px",
+        stagger: 0.15,
+    },"-=0.3")
+
+    const TestimonialCurtainTL = gsap.timeline({
+        scrollTrigger: {
+            trigger: testimonialSection,
+            start: '70% 75%',
+            end: 'bottom 50%',
+            scrub: 1,
+    } });
+
+    TestimonialCurtainTL
+    .to(redTestimonialCurtain,{
+        y:"-110vh",
+        ease: "power4.out",
+    })
+    .to(whiteTestimonialCurtain,{
+        y:"-100vh",
+        ease: "power1.out",
+    },"<")
+
 </script>
 
 <style lang="scss">
@@ -142,7 +206,9 @@ const cardMinWidth:number = 260;
         box-sizing: border-box;
         padding: 96px $inner-padding;
         background-color: $grey-background;
-
+        padding-bottom: 480px;
+        width: 100%;
+        position: relative;
     }
 
     .layout {
@@ -266,6 +332,68 @@ const cardMinWidth:number = 260;
         
         li:first-child{
             scale: (-1);
+        }
+    }
+
+    .carousel-nav{
+        button{
+            user-select: none;
+        }
+        img{
+            user-select: none;
+        }
+    }
+
+    .curtain-wrapper{
+        position: absolute;
+        z-index: 99;
+        height: 100vh;
+        width: 100%;
+        top: auto;
+        bottom: 0px;
+        left: 0px;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .curtain{
+        --bottom-margin: 150px;
+        --red-curtain-puffer: 16px;
+        z-index: 99;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        bottom: calc(-100% - var(--bottom-margin));
+        left: 0px;
+
+        &::before{
+            content: "";
+            position: absolute;
+            top:-24%;
+            left: 0%;
+            width: 200%;
+            height: 100%;
+            rotate: -6deg;
+        }
+    }
+
+    .inner{
+        bottom: calc(-100% - var(--bottom-margin) + 36px - var(--red-curtain-puffer) );
+    }
+
+    .white{
+       background-color: white;
+
+        &::before{
+           background-color: white; 
+        }
+    }
+
+    .red{
+        background-color: $main-color; 
+
+        &::before{
+            background-color: $main-color; 
         }
     }
 
