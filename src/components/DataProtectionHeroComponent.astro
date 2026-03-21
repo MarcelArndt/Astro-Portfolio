@@ -1,0 +1,254 @@
+---
+import Image from "astro/components/Image.astro"
+import background from "../../public/assets/pictures/background-dots.png"
+import portrait from "../../public/assets/pictures/portrait.webp"
+---
+<section id="start" hero-section>
+    <div class="background">
+        <div class="background-element">  
+            <Image loading="eager" fetchpriority="high" src={background} alt="" />      
+        </div>
+    </div>
+    <div class="text-container" text-container>
+        <p>Weil es wichtig ist</p>
+        <h1>Datenschutz</h1>
+        <p>Deine Daten gehören dir. Ich erklären dir genau, was ich damit machen. Denn Datenschutz ist jeder eins Pflichtprogramm </p>
+        <p></p>
+
+    </div>
+    <div class="image-container" image-container>
+          <Image loading="eager" fetchpriority="high" alt="Portraitbild" src={portrait}/>
+    </div>
+    <div class="curtain-wrapper" curtain-wrapper>
+        <div class="curtain inner red" red-curtain></div>
+        <div class="curtain white" white-curtain></div>
+    </div>
+</section>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    section{
+        width: 100%;
+        height: 100vh;
+        background-color: $dark-red;
+        position: relative;
+        z-index: 1;
+    }
+
+    .background{
+        position: absolute;
+        right: 0px;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+
+        .background-element{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+
+            img{
+                height: 100%;
+                position: absolute;
+                left: 0px;
+                bottom: 0px;
+                width: auto;
+            }
+        }
+
+        &::before{
+            content: "";
+            height: 400px;
+            background-color: $dark-red;
+            position: absolute;
+            width: 100%;
+            bottom: -100px;
+            left: 0px;
+        }
+    }
+
+    .text-container{
+        position: relative;
+        z-index: 4;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding-left: $inner-padding;
+        padding-right: $inner-padding;
+        align-items: start;
+
+        &::before{
+            z-index: -1;
+            content: "";
+            width: 100%;
+            height: 33%;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            background: linear-gradient(0deg,rgba(48, 1, 5, 1) 0%, rgba(48, 1, 5, 0) 100%);
+        }
+
+        p{
+            max-width: 36ch;
+        }
+
+        @media screen and (max-width:1365px) and (orientation: landscape) {
+
+            p,button{
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+            }
+
+            h1{
+               font-size: 5rem;  
+            }
+
+        }
+
+        @media screen  and (max-width:1024px) and (orientation: portrait) {
+            justify-content: end;
+            padding-bottom: clamp(0rem, 3vw, 4rem);
+
+            p{
+                line-height: 1.75rem;
+            }
+
+        }
+    }
+
+
+    .image-container {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+
+        img{
+            position: absolute;
+            right: $inner-padding;
+            bottom: 0px;
+            height: calc(100% - 90px);
+            width: auto;
+
+
+            @media screen and (max-width:1550px) and (orientation: landscape) {
+                right: -36px;
+            }
+            
+  
+            @media screen and (max-width:1365px) and (orientation: portrait) {
+                right: auto;
+                left: 50%;
+                transform: translate(-50%,0%);
+            }
+        }
+    }
+
+    .curtain-wrapper{
+    pointer-events: none;
+    position: absolute;
+    top: 400px;
+    left: 0px;
+    z-index: 77;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+    .curtain{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px;
+
+        &::before{
+            content: "";
+            position: absolute;
+            top: -24%;
+            left: 0%;
+            width: 200%;
+            height: 100%;
+            rotate: -6deg;
+        }
+    }
+
+    .inner{
+        top: -36px;
+    }
+
+    .white{
+        background-color: white;
+
+        &::before{
+            background-color: white; 
+        }
+    }
+
+    .red{
+        background-color: $main-color;
+
+        &::before{
+            background-color: $main-color; 
+        }
+    }
+</style>
+
+<script>
+    import { gsap } from "../lip/gsap";
+    const redCurtain = document.querySelectorAll("[red-curtain]");
+    const whiteCurtain = document.querySelectorAll("[white-curtain]");
+    const heroSection = document.querySelectorAll("[hero-section]");
+    const textBlock = document.querySelectorAll("[text-container]");
+    const imageBlock = document.querySelectorAll("[image-container]");
+    const curtainWrapper = document.querySelectorAll("[curtain-wrapper]");
+
+    gsap.set(whiteCurtain,{
+        y:"+=100vh",
+    })
+
+    gsap.set(redCurtain,{
+        y:"+=100vh"
+    })
+
+
+    let tlOne = gsap.timeline({
+            scrollTrigger: {
+                trigger: heroSection,
+                start: 'top top',
+                end: 'bottom 30%',
+                scrub: 1, 
+            }
+        });
+
+        tlOne
+        .to(whiteCurtain,{
+            y:"-=100vh",
+            ease: "power1.out",
+        },"<")
+        .to(redCurtain,{
+            y:"-=100vh",
+            ease: "power4.out",
+        },"<")
+        .to(curtainWrapper,{
+            y:"-=500px",
+
+        },"<")
+        .to(textBlock,{
+            y:"+=30%",
+            opacity:0,
+            ease: "power3.out",
+        },"<")
+        .to(imageBlock,{
+            y:"-=20vh",
+            opacity:0,
+            ease: "power3.out",
+        },"<")
+</script>

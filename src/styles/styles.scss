@@ -113,7 +113,21 @@ button{
 }
 
 
+::-webkit-scrollbar{
+    width: 18px;
 
+}
+
+::-webkit-scrollbar-track{
+    width: 22px;
+    background-color: #fff;
+    outline:3px solid $dark-red;
+}
+::-webkit-scrollbar-thumb{
+    background-color: $main-color;
+    border-radius: 24px;
+    border: 2px solid #fff;
+}
 
 .main-wrapper{
    width: 100%;
@@ -152,3 +166,38 @@ button{
             }
         }
     }
+
+.component-wrapper{
+    padding: 6rem $inner-padding;
+    position: relative;
+    box-sizing: border-box;
+    padding-bottom: 13rem;
+    
+    p,ul,li,strong{
+        font-size: $font-size-200;
+        color:$font-color;
+        max-width: 60ch;
+    }
+
+    h4{
+        font-size: clamp(1.25rem, 6vw, 2.5rem);
+        color:$main-color;
+    }
+
+    h2{
+        margin-bottom: 3rem;
+    }
+
+    a{
+        color:$button-color;
+
+        &:hover{
+            color:$button-color-hover; 
+        }
+    }
+}
+
+.component-content{
+    position: relative;
+    z-index: 500;
+}

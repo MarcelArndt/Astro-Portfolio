@@ -1,0 +1,75 @@
+---
+  import BaseLayout from '../layouts/BaseLayout.astro';
+  import HeaderComponent from '../components/HeaderComponent.astro';
+  import DataProtectionHeroComponent from '../components/DataProtectionHeroComponent.astro';
+    import DataProtectionComponent from '../components/DataProtectionComponent.astro';
+
+  import FooterComponent from '../components/FooterComponent.astro';
+
+  const pageTitle = "Marcel Arndt Web-Developer";
+  const pageDescription = "Marcel Arndt – Freelance Web Developer aus Deutschland. Spezialisiert auf moderne Webentwicklung mit Fokus auf Performance und Design."
+---
+
+<BaseLayout pageTitle={pageTitle} description={pageDescription}>
+  <HeaderComponent />
+  <DataProtectionHeroComponent />
+
+  <div class="component-wrapper" component-wrapper>
+
+    <div class="curtain-white" component-curtain-white></div>
+
+    <div class="component-content">
+      <DataProtectionComponent   />
+    </div>
+
+  </div>
+
+  <FooterComponent />
+</BaseLayout>
+
+<style lang="scss">
+  @use "../styles/index.scss" as *;
+
+  .curtain-white{
+    z-index: 1;
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 100%;
+    height: 100vh;
+    // background-color: rgba(125,125,125,0.5);
+    background-color: #fff;
+  }
+
+  h2{
+    font-size: clamp(1.125rem ,12vw, 2.5rem)
+  }
+
+</style>
+
+<script>
+    import { gsap } from "../lip/gsap";
+    const curtainWhite = document.querySelector<HTMLElement>('[component-curtain-white]');
+    const componentWrapper = document.querySelector<HTMLElement>('[component-wrapper]');
+
+    const ComponentCurtainTL = gsap.timeline({
+        scrollTrigger: {
+            trigger: componentWrapper,
+            start: '0px 70%',
+            end: '250px 25%',
+            scrub: 1,
+    } });
+
+
+    ComponentCurtainTL
+    .to(curtainWhite,{
+      opacity:1,
+      y:"-=80%",
+      ease: "power4.out",
+    },"<")
+
+
+
+</script>
+
+
