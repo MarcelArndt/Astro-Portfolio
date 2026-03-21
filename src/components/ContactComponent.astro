@@ -1,4 +1,5 @@
 ---
+import ContactForm from "./ContactFormComponent.astro"
 ---
 <section id="contact">
 
@@ -56,7 +57,7 @@
     </div>
 
     <div class="from-aera">
-
+        <ContactForm />
     </div>
 
 
@@ -67,11 +68,31 @@
 
     section{
         box-sizing: border-box;
-        padding: 96px $inner-padding;
+        padding: 6rem $inner-padding;
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 9rem;
+
+        @media screen and (max-width: 1700px){
+            flex-direction: column;
+        }
     }
 
     .text-aera{
-        max-width: 50%;
+        width: 50%;
+
+        @media screen and (max-width: 1700px){
+            width: 100%;
+        }
+    }
+
+    .from-aera{
+        width: 50%;
+        @media screen and (max-width: 1700px){
+            width: 100%;
+            display: flex;
+            justify-content: center
+        }
     }
 
     p{

@@ -55,64 +55,80 @@ const cardMinWidth:number = 260;
 <script>
 
     const testimoinalCards = Array.from(document.querySelectorAll<HTMLElement>('[testimoinal-card]'));
+    const cardWrappers = Array.from(document.querySelectorAll<HTMLElement>('.card-card'));
     const carouselInsideWrapper = document.querySelector<HTMLElement>('.carousel-inside-wrapper')
     const dots = Array.from(document.querySelectorAll<HTMLElement>('.dot'));
     const middleOfCardsLenght = Math.floor(testimoinalCards.length / 2)
     const previousButton = document.querySelector<HTMLButtonElement>('[previous-button]');
     const nextButton = document.querySelector<HTMLButtonElement>('[next-button]');
+    let currentIndex = middleOfCardsLenght;
 
     function init(){
-        scrollTocard(middleOfCardsLenght, false);
+        scrollToCard(middleOfCardsLenght, false);
         checkDotPosition();
         setButtons();
         carouselInsideWrapper?.addEventListener('keydown', (event) => {
             if (event.key === 'ArrowLeft') {
                 event.preventDefault();
                 const previousId = findIndexForButtons().previousId;
-                if (previousId !== null) scrollTocard(previousId, true);
+                if (previousId !== null) scrollToCard(previousId, true);
             } else if (event.key === 'ArrowRight') {
                 event.preventDefault();
                 const nextId = findIndexForButtons().nextId;
-                if (nextId !== null) scrollTocard(nextId, true);
+                if (nextId !== null) scrollToCard(nextId, true);
             }
         });
     }
 
-    function scrollTocard(index: number, smooth = true) {
+    function scrollToCard(index: number, smooth = true) {
+        currentIndex = index;
         testimoinalCards[index].scrollIntoView({ behavior: smooth ? 'smooth' : 'instant', block: 'nearest', inline: 'center' });
-        setActiveDot(index)
+        setActiveDot(index);
+        setCardToActive(index)
     }
 
     function setActiveDot(index: number) {
         dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
     }
 
+    function setCardToActive(index: number){
+        cardWrappers.forEach((card, cardIndex) => {
+            card.classList.toggle('active', cardIndex === index);
+            card.classList.toggle('small', cardIndex < index - 1 || cardIndex > index + 1);
+        });
+    }
+
     dots.forEach((dot, i) => {
         dot.addEventListener('click', () => {
-            scrollTocard(i);
+            scrollToCard(i);
         });
     });
 
     function getActiveIndex(){
-         if(!carouselInsideWrapper || !testimoinalCards) return 0;
-            const cardWidth = testimoinalCards[0].getBoundingClientRect().width;
-            const scrollLeft =  carouselInsideWrapper.scrollLeft; 
-            const activeIndex = Math.round((scrollLeft) / cardWidth);
+        if(!carouselInsideWrapper || !cardWrappers.length) return 0;
+        const cardWidth = cardWrappers[0].offsetWidth;
+        const gap = parseFloat(getComputedStyle(carouselInsideWrapper).gap) || 0;
+        const scrollLeft = carouselInsideWrapper.scrollLeft;
+        const activeIndex = Math.round(scrollLeft / (cardWidth + gap));
         return activeIndex || 0;
     }
 
     function checkDotPosition(){
-         if(!carouselInsideWrapper || !testimoinalCards) return;
-         carouselInsideWrapper.addEventListener('scroll', () => {
-            setActiveDot(getActiveIndex());
+        if(!carouselInsideWrapper || !testimoinalCards) return;
+        carouselInsideWrapper.addEventListener('scroll', () => {
+            const index = getActiveIndex();
+            currentIndex = index;
+            setActiveDot(index);
             checkButtons();
-         });
+            setCardToActive(index);     
+           
+        });
     }
 
     function findIndexForButtons(){
-        const nextIndex = getActiveIndex() + 1 >= testimoinalCards.length? null : getActiveIndex() + 1;
-        const previousIndex =  getActiveIndex() - 1 >= 0? getActiveIndex() - 1 : null ;
-        return {nextId : nextIndex, previousId: previousIndex}
+        const nextIndex = currentIndex + 1 >= testimoinalCards.length ? null : currentIndex + 1;
+        const previousIndex = currentIndex - 1 >= 0 ? currentIndex - 1 : null;
+        return {nextId: nextIndex, previousId: previousIndex}
     }
 
     function setButtons(){
@@ -120,7 +136,7 @@ const cardMinWidth:number = 260;
             event.preventDefault();
             const previousId = findIndexForButtons().previousId
             if(previousId !== null){
-                scrollTocard(previousId, true)
+                scrollToCard(previousId, true)
             }
 
         });
@@ -129,7 +145,7 @@ const cardMinWidth:number = 260;
             event.preventDefault();
             const nextId = findIndexForButtons().nextId
             if(nextId){
-                scrollTocard(nextId, true)
+                scrollToCard(nextId, true)
             }
         });
     }
@@ -176,7 +192,10 @@ const cardMinWidth:number = 260;
     .from(testimoinalCards,{
         opacity:0,
         y:"+=75px",
-        stagger: 0.15,
+        stagger: {
+            from: "center",
+            amount: 0.75
+        }
     },"-=0.3")
 
     const TestimonialCurtainTL = gsap.timeline({
@@ -233,7 +252,7 @@ const cardMinWidth:number = 260;
         overflow-x: scroll;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        gap: 1.75rem;
+        gap: 1.25rem;
         padding: 1rem 0;
         scrollbar-width: none;
         padding-inline: calc(50% - (calc(var(--card-width))  / 2));
@@ -396,5 +415,6 @@ const cardMinWidth:number = 260;
             background-color: $main-color; 
         }
     }
+
 
 </style>

@@ -1,0 +1,292 @@
+---
+---
+
+    <form>
+        
+        <div class="inside-form-wrapper">
+            <h3>Anfrageformular:</h3>
+            <strong>Send mir eine Nachricht</strong>
+            <div class="first-area">
+                <input type="text" placeholder="Vorname">
+                <input type="text" placeholder="Nachname">
+            </div>
+        
+            <div class="second-area">
+                <input type="text" placeholder="E-Mail">
+                <input type="text" placeholder="Betreff">
+            </div>
+            <hr>
+            <strong>Erzähl mir mehr über deine Idee</strong>
+            <div class="third-area">
+                <textarea placeholder="Deine Nachricht an mich ..."></textarea>
+            </div>
+            <hr>
+            <div class="fourth-area">
+                <div class="custom-checkbox-wrapper" role="button">
+                    <input type="checkbox" aria-hidden="true">
+                    <div class="custom-checkbox"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M400-304 240-464l56-56 104 104 264-264 56 56-320 320Z"/></svg></div>
+                </div>
+                <div>
+                    <p>Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der darin beschriebenen Verarbeitung meiner Daten zu.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="five-area">
+                <button>Naricht senden</button>
+            </div>
+        </div>
+    </form>
+
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    form{
+        max-width:1240px;
+        width: 100%;
+        height: 100%;
+        background-color: $box-grey-100;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 2rem clamp(1.5rem, 6vw, 4rem);
+        border-radius: 8px;
+        padding-bottom: 2rem;
+        box-shadow: 1px 2px 4px rgba(19, 16, 31, 0.25);
+        border: 1px solid $box-grey-200;;
+    }
+
+    .first-area, .second-area, .third-area, .fourth-area, .five-area{
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1.5rem;
+
+        input {
+            box-sizing: border-box;
+            width: 50%;
+            height: 3.125rem;
+            font-size: $font-size-100;
+            color: $font-color;
+            outline: none;
+            border: none;
+            border-radius: 8px;
+            padding: 0rem 1rem;
+            border: 1px solid $box-grey-600;
+            font-weight: 300;
+            font-family: $system-font;
+
+            &::placeholder{
+              color: $box-grey-500;
+            }
+
+            &:hover{
+                border-color: $button-color-hover;
+            }
+
+            &:active, &:focus{
+                border-color: $button-color;
+            }
+        }
+    }
+
+    .first-area{
+
+        @media screen and (max-width:560px) {
+            flex-direction: column;
+
+            input{
+                width: 100%;
+            }
+        }
+    }
+
+    .second-area{
+        margin: 1.5rem 0px;
+        width: 100%;
+
+        @media screen and (max-width:760px) {
+            flex-direction: column;
+
+            input{
+                width: 100%;
+            }
+        }
+    }
+
+    .fourth-area{
+        display: flex;
+        align-items: center;
+        margin-top: 2rem;
+        display: flex;
+        position: relative;
+
+        @media screen and (max-width:700px) {
+            flex-direction: column;
+            align-items: start;
+            align-items: center;
+
+            p{
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+
+        p{
+            color: $font-color;
+        }
+    }
+
+    .five-area{
+        margin-top: 5rem;
+
+         @media screen and (max-width:700px){
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+         }
+    }
+    strong{
+        display: block;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-size: $font-size-300;
+        color: $font-color;
+        opacity: 0.6;
+        font-weight: 300;
+        @media screen and (max-width:700px){
+            text-align: center;
+            width: 100%;
+         }
+    }
+
+    h3{
+        font-size: $font-size-300;
+        color: $main-color;;
+        font-weight: 400;
+        margin-top: 2rem;
+         @media screen and (max-width:700px){
+            text-align: center;
+            width: 100%;
+         }
+    }
+
+    .inside-form-wrapper{
+        width: 100%;
+    }
+
+    button{
+        color: #fff;
+    }
+
+    hr{
+        border: 0px;
+        border-top: 1px solid $box-grey-400;
+        margin: 2rem 0px;
+        width: 100%;
+        padding: 0px;
+    }
+
+    a{
+        color:$button-color;
+        &:hover{
+            color:$button-color-hover;
+        }
+    }
+
+    textarea{
+        resize: none;
+        width: 100%;
+        height: 260px;
+        font-size: $font-size-100;
+        color: $font-color;
+        outline: none;
+        border: none;
+        border-radius: 8px;
+        padding: 1.125rem 1rem;
+        border: 1px solid $box-grey-600;
+        font-weight: 300;
+        font-family: $system-font;
+
+        &::placeholder{
+            color: $box-grey-500;
+        }
+
+        &:hover{
+            border-color: $button-color-hover;
+        }
+
+        &:active, &:focus{
+            border-color: $button-color;
+        }
+    }
+
+    .custom-checkbox{
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left:0px;
+        border: 1px solid $box-grey-500;
+        border-radius: 6px;
+    }
+
+    .custom-checkbox-wrapper{
+        --box-size : 2.5rem;
+        position: relative;
+        width: var(--box-size);
+        height: var(--box-size);
+        display: flex;
+        flex-shrink: 0;
+        aspect-ratio: 1 / 1;
+
+        input{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0%;
+            left:0%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        input ~ .custom-checkbox > svg{
+            position: absolute;
+            top: 52%;
+            left: 53%;
+            transform: translate(-50%,-50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        input:not(:checked) ~ .custom-checkbox > svg{
+            fill: transparent;
+        }
+
+        input:checked ~ .custom-checkbox, input:checked ~ .custom-checkbox > svg{
+            border-color: $button-color;
+            fill: $button-color;
+        }
+
+         input:checked:hover ~ .custom-checkbox, input:checked:hover ~ .custom-checkbox > svg {
+             border-color: $button-color-hover;
+             fill: $button-color-hover;
+         }
+
+
+        input:hover ~ .custom-checkbox{
+             border-color: $button-color-hover;
+ 
+         }
+
+    }
+
+
+
+
+
+</style>
