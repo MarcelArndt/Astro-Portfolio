@@ -7,23 +7,23 @@
             <h3>Anfrageformular:</h3>
             <strong>Send mir eine Nachricht</strong>
             <div class="first-area">
-                <input type="text" placeholder="Vorname">
-                <input type="text" placeholder="Nachname">
+                <input type="text" id="firstName" placeholder="Vorname" minlength="3" required>
+                <input type="text" id="lastName" placeholder="Nachname" minlength="3" required>
             </div>
         
             <div class="second-area">
-                <input type="text" placeholder="E-Mail">
-                <input type="text" placeholder="Betreff">
+                <input id="email" type="email" placeholder="E-Mail">
+                <input type="text" id="subject" placeholder="Betreff">
             </div>
             <hr>
             <strong>Erzähl mir mehr über deine Idee</strong>
             <div class="third-area">
-                <textarea placeholder="Deine Nachricht an mich ..."></textarea>
+                <textarea placeholder="Deine Nachricht an mich ..." id="message" minlength="3" required></textarea>
             </div>
             <hr>
             <div class="fourth-area">
                 <div class="custom-checkbox-wrapper" role="button">
-                    <input type="checkbox" aria-hidden="true">
+                    <input type="checkbox" id="dataProtectionCheckbox" aria-hidden="true" required>
                     <div class="custom-checkbox"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M400-304 240-464l56-56 104 104 264-264 56 56-320 320Z"/></svg></div>
                 </div>
                 <div>
@@ -31,12 +31,274 @@
                 </div>
             </div>
             <hr>
+            <div class="error-area">
+                <p id="email-error">Bitte eine gültige E-Mail
+  eingeben.</p>
+            </div>
             <div class="five-area">
                 <button>Naricht senden</button>
             </div>
         </div>
     </form>
 
+<script>
+
+    type Error = {
+        field:string,
+        errorTyp:string,
+        message:string,
+    }
+
+    type Field = {
+        name:string,
+        input : HTMLInputElement,
+        touched : boolean,
+        valid : boolean
+    }
+    const emailRegex:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailMinlength:number = 6;
+    const nameMinLenght:number = 3;
+    const subjectMinLenght:number = 3;
+    const messageMinLenght:number = 3;
+
+    let formErrors:Error[] = [];
+
+    /* 
+    #################################################
+    ########### Registration der Felder #############
+    #################################################`
+    */
+
+    const emailInput:Field = {
+        name:'E-Mail',
+        input : document.getElementById('email') as HTMLInputElement,
+        touched : false,
+        valid : false,
+    }
+
+    const firstNameInput:Field = {
+        name:'First-Name',
+        input : document.getElementById('firstName') as HTMLInputElement,
+        touched : false,
+        valid : false,
+    }
+
+    const lastNameInput:Field = {
+        name:'Last-Name',
+        input : document.getElementById('lastName') as HTMLInputElement,
+        touched : false,
+        valid : false,
+    }
+
+    const subjectInput:Field = {
+        name:'Last-Name',
+        input : document.getElementById('subject') as HTMLInputElement,
+        touched : false,
+        valid : false,
+    }
+
+    const messageInput:Field = {
+        name:'Last-Name',
+        input : document.getElementById('message') as HTMLInputElement,
+        touched : false,
+        valid : false,
+    }
+
+    const dataProtectionCheckboxInput:Field = {
+        name:'Data-Protection-Checkbox',
+        input : document.getElementById('dataProtectionCheckbox') as HTMLInputElement,
+        touched : false,
+        valid : false,
+    }
+
+    /* 
+    #################################################
+    ######### Registration der Validation ###########
+    #################################################`
+    */
+
+    function validateEmailInput(){
+        if (!emailInput.touched) return;
+        requiredTest(emailInput, "Eine E-Mail muss vorhanden sein.")
+        minLengthTest(emailInput, emailMinlength, "Eine E-Mail muss min. 6 Zeichen lang sein.")
+        regexTest(emailInput, emailRegex, "Deine E-Mail ist nicht valide.") 
+    }
+
+    function validateFirstNameInput(){
+        if (!firstNameInput.touched) return;
+        requiredTest(firstNameInput, "Dein Vorname muss vorhanden sein.")
+        minLengthTest(firstNameInput, nameMinLenght, "Dein Vorname muss min. 3 Zeichen lang sein.")
+    }
+
+    function validateLastNameInput(){
+        if (!lastNameInput.touched) return;
+        requiredTest(lastNameInput, "Dein Nachname muss vorhanden sein.")
+        minLengthTest(lastNameInput, nameMinLenght, "Dein Nachname muss min. 3 Zeichen lang sein.")
+    }
+
+    function validateSubjectInput(){
+        if (!subjectInput.touched) return;
+        requiredTest(subjectInput, "Ein Betreff muss vorhanden sein.")
+        minLengthTest(subjectInput, subjectMinLenght, "Ein Betreff muss min. 3 Zeichen lang sein.")
+    }
+    
+    function validateMessageInput(){
+        if (!messageInput.touched) return;
+        requiredTest(messageInput, "Eine Nachricht muss vorhanden sein.")
+        minLengthTest(messageInput, messageMinLenght, "Deine Nachricht muss min. 3 Zeichen lang sein.")
+    }
+
+    function validateDataProtectionCheckbox(){
+        if (!dataProtectionCheckboxInput.touched) return;
+        checkedTest(dataProtectionCheckboxInput, "Datenschutzerklärung muss akzeptiert werden.")
+    }
+
+    /* 
+    #################################################
+    ########### Registration der Tests ##############
+    #################################################`
+    */
+
+    function checkedTest(field:Field, errorMessage:string){
+        let message = errorMessage;
+        const errorTyp = `${field.name} Required Error`;
+        if (!errorMessage) message = ` Checkbox ${field.name} is required.`;
+        if(!field.input.checked){
+            field.valid = false;
+            const error = {
+                    field: field.name,
+                    errorTyp: errorTyp,
+                    message: message,
+                } as Error;
+                addError(error);
+            return false
+        }
+        field.valid = true;
+        removeError(errorTyp);
+        return true;
+    }
+
+    function requiredTest(field:Field, errorMessage:string){
+        let message = errorMessage;
+        const errorTyp = `${field.name} Required Error`;
+        if (!errorMessage) message = ` field ${field.name} is required.`;
+        if(field.input.value.length <= 0){
+            field.valid = false;
+            const error = {
+                    field: field.name,
+                    errorTyp: errorTyp,
+                    message: message,
+                } as Error;
+                addError(error);
+            return false
+        }
+        field.valid = true;
+        removeError(errorTyp);
+        return true;
+    }
+
+    function regexTest(field:Field, regex:RegExp, errorMessage:string){
+        let message = errorMessage;
+        const errorTyp = `${field.name} Regex Error`;
+        if (!errorMessage) message = `Value in field ${field.name} is not valid.`;
+        if(!regex.test(field.input.value)){
+            field.valid = false;
+            const error = {
+                    field: field.name,
+                    errorTyp: errorTyp,
+                    message: message,
+                } as Error;
+                addError(error);
+            return false;
+        }
+        field.valid = true;
+        removeError(errorTyp);
+        return true;
+    }
+
+    function minLengthTest(field:Field, minlength:number, errorMessage:string){
+        let message = errorMessage;
+        const errorTyp = `${field.name} MinLength Error`;
+        if (!errorMessage) message = `Length in field ${field.name} is not valid.`;
+        if(field.input.value.length < minlength ){
+            field.valid = false;
+            const error = {
+                    field: field.name,
+                    errorTyp: errorTyp,
+                    message: message,
+                } as Error;
+                addError(error);
+            return false
+        }
+        field.valid = true;
+        removeError(errorTyp);
+        return true;
+    }
+
+    /* 
+    #################################################
+    ####### Registration der EventListener ##########
+    ######## Damit es nach einer Eingabe  ###########
+    ####### Die Validierung ausgeführt wird  ########
+    #################################################`
+    */
+
+    emailInput.input.addEventListener('blur', () => {
+        emailInput.touched = true;
+        validateEmailInput();
+        setBorderIfError(emailInput);
+    });
+
+    firstNameInput.input.addEventListener('blur', () => {
+        firstNameInput.touched = true;
+        validateFirstNameInput();
+        setBorderIfError(firstNameInput);
+    });
+
+    lastNameInput.input.addEventListener('blur', () => {
+        lastNameInput.touched = true;
+        validateLastNameInput();
+        setBorderIfError(lastNameInput);
+    });
+
+    subjectInput.input.addEventListener('blur', () => {
+        subjectInput.touched = true;
+        validateSubjectInput();
+        setBorderIfError(subjectInput);
+    });
+
+    messageInput.input.addEventListener('blur', () => {
+        messageInput.touched = true;
+        validateMessageInput();
+        setBorderIfError(messageInput);
+    });
+
+    dataProtectionCheckboxInput.input.addEventListener('click', () => {
+        dataProtectionCheckboxInput.touched = true;
+        validateDataProtectionCheckbox();
+        setBorderIfError(dataProtectionCheckboxInput);
+    });
+
+    function setBorderIfError(field:Field){
+        if (!field.valid){
+            field.input.classList.add("error")
+        } else {
+            field.input.classList.remove("error")
+        }
+    }
+
+    function addError(newError: Error) {
+        const alreadyExists = formErrors.some(e => e.errorTyp === newError.errorTyp);
+        if (!alreadyExists) {
+            formErrors.push(newError);
+        }
+    }
+
+    function removeError(errorTyp: string) {
+        formErrors = formErrors.filter(e => e.errorTyp !== errorTyp);
+    }
+
+</script>
 
 <style lang="scss">
     @use "../styles/index.scss" as *;
@@ -87,6 +349,10 @@
 
             &:active, &:focus{
                 border-color: $button-color;
+            }
+
+            &.error {
+                border-color: $error-color;
             }
         }
     }
@@ -222,6 +488,10 @@
         &:active, &:focus{
             border-color: $button-color;
         }
+
+        &.error {
+            border-color: $error-color;
+        }
     }
 
     .custom-checkbox{
@@ -263,6 +533,10 @@
             height: 100%;
         }
 
+        input:not(:checked).error ~ .custom-checkbox{
+            border-color: $error-color;
+        }
+
         input:not(:checked) ~ .custom-checkbox > svg{
             fill: transparent;
         }
@@ -277,16 +551,14 @@
              fill: $button-color-hover;
          }
 
-
         input:hover ~ .custom-checkbox{
              border-color: $button-color-hover;
- 
          }
-
     }
 
-
-
-
-
+    .error-area{
+        p{
+            color:$error-color;
+        }
+    }
 </style>
