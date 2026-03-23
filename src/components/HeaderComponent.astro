@@ -1,11 +1,12 @@
 
 ---
 import HamburgerMenu from "./HamburgerMenu.astro"
+import Logo from "../../public/assets/pictures/logo.svg"
 ---
 <div class="header-wrapper">
     <header>
         <div class="logo">
-            <a href="#start"><img src="./assets/pictures/logo.svg" alt="logo"></a>
+            <a href="#start"><img src={Logo.src} alt="logo"></a>
         </div>
             <div class="flex-nav">
             <HamburgerMenu />

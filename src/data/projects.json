@@ -2,7 +2,7 @@
     {
         "id": "join",
         "label": "Project Join",
-        "previewImage": "project-one",
+        "previewImage": "project_one",
         "subtitle": "Verwalte Aufgaben in",
         "title": "Join",
         "descriptions": [
@@ -18,7 +18,7 @@
     {
         "id": "second-project",
         "label": "Videoflix",
-        "previewImage": "project-two",
+        "previewImage": "project_two",
         "subtitle": "Watch it first on",
         "title": "Videoflix",
         "descriptions": [
@@ -34,7 +34,7 @@
     {
         "id": "third-project",
         "label": "DABubble",
-        "previewImage": "project-three",
+        "previewImage": "project_three",
         "subtitle": "Schreib mir auf",
         "title": "DABubble",
         "descriptions": [

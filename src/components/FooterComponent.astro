@@ -1,22 +1,23 @@
 ---
+import Logo from "../../public/assets/pictures/logo.svg"
 ---
 <footer>
 
     <div class="main-footer-wrapper">
         <div class="logo">
-            <a href="#start"><img loading="lazy" src="./assets/pictures/logo.svg" alt="logo"></a>
+            <a href="#start"><img loading="lazy" src={Logo.src} alt="logo"></a>
             <p>Design (c) by Marcel Arndt</p>
         </div>
         <div class="nav-box">
             <nav class="footer-nav">
                 <p>Navigation:</p>
                 <ul>
-                    <li><a href="#start">Startseite</a></li>
-                    <li><a href="#about_me">Über Mich</a></li>
-                    <li><a href="#skills">Meine Skills</a></li>
-                    <li><a href="#projects">Projekte</a></li>
-                    <li><a href="#testimonial">Testimonial</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
+                    <li><a href="/#start">Startseite</a></li>
+                    <li><a href="/#about_me">Über Mich</a></li>
+                    <li><a href="/#skills">Meine Skills</a></li>
+                    <li><a href="/#projects">Projekte</a></li>
+                    <li><a href="/#testimonial">Testimonial</a></li>
+                    <li><a href="/#contact">Kontakt</a></li>
                 </ul>
             </nav>
 
@@ -154,6 +155,39 @@
                     opacity: 1;
                 }
             }
+
+            @media screen and (max-width:600px) {
+
+                gap: clamp(1.5rem, 6vw, 2rem);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 1rem;
+                flex-wrap: wrap;
+
+                li{
+                    width: max-content;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                li:not(:first-child){
+                    width: max-content;
+                    &::before{
+                content: "";
+                color: transparent;
+                font-size: 0;
+                width: 0;
+                height: 0;
+                position: absolute;
+                left: -1.5rem;
+                top: 0px;
+                }
+                }
+          
+                 
+
+            }
         }
      }
 
@@ -166,6 +200,24 @@
         p{
             color: #fff;
             font-size: 1.275rem;
+        }
+
+        @media screen and (max-width:723px) {
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+
+            a{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                object-position: center center;
+                
+            }
+
+            img{
+               
+            }
         }
     }
 

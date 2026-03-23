@@ -1,18 +1,17 @@
 ---
 import SingleProjectComponent from "./SingleProjectComponent.astro"
 import projects from "../data/projects.json"
-
-import projectPictureOne from "../../public/assets/pictures/projects/project-one.jpg"
+import projectPictureOne from "../../public/assets/pictures/projects/project_one.jpg"
 import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
 import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
 import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
 import { iconMap } from "../types/types-icon-map"
 
 const previewImageMap: Record<string, string> = {
-    "project-one": projectPictureOne.src,
-    "project-two": projectPictureTwo.src,
-    "project-three": projectPictureThree.src,
-    "project-four": projectPictureFour.src,
+    "project_one": projectPictureOne.src,
+    "project_two": projectPictureTwo.src,
+    "project_three": projectPictureThree.src,
+    "project_four": projectPictureFour.src,
 };
 
 ---
@@ -34,7 +33,7 @@ const previewImageMap: Record<string, string> = {
                             <label for={project.id} data-preview={previewImageMap[project.previewImage]} role="button" id={`${project.id}-label`} aria-expanded="false" aria-controls={`${project.id}-content`}>
                                 <div class="titel-box">
                                     <div class="cloumn-box">
-                                        {project.label}
+                                        <h4>{project.label}</h4>
                                         <ul class="technology-list">
                                             {project.techstack.map( tech => (<li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>))}
                                         </ul>
@@ -84,7 +83,6 @@ const previewImageMap: Record<string, string> = {
     }
 
     .project-section-wrapper{
-        box-sizing: border-box;
         padding-bottom: 460px;
     }
 
@@ -111,7 +109,7 @@ const previewImageMap: Record<string, string> = {
         position: fixed;
         top: 0;
         left: 0;
-        width: clamp(300px, 24vw, 460px);
+        width: clamp(18.75rem, 24vw, 28.75rem);
         aspect-ratio: 16 / 9;
         border-radius: 4px;
         overflow: hidden;
@@ -159,7 +157,7 @@ const previewImageMap: Record<string, string> = {
                 opacity: 0.5;
                 margin: 0px 1.75rem; 
 
-                @media screen and (max-width:767px) {
+                @media screen and (max-width:818px) {
                     display: none;
                 }
             }
@@ -174,7 +172,10 @@ const previewImageMap: Record<string, string> = {
                 overflow: hidden; 
                 opacity: 0.6;
 
-                @media screen and (max-width:767px) {
+                @media screen and (max-width:880px){
+                    padding-right: 0rem;
+                }
+                @media screen and (max-width:818px) {
                     display: none;
                 }
             }
@@ -193,7 +194,6 @@ const previewImageMap: Record<string, string> = {
         label {
             position: relative;
             width: 100%;
-            font-size: $h4;
             font-weight: 300;
             display: flex;
             align-items: center;
@@ -204,6 +204,13 @@ const previewImageMap: Record<string, string> = {
             border: 1px solid #f2f2f2;
             gap: 1.5rem;
             box-shadow: 4px 2px 4px rgba(0,0,0,0.04);
+
+            h4{
+                font-weight: 300;
+                margin: 0px;
+                margin-bottom: 1rem;
+                font-size: clamp(1rem, 8vw, 3em);
+            }
 
             &:hover{
                 color: var(--project-color);
@@ -327,9 +334,26 @@ const previewImageMap: Record<string, string> = {
 
     // ## Accordion
     const checkboxes = document.querySelectorAll<HTMLInputElement>('.projects-list input[type="checkbox"]');
+
+        
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
+            refreshAriaExpanded(checkbox)
+            refreshScrollTrigger()
+        });
+    });
+
+
+    function refreshScrollTrigger(){
+         setTimeout(() => {
+                ScrollTrigger.getById('curtain')?.refresh();
+                ScrollTrigger.getById('testimonial-curtain')?.refresh();
+            }, 420);
+    }
+
+
+    function refreshAriaExpanded(checkbox:HTMLInputElement){
+                    if (checkbox.checked) {
                 checkboxes.forEach(other => {
                     if (other !== checkbox) {
                         other.checked = false;
@@ -339,11 +363,7 @@ const previewImageMap: Record<string, string> = {
             }
             const label = document.getElementById(`${checkbox.id}-label`);
             label?.setAttribute('aria-expanded', checkbox.checked ? 'true' : 'false');
-            setTimeout(() => {
-                ScrollTrigger.getById('curtain')?.refresh();
-            }, 420); 
-        });
-    });
+    }
 
     // ## Cursor Preview
     const preview = document.getElementById('project-preview') as HTMLDivElement;
@@ -410,8 +430,8 @@ const previewImageMap: Record<string, string> = {
         scrollTrigger: {
             id: 'curtain',
             trigger: porjectsSection,
-            start: '81% bottom',
-            end: 'bottom 75%',
+            start: 'bottom-=600 75%',
+            end: 'bottom 50%',
             scrub: 1,
         } });
 

@@ -1,9 +1,13 @@
 ---
 
-import projectPictureOne from "../../public/assets/pictures/projects/project-one.jpg"
+import projectPictureOne from "../../public/assets/pictures/projects/project_one.jpg"
 import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
 import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
-import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
+
+import projectPictureOneMobil from "../../public/assets/pictures/projects/project_one_mobil.jpg"
+import projectPictureTwoMobil from "../../public/assets/pictures/projects/project_two_mobil.jpg"
+import projectPictureThreeMobil from "../../public/assets/pictures/projects/project_three_mobil.jpg"
+
 import { iconMap } from "../types/types-icon-map"
 import { Image } from "astro:assets"
 
@@ -20,20 +24,30 @@ interface Props {
 
 const { subtitle, title, descriptions, previewImage, techstack, demo, github, mainColor } = Astro.props;
 
-
-
 const imageMap: Record<string, ImageMetadata> = {
-    "project-one": projectPictureOne,
-    "project-two": projectPictureTwo,
-    "project-three": projectPictureThree,
-    "project-four": projectPictureFour,
+    "project_one": projectPictureOne,
+    "project_two": projectPictureTwo,
+    "project_three": projectPictureThree,
+};
+
+const mobileImageMap: Partial<Record<string, ImageMetadata>> = {
+    "project_one": projectPictureOneMobil,
+    "project_two": projectPictureTwoMobil,
+    "project_three": projectPictureThreeMobil,
 };
 ---
 
 <p>{subtitle}</p>
 <h3 style={{ color: mainColor }}>{title}</h3>
 {descriptions.map(desc => <p class="description-text">{desc}</p>)}
-<div class="thumb-container"><Image src={imageMap[previewImage]} alt={title} /></div>
+<div class="thumb-container">
+    <picture>
+        {mobileImageMap[previewImage] && (
+            <source media="(orientation: portrait)" srcset={mobileImageMap[previewImage]!.src} />
+        )}
+        <Image src={imageMap[previewImage]} alt={title} />
+    </picture>
+</div>
 <strong>Techstack:</strong>
 <ul class="technology-list">
     {techstack.map(tech => (
@@ -51,8 +65,6 @@ const imageMap: Record<string, ImageMetadata> = {
     p,ul,li{
         color:$font-color;
     }
-
-
 
     strong{
         font-weight: 300;
@@ -94,10 +106,17 @@ const imageMap: Record<string, ImageMetadata> = {
                  background-color: color-mix(in srgb, var(--button-color)  70%, white);
                  scale: 1.05;
             }
+
+            @media screen and (max-width:600px) {
+               padding: 1rem 1.5em; 
+            }
         }
 
         a:not(:first-child){
             margin-left: 1.5rem;
+            @media screen and (max-width:600px) {
+                margin-left: 1rem;
+            }
         }
 
         a.github {
@@ -117,10 +136,38 @@ const imageMap: Record<string, ImageMetadata> = {
     .thumb-container{
         width: 100%;
         max-width: 678px;
+        display: flex;
+        align-items: start;
+        picture{
+                height: 100%;
+                width: 100%;
+        }
+
         img{
             width: 100%;
             object-fit: contain;
             object-position: center;
+        }
+
+        @media  screen and (orientation: portrait) {
+            box-sizing: border-box;
+            width: 80%;
+            max-width: 80%;
+            height: auto;
+            border: 1px solid $box-grey-100;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.125);
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+
+
+            img{
+                display: block;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+            }
         }
     }
 </style>
