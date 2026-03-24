@@ -11,52 +11,44 @@ import ContactForm from "./ContactFormComponent.astro"
    
             <div class="box-gird">
 
-                <a href="mailto:info@arndt-marcel.de">
-                <div class="info-box" info-box role="button">
+                <a class="info-box"  href="mailto:info@arndt-marcel.de">
                     <div class="icon">
                         <img loading="lazy" src="./assets/icons/ui/mail.svg" alt="">
                     </div>
                     <div>
                         <p>Sende eine E-Mail an</p>
-                        <a class="impotent">info@arndt-macrel.de</a>
+                        <p class="impotent">info@arndt-macrel.de</p>
                     </div>
-                </div>
                 </a>
 
-                <a>
-                <div class="info-box" info-box role="button">
+                <a href="tel:017663626861" class="info-box">
                     <div class="icon">
                         <img loading="lazy" src="./assets/icons/ui/phone.svg" alt="">
                     </div>
                     <div>
                         <p>Oder ruf an unter</p>
-                        <a class="impotent">(0) 176 636 268 61</a>
+                        <p class="impotent">(0) 176 636 268 61</p>
                     </div>
-                </div>
                 </a>
 
-                <a>
-                <div class="info-box" info-box role="button">
+                <a href="https://github.com/MarcelArndt" target="_blank" class="info-box">
                     <div class="icon">
                         <img loading="lazy" src="./assets/icons/ui/github.svg" alt="">
                     </div>
                     <div>
-                        <p>sende eine E-Mail an</p>
-                        <p class="impotent">info@arndt-macrel.de</p>
+                        <p>Finde mich auf Github</p>
+                        <p class="impotent">github.com</p>
                     </div>
-                </div>
                 </a>
 
-                <a></a>
-                <div class="info-box" info-box role="button">
+                <a href="https://linkedin.com/in/profil-marcel-arndt" target="_blank" class="info-box">
                     <div class="icon">
                         <img loading="lazy" src="./assets/icons/ui/linkedin.svg" alt="">
                     </div>
                     <div>
-                        <p>sende eine E-Mail an</p>
-                        <p class="impotent">info@arndt-macrel.de</p>
+                        <p>Folge mir auf LinkedIn</p>
+                        <p class="impotent">linkedin.com</p>
                     </div>
-                </div>
                 </a>
             </div>
     </div>
@@ -70,6 +62,32 @@ import ContactForm from "./ContactFormComponent.astro"
 
 
 </section>
+
+<script>
+
+    import { gsap } from "../lip/gsap";
+
+    const inofBoxArray:HTMLElement[] = gsap.utils.toArray(".info-box");
+
+    inofBoxArray.forEach((component:HTMLElement) => {
+        component.addEventListener('mouseenter', () => {
+            
+            const tl = gsap.timeline({});
+            tl.to(component, {
+                x:4,
+                y:-4,
+                ease: "power1.out",
+                duration: 0.25,
+            }).to(component,{
+                x:0,
+                y:0,
+                ease: "power1.out",
+                duration: 0.25,
+            },"-=0.125");
+        });
+    });
+
+</script>
 
 <style lang="scss">
     @use "../styles/index.scss" as *;
@@ -108,17 +126,22 @@ import ContactForm from "./ContactFormComponent.astro"
         max-width: 40ch;
     }
 
-    .box-gird{
+  .box-gird {
         box-sizing: border-box;
-        padding: 1rem 1rem;
-        padding-left: 0px;
+        padding: 1rem 0;
         display: flex;
         width: 100%;
-        gap: 1rem;
         flex-wrap: wrap;
-        justify-content: start;
-        align-items: center;
-    }
+        gap: 1rem;
+        margin-bottom: 3rem;
+
+
+
+    //  @media screen and (max-width: 760px) {
+     //     grid-template-columns: 1fr;
+      //    justify-items: center;
+      //}
+  }
 
 
 
@@ -126,20 +149,22 @@ import ContactForm from "./ContactFormComponent.astro"
         cursor: pointer;
         width: 320px;
         box-sizing: border-box;
-        padding: 0.75rem 3rem 0.75rem 1.25rem;
+        padding: 0.75rem 1.25rem 0.75rem 1.25rem;
         background-color: $box-grey-100;
         display: flex;
         align-items: center;
         justify-content: start;
-        margin: 1rem 0px;
+
         border-radius: 4px;
-        gap: 1rem;
+        gap: clamp(0.5rem, 4vw, 1rem);
         box-shadow: 1px 2px 4px rgba(0,0,0,0.2);
         border: 1px solid $box-grey-200;
+        text-decoration: none;
 
         .icon{
-            width: 56px;
-            height: 56px;
+            width: clamp(32px, 4vw, 56px);
+            height: clamp(32px, 4vw, 56px);
+            max-height: clamp(32px, 4vw, 56px);
             aspect-ratio:  1 / 1;
             flex-shrink: 0;
             display: flex;
@@ -148,7 +173,6 @@ import ContactForm from "./ContactFormComponent.astro"
             background-color: $box-grey-300;
             border-radius: 4px;
             border: 1px solid $box-grey-400;
-
             img{
                 height: 80%;
                 max-height: 42px;
@@ -161,10 +185,26 @@ import ContactForm from "./ContactFormComponent.astro"
             color: $dark-red;
             font-size: 1.125rem;
             line-height: 1.75rem;
+            font-size: clamp(1rem, 4vw, 1.125rem);
+            opacity: 1;
+            transition: width 0.25s ease-in-out, opacity 1s ease-in-out;
         }
 
         .impotent{
             color: $main-color;
+        }
+
+        @media screen and (max-width:806px) {
+            width: clamp(32px, 16vw, 80px);
+            height: clamp(32px, 16vw, 80px);
+            gap: 0px;
+            justify-content: center;
+
+            p{
+                width: 0px;
+                overflow: hidden;
+                opacity: 0;
+            }
         }
     }
 </style>

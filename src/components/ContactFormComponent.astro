@@ -7,12 +7,12 @@
             <h3>Anfrageformular:</h3>
             <strong>Send mir eine Nachricht</strong>
             <div class="first-area">
-                <input type="text" id="firstName" placeholder="Vorname" minlength="3" required>
-                <input type="text" id="lastName" placeholder="Nachname" minlength="3" required>
+                <input type="text" id="firstName" placeholder="Vorname" autocomplete="name" minlength="3" required>
+                <input type="text" id="lastName" placeholder="Nachname" autocomplete="family-name" minlength="3" required>
             </div>
         
             <div class="second-area">
-                <input id="email" type="email" placeholder="E-Mail">
+                <input id="email" type="email" placeholder="E-Mail" autocomplete="email">
                 <input type="text" id="subject" placeholder="Betreff">
             </div>
             <hr>
@@ -27,7 +27,7 @@
                     <div class="custom-checkbox"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M400-304 240-464l56-56 104 104 264-264 56 56-320 320Z"/></svg></div>
                 </div>
                 <div>
-                    <p>Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und stimme der darin beschriebenen Verarbeitung meiner Daten zu.</p>
+                    <p>Ich habe die <a href="/data-protection">Datenschutzerklärung</a> gelesen und stimme der darin beschriebenen Verarbeitung meiner Daten zu.</p>
                 </div>
             </div>
             <hr>
@@ -36,7 +36,7 @@
   eingeben.</p>
             </div>
             <div class="five-area">
-                <button>Naricht senden</button>
+                <button disabled form-submit-button>Naricht senden</button>
             </div>
         </div>
     </form>
@@ -60,8 +60,40 @@
     const nameMinLenght:number = 3;
     const subjectMinLenght:number = 3;
     const messageMinLenght:number = 3;
-
+    const submitButton = document.querySelector<HTMLButtonElement>('[form-submit-button]');
     let formErrors:Error[] = [];
+    submitButton?.addEventListener("mouseenter",ShowInvalidFieldOnHover)
+
+    /* 
+    #################################################
+    ######## Factory und Refresh der Felder #########
+    #################################################`
+    */
+
+    const allFields:Field[] = [];
+
+    function createField(name: string, id: string): Field {
+    const field: Field = {                                          
+        name,   
+        input: document.getElementById(id) as HTMLInputElement,
+        touched: false,
+        valid: false,
+    };
+    allFields.push(field);
+    return field;
+    }
+
+    function refreshAllFields(){
+        allFields.forEach((field) => {
+            if(field.input.value) field.input.value="";
+            if(field.input.checked) field.input.checked= false;
+            field.touched = false;
+            field.valid = false;
+            field.input.classList.remove("error");
+        });
+        formErrors = [];
+        updateSubmitButton();
+    }
 
     /* 
     #################################################
@@ -69,47 +101,12 @@
     #################################################`
     */
 
-    const emailInput:Field = {
-        name:'E-Mail',
-        input : document.getElementById('email') as HTMLInputElement,
-        touched : false,
-        valid : false,
-    }
-
-    const firstNameInput:Field = {
-        name:'First-Name',
-        input : document.getElementById('firstName') as HTMLInputElement,
-        touched : false,
-        valid : false,
-    }
-
-    const lastNameInput:Field = {
-        name:'Last-Name',
-        input : document.getElementById('lastName') as HTMLInputElement,
-        touched : false,
-        valid : false,
-    }
-
-    const subjectInput:Field = {
-        name:'Subject',
-        input : document.getElementById('subject') as HTMLInputElement,
-        touched : false,
-        valid : false,
-    }
-
-    const messageInput:Field = {
-        name:'Message',
-        input : document.getElementById('message') as HTMLInputElement,
-        touched : false,
-        valid : false,
-    }
-
-    const dataProtectionCheckboxInput:Field = {
-        name:'Data-Protection-Checkbox',
-        input : document.getElementById('dataProtectionCheckbox') as HTMLInputElement,
-        touched : false,
-        valid : false,
-    }
+    const emailInput:Field = createField('E-Mail','email');
+    const firstNameInput:Field = createField('First-Name','firstName');
+    const lastNameInput:Field = createField('Last-Name','lastName');
+    const subjectInput:Field = createField('Subject','subject');
+    const messageInput:Field = createField('Message','message');
+    const dataProtectionCheckboxInput:Field = createField('Data-Protection-Checkbox','dataProtectionCheckbox');
 
     /* 
     #################################################
@@ -292,12 +289,34 @@
         if (!alreadyExists) {
             formErrors.push(newError);
         }
+        updateSubmitButton()
     }
 
     function removeError(errorTyp: string) {
         formErrors = formErrors.filter(e => e.errorTyp !== errorTyp);
+        updateSubmitButton()
     }
 
+    function isFormValid():boolean{
+        const noErrors = formErrors.length == 0;
+        const allTouched = allFields.every(field => field.touched);
+        const allValid = allFields.every(field => field.valid);
+        return noErrors && allTouched && allValid;
+    }
+
+    function updateSubmitButton(){
+        if(!submitButton) return
+        submitButton.disabled = !isFormValid()
+    }
+
+    function ShowInvalidFieldOnHover(){
+        allFields.forEach((field) =>{
+           if(!field.touched || !field.valid){
+            field.input.classList.add("error")
+           }
+        })
+    }
+    
 </script>
 
 <style lang="scss">
@@ -402,6 +421,8 @@
 
         p{
             color: $font-color;
+            font-size: 1.125rem;
+            line-height: 1.5rem;
         }
     }
 
@@ -446,6 +467,15 @@
 
     button{
         color: #fff;
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: $box-grey-800;
+
+            &:hover{
+                scale: 1;
+            }
+        }
     }
 
     hr{
