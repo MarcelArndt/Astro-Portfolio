@@ -31,9 +31,8 @@
                 </div>
             </div>
             <hr>
-            <div class="error-area">
-                <p id="email-error">Bitte eine gültige E-Mail
-  eingeben.</p>
+            <div class="error-area" id="error-area">
+                
             </div>
             <div class="five-area">
                 <button disabled form-submit-button>Naricht senden</button>
@@ -55,14 +54,26 @@
         touched : boolean,
         valid : boolean
     }
+
+    type Payload = {
+        firstname:string;
+        lastname:string;
+        email:string;
+        subject:string;
+        message:string;
+    }
+
     const emailRegex:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailMinlength:number = 6;
     const nameMinLenght:number = 3;
     const subjectMinLenght:number = 3;
     const messageMinLenght:number = 3;
     const submitButton = document.querySelector<HTMLButtonElement>('[form-submit-button]');
+    const errorArea = document.getElementById('error-area') as HTMLElement;
     let formErrors:Error[] = [];
+
     submitButton?.addEventListener("mouseenter",ShowInvalidFieldOnHover)
+    submitButton?.addEventListener("click", onSubmit)
 
     /* 
     #################################################
@@ -107,7 +118,7 @@
     const subjectInput:Field = createField('Subject','subject');
     const messageInput:Field = createField('Message','message');
     const dataProtectionCheckboxInput:Field = createField('Data-Protection-Checkbox','dataProtectionCheckbox');
-
+    const apiUrl = 'https://contact-express.arndt-dev.de/send-mail';
     /* 
     #################################################
     ######### Registration der Validation ###########
@@ -278,23 +289,25 @@
 
     function setBorderIfError(field:Field){
         if (!field.valid){
-            field.input.classList.add("error")
+            field.input.classList.add("error");
         } else {
-            field.input.classList.remove("error")
+            field.input.classList.remove("error");
         }
     }
 
     function addError(newError: Error) {
         const alreadyExists = formErrors.some(e => e.errorTyp === newError.errorTyp);
         if (!alreadyExists) {
-            formErrors.push(newError);
+            formErrors.unshift(newError);
         }
-        updateSubmitButton()
+        updateSubmitButton();
+        renderError();
     }
 
     function removeError(errorTyp: string) {
         formErrors = formErrors.filter(e => e.errorTyp !== errorTyp);
-        updateSubmitButton()
+        updateSubmitButton();
+        renderError();
     }
 
     function isFormValid():boolean{
@@ -306,16 +319,78 @@
 
     function updateSubmitButton(){
         if(!submitButton) return
-        submitButton.disabled = !isFormValid()
+        submitButton.disabled = !isFormValid();
     }
 
     function ShowInvalidFieldOnHover(){
         allFields.forEach((field) =>{
            if(!field.touched || !field.valid){
-            field.input.classList.add("error")
+            field.input.classList.add("error");
            }
         })
     }
+
+    function returnErrorSVG():string{
+        return `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+            <path d="M508.5-291.5Q520-303 520-320t-11.5-28.5Q497-360 480-360t-28.5 11.5Q440-337 440-320t11.5 28.5Q463-280 480-280t28.5-11.5ZM440-440h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+            </svg>`
+    }
+
+    function renderError(){
+        if(!errorArea) return
+        errorArea.textContent = '';
+        if(formErrors && formErrors.length > 0){
+            const newError = document.createElement('p');
+            const errorIconWrapper = document.createElement('div');
+            errorIconWrapper.classList.add("error-icon");
+            errorIconWrapper.innerHTML = returnErrorSVG();
+            newError.textContent = formErrors[0].message;
+            newError.classList.add('error-message');
+            errorArea.appendChild(errorIconWrapper);
+            errorArea.appendChild(newError);
+            errorArea.classList.add("active")
+        }
+        if(formErrors.length <= 0){
+            errorArea.classList.remove("active")
+        }
+    }
+
+    function buildPayLoadFromForm():Payload{
+        const JSON = {
+            firstname: firstNameInput.input.value,
+            lastname: lastNameInput.input.value,
+            email: emailInput.input.value,
+            subject:subjectInput.input.value,
+            message: messageInput.input.value
+        }
+        return JSON
+    }
+
+    async function sendMessageToAPI(payload:Payload){
+        const response = await fetch(
+            apiUrl,
+            {
+                method:'POST',
+                headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+        const content = await response.json();
+        return content
+    }
+
+    async function onSubmit(event:Event){
+        event.preventDefault();
+        console.log("test");
+        const payload = buildPayLoadFromForm();
+        const response = await sendMessageToAPI(payload);
+    }
+
+
+
+
     
 </script>
 
@@ -364,6 +439,10 @@
 
             &:hover{
                 border-color: $button-color-hover;
+
+                &.error{
+                     border-color: $button-color-hover;
+                }
             }
 
             &:active, &:focus{
@@ -427,7 +506,7 @@
     }
 
     .five-area{
-        margin-top: 5rem;
+        margin-top: 1rem;
 
          @media screen and (max-width:700px){
             width: 100%;
@@ -513,6 +592,9 @@
 
         &:hover{
             border-color: $button-color-hover;
+            &.error{
+                border-color: $button-color-hover;
+            }
         }
 
         &:active, &:focus{
@@ -567,6 +649,10 @@
             border-color: $error-color;
         }
 
+        input:not(:checked).error:hover ~ .custom-checkbox{
+            border-color: $button-color;
+        }
+
         input:not(:checked) ~ .custom-checkbox > svg{
             fill: transparent;
         }
@@ -587,8 +673,26 @@
     }
 
     .error-area{
-        p{
-            color:$error-color;
+        display: flex;
+        box-sizing: border-box;
+        padding: 2rem 1.25rem;
+        align-items: center;
+        vertical-align: middle;
+        min-height: 8rem;
+        background-color: transparent;
+        border-radius: 8px;
+        max-width: 656px;
+        gap: 0.75rem;
+        opacity: 1;
+        transition: opacity 0.25s ease-in-out, background-color 0.25s ease-in-out;
+
+        &.active{
+            background-color:$main-color;
+            opacity: 1;
+        }
+        @media screen and (max-width:550px) {
+            flex-direction: column;
+            gap: 1rem;
         }
     }
 </style>

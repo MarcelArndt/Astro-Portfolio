@@ -192,6 +192,13 @@ import ContactForm from "./ContactFormComponent.astro"
 
         .impotent{
             color: $main-color;
+            transition: color 0.125s ease-in-out;
+        }
+
+        &:hover {
+            .impotent{
+                color: $button-color-hover;
+            }
         }
 
         @media screen and (max-width:806px) {
