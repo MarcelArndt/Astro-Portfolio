@@ -97,6 +97,7 @@ import ContactForm from "./ContactFormComponent.astro"
 
     let contactTl = gsap.timeline({
         scrollTrigger: {
+            id: 'contact-section',
             trigger: contactSection,
             start: '0% 80%',
             end: '25% 50%',
