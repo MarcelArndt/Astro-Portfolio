@@ -389,11 +389,11 @@
         const payload = buildPayLoadFromForm();
         try{
             const response = await sendMessageToAPI(payload);
-            console.log(response)
             setToaster("success", "Nachricht konnte erfolgreich versenden werden.")
         } catch(error){
-            console.log(error)
             setToaster("error", "Es liegt ein Fehler in der Verbindung vor.");
+        } finally {
+            refreshAllFields();
         }
     
     }
