@@ -64,6 +64,7 @@
         message:string;
     }
 
+    const apiUrl = 'https://contact-express.arndt-dev.de/send-mail';
     const emailRegex:RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailMinlength:number = 6;
     const nameMinLenght:number = 3;
@@ -74,8 +75,8 @@
     const errorArea = document.getElementById('error-area') as HTMLElement;
     let formErrors:Error[] = [];
 
-    submitButton?.addEventListener("mouseenter",ShowInvalidFieldOnHover)
-    submitButton?.addEventListener("click", onSubmit)
+    submitButton?.addEventListener("mouseenter",ShowInvalidFieldOnHover);
+    submitButton?.addEventListener("click", onSubmit);
 
     /* 
     #################################################
@@ -120,7 +121,7 @@
     const subjectInput:Field = createField('Subject','subject');
     const messageInput:Field = createField('Message','message');
     const dataProtectionCheckboxInput:Field = createField('Data-Protection-Checkbox','dataProtectionCheckbox');
-    const apiUrl = 'https://contact-express.arndt-dev.de/send-mail';
+
     /* 
     #################################################
     ######### Registration der Validation ###########
@@ -398,12 +399,6 @@
     
     }
 
-
-
-
-
-
-    
 </script>
 
 <style lang="scss">

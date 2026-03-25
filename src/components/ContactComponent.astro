@@ -1,13 +1,14 @@
 ---
 import ContactForm from "./ContactFormComponent.astro"
 ---
-<section id="contact">
+<section id="contact" contact-section>
 
-    <div class="text-aera">
+    <div class="text-aera" text-area>
     <div>
-        <p>Komm mit mir in</p>
-        <h2>Kontakt</h2>
-        <p>Kontaktiere mich gern, wenn du Unterstützung bei deinem Webprojekt brauchst oder Fragen hast.</br></br>Ich freue mich auf deine Nachricht.</p>
+        <p text-element>Komm mit mir in</p>
+        <h2 text-element>Kontakt</h2>
+        <p text-element>Kontaktiere mich gern, wenn du Unterstützung bei deinem Webprojekt brauchst oder Fragen hast.</p>
+        <p text-element>Ich freue mich auf deine Nachricht.</p>
    
             <div class="box-gird">
 
@@ -57,7 +58,9 @@ import ContactForm from "./ContactFormComponent.astro"
     </div>
 
     <div class="from-aera">
-        <ContactForm />
+        <div class="from-aera-wrapper" contact-form>
+                <ContactForm  />
+        </div>
     </div>
 
 
@@ -67,9 +70,14 @@ import ContactForm from "./ContactFormComponent.astro"
 
     import { gsap } from "../lip/gsap";
 
-    const inofBoxArray:HTMLElement[] = gsap.utils.toArray(".info-box");
+    const infoBoxArray:HTMLElement[] = gsap.utils.toArray(".info-box");
+    const textArray:HTMLElement[] = gsap.utils.toArray("[text-element]");
+    const contactSection = document.querySelector<HTMLElement>("[contact-section]")
+    const contactForm = document.querySelector<HTMLElement>("[contact-form]")
+    const textArea = document.querySelector<HTMLElement>("[text-area]")
+        
 
-    inofBoxArray.forEach((component:HTMLElement) => {
+    infoBoxArray.forEach((component:HTMLElement) => {
         component.addEventListener('mouseenter', () => {
             
             const tl = gsap.timeline({});
@@ -86,6 +94,35 @@ import ContactForm from "./ContactFormComponent.astro"
             },"-=0.125");
         });
     });
+
+    let contactTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: contactSection,
+            start: '0% 80%',
+            end: '25% 50%',
+            scrub: 1, 
+        }
+    });
+
+    contactTl
+    .from(textArray,{
+        y:"+=50",
+        opacity:0,
+        stagger:0.35
+    })
+    .from(contactForm,{
+       y:"+=50",
+       opacity:0, 
+    },"+=0.4")
+    .from(infoBoxArray,{
+        y:"+=50",
+        opacity:0,
+        stagger:0.15
+    })
+
+
+    
+
 
 </script>
 
@@ -113,12 +150,18 @@ import ContactForm from "./ContactFormComponent.astro"
     }
 
     .from-aera{
+        overflow: hidden;
         width: 50%;
         @media screen and (max-width: 1700px){
             width: 100%;
             display: flex;
             justify-content: center
         }
+    }
+
+    .from-aera-wrapper{
+        width: 100%;
+        height: 100%;
     }
 
     p{
