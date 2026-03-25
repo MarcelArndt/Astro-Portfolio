@@ -1,5 +1,6 @@
 ---
 import "../styles/styles.scss";
+import Toaster from "../components/ToasterComponent.astro"
 
 const { pageTitle, description } = Astro.props;
 ---
@@ -15,6 +16,7 @@ const { pageTitle, description } = Astro.props;
 		{description && <meta name="description" content={description} />}
 	</head>
 	<body>
+		<Toaster/>
 		<div class="main-wrapper">
 			<div class="content-wrapper">
 				<slot />

@@ -1,8 +1,7 @@
 ---
----
 
+---
     <form>
-        
         <div class="inside-form-wrapper">
             <h3>Anfrageformular:</h3>
             <strong>Send mir eine Nachricht</strong>
@@ -42,6 +41,8 @@
 
 <script>
 
+    import { setToaster } from "../utils/scripts/toaster"
+
     type Error = {
         field:string,
         errorTyp:string,
@@ -69,6 +70,7 @@
     const subjectMinLenght:number = 3;
     const messageMinLenght:number = 3;
     const submitButton = document.querySelector<HTMLButtonElement>('[form-submit-button]');
+
     const errorArea = document.getElementById('error-area') as HTMLElement;
     let formErrors:Error[] = [];
 
@@ -385,8 +387,18 @@
         event.preventDefault();
         console.log("test");
         const payload = buildPayLoadFromForm();
-        const response = await sendMessageToAPI(payload);
+        try{
+            const response = await sendMessageToAPI(payload);
+            console.log(response)
+            setToaster("success", "Nachricht konnte erfolgreich versenden werden.")
+        } catch(error){
+            console.log(error)
+            setToaster("error", "Es liegt ein Fehler in der Verbindung vor.");
+        }
+    
     }
+
+
 
 
 

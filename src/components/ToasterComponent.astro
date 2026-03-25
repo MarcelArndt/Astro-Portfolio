@@ -1,0 +1,112 @@
+<div class="toaster-wrapper" toaster-wrapper>
+    <div class="toaster-content-wrapper" toaster-content-wrapper >
+        <button class="toaster-close-button" toaster-close-button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></button>
+        <div class="toaster-icon" toaster-icon>
+            <svg class="" toaster-success-icon xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+            <svg class="" toaster-error-icon xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M508.5-291.5Q520-303 520-320t-11.5-28.5Q497-360 480-360t-28.5 11.5Q440-337 440-320t11.5 28.5Q463-280 480-280t28.5-11.5ZM440-440h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+           <svg class="" toaster-info-icon xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M440-280h80v-240h-80v240Zm68.5-331.5Q520-623 520-640t-11.5-28.5Q497-680 480-680t-28.5 11.5Q440-657 440-640t11.5 28.5Q463-600 480-600t28.5-11.5ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+        </div>
+        <hr>
+        <div class="toaster-text" toaster-text-wrapper>
+            
+        </div>
+    </div>
+</div>
+
+<script></script>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    .toaster-wrapper{
+        --backgound-color:rgba(0,0,0,0.6);
+        display: none;
+        opacity: 0;
+        justify-content: center;
+        z-index: 999;
+        width: 100%;
+        position: fixed;
+        min-height: 100px;
+        bottom:0px;
+        left: 0px;
+        background-color: var(--backgound-color);
+        backdrop-filter: blur(20px);
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .toaster-content-wrapper{
+        width: 100%;
+        max-width: 640px;
+        padding: 3rem 3rem;
+        margin: 2rem;
+        border: 1px solid white;
+        border-radius: 8px;
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+        position: relative;
+
+        @media screen and (max-width:600px) {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+
+    hr{
+        margin: 0px;
+        border: 0px;
+        height: 100%;
+        width: 1px;
+        background-color: #fff;
+
+         @media screen and (max-width:600px) {
+            display: none;
+        }
+    }
+
+    .toaster-close-button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        position: absolute;
+        top: -12px;
+        right: 12px;
+        padding: 0.5rem 0.5rem;
+        height: 48px;
+        width: 48px;
+
+        &:hover{
+            scale: 1.1;
+        }
+    
+        svg{
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .toaster-icon{
+        width: 56px;
+        height: 56px;
+        display: flex;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+            width: 100%;
+            height: 100%;
+
+            display: none;
+
+            &.active {
+             display :flex  
+            }
+
+        }
+    }
+
+
+</style>
