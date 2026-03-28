@@ -18,6 +18,12 @@ const previewImageMap: Record<string, string> = {
 
 <section >
     <div class="project-section-wrapper" project-section id="projects"> 
+        <div class="cirlce-window-wrapper">
+            <div class="circle-wrapper">
+                <div circle-curtain></div>
+            </div>
+        </div>
+
         <div class="content-box">
             <div>
                 <p  project-head-aera>Dies ist eine Auswahl</p>
@@ -384,6 +390,41 @@ const previewImageMap: Record<string, string> = {
         background-color: $grey-background;;
     }
     }
+
+    .cirlce-window-wrapper{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0px;
+        top: 0px;
+    }
+
+    .circle-wrapper{
+        width: 100%;
+        height: 100%;
+        max-width: 1920px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    [circle-curtain]{
+        --circle-color:#fff;
+        z-index: 99;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 32px;
+        height: 32px;
+        aspect-ratio: 1 / 1;
+        flex-shrink: 0;
+        background-color: var(--circle-color);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+    }
 </style>
 
 <script>
@@ -469,9 +510,17 @@ const previewImageMap: Record<string, string> = {
         label.addEventListener('mouseleave', () => {
             preview.classList.remove('visible');
         });
-        label.addEventListener("click", () => {changeColorScheme(index)});
+        label.addEventListener("click", () => {
+            const currentProject = arrayProject[index];
+            const currentColor = getComputedStyle(currentProject).getPropertyValue('--project-color').trim();
+            circleGrowing(currentColor);
+        });
     });
 
+    type ColorScheme = {
+        backgroundColor :string,
+        textColor : string,
+    }
 
     // ## GSAP Animation
         import { gsap, ScrollTrigger } from "../lip/gsap";
@@ -480,31 +529,64 @@ const previewImageMap: Record<string, string> = {
         const arrayProject = Array.from(document.querySelectorAll<HTMLElement>(`[single-project]`));
         const curtainBlack = document.querySelector<HTMLElement>(`[project-curtain-black]`);
         const whiteSkillCurtain = document.querySelector<HTMLElement>('[white-skill-curtain]');
-        const projectsInputsArray:HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[projejct-checkbox]'))
-        let contentActive:boolean = false;
+        const projectsInputsArray:HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[projejct-checkbox]'));
+        const circleCurtain = document.querySelector<HTMLElement>('[circle-curtain]');
 
-        function changeColorScheme(index:number){
-        const currentProject = arrayProject[index];
-        setTimeout(()=>{
-            contentActive = projectsInputsArray.some(input => input.checked == true);
-            if(contentActive){
-                darkenColor(currentProject)
-            }
-            else {
-                setDefaultColor()
-            }
-        },0);
+       async function circleGrowing(currentColor:string){
+            if(!circleCurtain) return;
+            const darkerColor = darkenColor(currentColor);
+            circleCurtain.style.setProperty('--circle-color', darkerColor);
+            const contentActive = await checkIsAkkodeonActive();
+            const newColorScheme:ColorScheme = {
+                backgroundColor : contentActive ? darkerColor : '#fff',
+                textColor : contentActive ? '#fff' : "#320105",
+            };
+            circleCurtain.style.setProperty('--circle-color', newColorScheme.backgroundColor);
+            animationCircle(currentColor, newColorScheme);
         }
 
-        function  setDefaultColor(){
-            if(!whiteSkillCurtain || !porjectsSection) return;
-            whiteSkillCurtain.style.setProperty('--background-color', "#fff");
-            porjectsSection.style.setProperty('--background-color', "#fff");
-            porjectsSection.style.setProperty('--text-color', '#320105');
+        function animationCircle(oldColor:string, newColorScheme:ColorScheme){
+            gsap.killTweensOf(circleCurtain);
+
+            gsap.set(circleCurtain,{
+               width:0,
+               height:0, 
+               opacity:1,
+            });
+
+            const circleTl = gsap.timeline();
+            circleTl
+            .to(circleCurtain,{
+                width:3600,
+                height:3600,
+                duration:1.25,
+                onStart:(() => {
+                    setNewColorScheme(oldColor, newColorScheme.textColor);
+                }),
+                onComplete: (()=> {
+                    setNewColorScheme(newColorScheme.backgroundColor, newColorScheme.textColor);
+                })
+            })
+            .to(circleCurtain,{
+                opacity:0,
+                duration:0.3,
+            },"+=0.3")
         }
 
-        function darkenColor(currentProject:HTMLElement){
-            const currentColor = getComputedStyle(currentProject).getPropertyValue('--project-color').trim();
+        async function checkIsAkkodeonActive(): Promise<boolean> {
+            await new Promise(resolve => setTimeout(resolve, 0));     
+            return projectsInputsArray.some(input => input.checked === true);
+        }
+        
+        function setNewColorScheme(backgroundColor:string, textColor:string){
+             if(!whiteSkillCurtain || !porjectsSection) return;{
+                whiteSkillCurtain.style.setProperty('--background-color', backgroundColor);
+                porjectsSection.style.setProperty('--background-color', backgroundColor);
+                porjectsSection.style.setProperty('--text-color', textColor);
+            }
+        }
+
+        function darkenColor(currentColor:string){
             const match = currentColor.match(/hsla?\((\d+),\s*([\d.]+)%,\s*([\d.]+)%/); 
             let h,s,l = 0;
             let darkerColor = ""
@@ -514,12 +596,8 @@ const previewImageMap: Record<string, string> = {
                 l = Number(match[3]);
                 darkerColor = `hsla(${h - 5}, ${s + 34 }%, ${l - 32}%, 100%)`;
                 }
-            if(!whiteSkillCurtain || !porjectsSection) return;
-                whiteSkillCurtain.style.setProperty('--background-color', darkerColor);
-                porjectsSection.style.setProperty('--background-color', darkerColor);
-                porjectsSection.style.setProperty('--text-color', '#fff');
-            }
-
+            return darkerColor
+        }
 
 
         gsap.set(curtainBlack,{
