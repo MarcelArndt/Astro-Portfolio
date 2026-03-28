@@ -34,7 +34,7 @@
                 
             </div>
             <div class="five-area">
-                <button disabled form-submit-button>Naricht senden</button>
+                <button disabled form-submit-button>Nachricht senden</button>
             </div>
         </div>
     </form>
@@ -430,7 +430,7 @@
             box-sizing: border-box;
             width: 50%;
             height: 3.125rem;
-            font-size: $font-size-100;
+            font-size: 1.25rem;
             color: $font-color;
             outline: none;
             border: none;
@@ -513,13 +513,18 @@
     }
 
     .five-area{
-        margin-top: 1rem;
+        margin-top: 2rem;
+        padding-bottom: 1.25rem;
 
+        button{
+            margin: 0px;
+            font-size: 1.25rem;
+        }
          @media screen and (max-width:700px){
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-top: 2rem;
+            
          }
     }
     strong{
@@ -527,8 +532,7 @@
         margin-top: 2rem;
         margin-bottom: 1rem;
         font-size: $font-size-300;
-        color: $font-color;
-        opacity: 0.6;
+        color: $dark-red-opacity;
         font-weight: 300;
         @media screen and (max-width:700px){
             text-align: center;
@@ -537,8 +541,9 @@
     }
 
     h3{
-        font-size: $font-size-300;
-        color: $main-color;;
+        font-size: 2rem;
+        color: $main-color;
+        
         font-weight: 400;
         margin-top: 2rem;
          @media screen and (max-width:700px){
@@ -583,12 +588,12 @@
         resize: none;
         width: 100%;
         height: 260px;
-        font-size: $font-size-100;
+        font-size: 1.25rem;
         color: $font-color;
         outline: none;
         border: none;
         border-radius: 8px;
-        padding: 1.125rem 1rem;
+        padding: 0.75rem 1rem;
         border: 1px solid $box-grey-600;
         font-weight: 300;
         font-family: $system-font;
@@ -682,16 +687,19 @@
     .error-area{
         display: flex;
         box-sizing: border-box;
-        padding: 2rem 1.25rem;
+        padding: 0.5rem 1.25rem;
         align-items: center;
         vertical-align: middle;
-        min-height: 8rem;
+        min-height: 6rem;
         background-color: transparent;
-        border-radius: 8px;
+        border-radius: 6px;
         max-width: 656px;
         gap: 0.75rem;
         opacity: 1;
+        position: relative;
         transition: opacity 0.25s ease-in-out, background-color 0.25s ease-in-out;
+
+
 
         &.active{
             background-color:$main-color;

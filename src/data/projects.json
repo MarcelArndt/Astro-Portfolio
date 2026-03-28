@@ -13,7 +13,7 @@
         "techstack": ["javascript", "html", "css"],
         "demo": "https://arndt-marcel.de/join/",
         "github": "https://github.com/MarcelArndt/Project-Join",
-        "mainColor":"#3A5AF8"
+        "mainColor":"hsla(210, 80%, 50%, 100%)"
     },
     {
         "id": "second-project",
@@ -29,7 +29,7 @@
         "techstack": ["python","django","docker"],
         "demo": "https://arndt-marcel.de/da_videoflix/",
         "github": "https://github.com/MarcelArndt/DAVideoflix",
-        "mainColor":"#7b04d1"
+        "mainColor":"hsla(275, 96%, 42%, 100%)"
     },
     {
         "id": "third-project",
@@ -46,6 +46,6 @@
         "techstack": ["angular","firebase","sass"],
         "demo": "https://arndt-marcel.de/dabubble",
         "github": "https://github.com/MarcelArndt/DABubble",
-        "mainColor":"#ed8e12"
+        "mainColor":"hsla(34, 86%, 50%, 100%)"
     }
 ]

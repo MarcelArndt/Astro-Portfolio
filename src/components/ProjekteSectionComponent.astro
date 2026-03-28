@@ -29,7 +29,7 @@ const previewImageMap: Record<string, string> = {
                 <ul class="projects-list">
                     {projects.map((project, index) => (
                         <li style={{ "--project-color": project.mainColor }} single-project>
-                            <input type="checkbox" name={project.id} id={project.id} />
+                            <input type="checkbox" name={project.id} id={project.id} projejct-checkbox/>
                             <label for={project.id} data-preview={previewImageMap[project.previewImage]} role="button" id={`${project.id}-label`} aria-expanded="false" aria-controls={`${project.id}-content`}>
                                 <div class="titel-box">
                                     <div class="cloumn-box">
@@ -80,6 +80,17 @@ const previewImageMap: Record<string, string> = {
 
     section{
         position: relative;
+
+    }
+
+    [project-section]{
+        --background-color:#fff;
+        --text-color: #320105;
+        background-color: var(--background-color);
+        transition: background-color 0.25s ease-in-out;
+        p{
+            color:var(--text-color);
+        }
     }
 
     .project-section-wrapper{
@@ -87,7 +98,6 @@ const previewImageMap: Record<string, string> = {
     }
 
     p{
-        color: $font-color;
         max-width: 75ch;
     }
 
@@ -171,6 +181,7 @@ const previewImageMap: Record<string, string> = {
                 -webkit-box-orient: vertical;
                 overflow: hidden; 
                 opacity: 0.6;
+                
 
                 @media screen and (max-width:880px){
                     padding-right: 0rem;
@@ -203,19 +214,50 @@ const previewImageMap: Record<string, string> = {
             border-radius: 4px;
             border: 1px solid #f2f2f2;
             gap: 1.5rem;
-            box-shadow: 4px 2px 4px rgba(0,0,0,0.04);
+            background-color: $box-grey-100;
+            user-select: none;
+            transition: background-color 0.125s ease-in-out;
+
+            p{
+                user-select: none;
+                position: relative;
+                z-index: 300;
+                
+                transition: color 0.125s ease-in-out;
+            }
+
 
             h4{
+                user-select: none;
                 font-weight: 300;
                 margin: 0px;
                 margin-bottom: 1rem;
                 font-size: clamp(1rem, 8vw, 3em);
+                position: relative;
+                z-index: 300;
+            }
+
+            img, .technology-list{
+                user-select: none;
+                opacity: 0.6;
+                transition: opacity 0.125s ease-in-out;
             }
 
             &:hover{
-                color: var(--project-color);
                 cursor: pointer;
-                background-color: #f6f6f6;
+                background-color: var(--project-color);
+                color:#fff;
+                
+
+                p{
+                    color: #fff;
+                }
+
+                img, .technology-list{
+                    filter: brightness(1000%);
+                    opacity: 1;
+                }
+
                 border-color:#ececec;
 
                 .titel-box{
@@ -229,7 +271,7 @@ const previewImageMap: Record<string, string> = {
 
         .technology-list{
             margin-top: 1rem;
-            opacity: 0.5;
+
 
             li{
                 width: 32px;
@@ -287,7 +329,21 @@ const previewImageMap: Record<string, string> = {
         }
 
         input[type="checkbox"]:checked ~ label{
-            background-color: #ececec;
+            background-color: var(--project-color);
+
+            &:hover{
+                filter: brightness(115%);
+            }
+            p,h4{
+                color:#fff;
+                opacity: 1;
+            }
+            img, .technology-list{
+                    filter: brightness(1000%);
+                    opacity: 1;
+            }
+
+
 
             span > img{
                 transform: rotate(90deg);
@@ -403,7 +459,7 @@ const previewImageMap: Record<string, string> = {
         if (!animating) animate();
     });
 
-    labels.forEach(label => {
+    labels.forEach((label, index) => {
         label.addEventListener('mouseenter', () => {
             if (checkForMobilDevice()) return;
             const src = label.dataset.preview;
@@ -413,7 +469,9 @@ const previewImageMap: Record<string, string> = {
         label.addEventListener('mouseleave', () => {
             preview.classList.remove('visible');
         });
+        label.addEventListener("click", () => {changeColorScheme(index)});
     });
+
 
     // ## GSAP Animation
         import { gsap, ScrollTrigger } from "../lip/gsap";
@@ -421,6 +479,47 @@ const previewImageMap: Record<string, string> = {
         const projectHeadAera = Array.from(document.querySelectorAll<HTMLElement>(`[project-head-aera]`));
         const arrayProject = Array.from(document.querySelectorAll<HTMLElement>(`[single-project]`));
         const curtainBlack = document.querySelector<HTMLElement>(`[project-curtain-black]`);
+        const whiteSkillCurtain = document.querySelector<HTMLElement>('[white-skill-curtain]');
+        const projectsInputsArray:HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[projejct-checkbox]'))
+        let contentActive:boolean = false;
+
+        function changeColorScheme(index:number){
+        const currentProject = arrayProject[index];
+        setTimeout(()=>{
+            contentActive = projectsInputsArray.some(input => input.checked == true);
+            if(contentActive){
+                darkenColor(currentProject)
+            }
+            else {
+                setDefaultColor()
+            }
+        },0);
+        }
+
+        function  setDefaultColor(){
+            if(!whiteSkillCurtain || !porjectsSection) return;
+            whiteSkillCurtain.style.setProperty('--background-color', "#fff");
+            porjectsSection.style.setProperty('--background-color', "#fff");
+            porjectsSection.style.setProperty('--text-color', '#320105');
+        }
+
+        function darkenColor(currentProject:HTMLElement){
+            const currentColor = getComputedStyle(currentProject).getPropertyValue('--project-color').trim();
+            const match = currentColor.match(/hsla?\((\d+),\s*([\d.]+)%,\s*([\d.]+)%/); 
+            let h,s,l = 0;
+            let darkerColor = ""
+            if (match) {
+                h = Number(match[1]);
+                s = Number(match[2]);
+                l = Number(match[3]);
+                darkerColor = `hsla(${h - 5}, ${s + 34 }%, ${l - 32}%, 100%)`;
+                }
+            if(!whiteSkillCurtain || !porjectsSection) return;
+                whiteSkillCurtain.style.setProperty('--background-color', darkerColor);
+                porjectsSection.style.setProperty('--background-color', darkerColor);
+                porjectsSection.style.setProperty('--text-color', '#fff');
+            }
+
 
 
         gsap.set(curtainBlack,{

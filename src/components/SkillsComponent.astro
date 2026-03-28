@@ -216,11 +216,14 @@ import { Image } from 'astro:assets';
         bottom: calc(-100% - var(--bottom-margin) + 36px - var(--red-curtain-puffer) );
     }
 
-    .white{
-       background-color: white;
+    [white-skill-curtain]{
+        --background-color:#ffffff;
+        background-color: var(--background-color);
+        transition: background-color 0.25s ease-in-out;
 
         &::before{
-           background-color: white; 
+           background-color: var(--background-color); 
+           transition: background-color 0.25s ease-in-out;
         }
     }
 

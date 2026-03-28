@@ -39,7 +39,9 @@ const mobileImageMap: Partial<Record<string, ImageMetadata>> = {
 
 <p>{subtitle}</p>
 <h3 style={{ color: mainColor }}>{title}</h3>
+
 {descriptions.map(desc => <p class="description-text">{desc}</p>)}
+<hr>
 <div class="thumb-container">
     <picture>
         {mobileImageMap[previewImage] && (
@@ -48,12 +50,14 @@ const mobileImageMap: Partial<Record<string, ImageMetadata>> = {
         <Image src={imageMap[previewImage]} alt={title} />
     </picture>
 </div>
+
 <strong>Techstack:</strong>
 <ul class="technology-list">
     {techstack.map(tech => (
         <li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>
     ))}
 </ul>
+<hr>
 <div class="button-box" style={{"--button-color": mainColor}}>
     {demo && <a href={demo} target="_blank">Demo</a>}
     {github && <a class="github" href={github} target="_blank">GitHub</a>}
@@ -62,9 +66,7 @@ const mobileImageMap: Partial<Record<string, ImageMetadata>> = {
 <style lang="scss">
     @use "../styles/index.scss" as *;
 
-    p,ul,li{
-        color:$font-color;
-    }
+
 
     strong{
         font-weight: 300;
@@ -169,5 +171,13 @@ const mobileImageMap: Partial<Record<string, ImageMetadata>> = {
                 object-position: center;
             }
         }
+    }
+
+    hr{
+        border: none;
+        background-color: transparent;
+        margin: 2rem 0px;
+        border-top: 1px solid $box-grey-300;
+        max-width: max(75%, 850px);
     }
 </style>

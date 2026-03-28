@@ -199,19 +199,19 @@ import ContactForm from "./ContactFormComponent.astro"
         text-decoration: none;
 
         .icon{
-            width: clamp(32px, 4vw, 56px);
-            height: clamp(32px, 4vw, 56px);
-            max-height: clamp(32px, 4vw, 56px);
+            width: clamp(42px, 4vw, 56px);
+            max-height: clamp(42px, 4vw, 56px);
             aspect-ratio:  1 / 1;
             flex-shrink: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: $box-grey-300;
-            border-radius: 4px;
+            background-color: $box-grey-700;
+            border-radius: 50%;
             border: 1px solid $box-grey-400;
+            transition: background-color 0.25s ease-in-out;
             img{
-                height: 80%;
+                height: 60%;
                 max-height: 42px;
                 object-fit: contain;
 
@@ -233,8 +233,13 @@ import ContactForm from "./ContactFormComponent.astro"
         }
 
         &:hover {
+           
             .impotent{
                 color: $button-color-hover;
+            }
+
+            .icon{
+                background-color: $grey-background;
             }
         }
 
