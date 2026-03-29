@@ -30,5 +30,6 @@ jobs:
           path: dist/
           remote_path: /var/www/testserver-web/
           remote_host: ${{ secrets.SERVER_HOST }}
+          remote_port: ${{ secrets.SSH_PORT }}
           remote_user: ${{ secrets.SERVER_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
