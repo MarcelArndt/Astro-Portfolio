@@ -35,12 +35,12 @@ const previewImageMap: Record<string, string> = {
                 <ul class="projects-list">
                     {projects.map((project, index) => (
                         <li style={{ "--project-color": project.mainColor }} single-project>
-                            <input type="checkbox" name={project.id} id={project.id} projejct-checkbox/>
-                            <label for={project.id} data-preview={previewImageMap[project.previewImage]} role="button" id={`${project.id}-label`} aria-expanded="false" aria-controls={`${project.id}-content`}>
+                            <input type="checkbox" name={project.id} id={project.id} project-checkbox/>
+                            <label for={project.id} project-card data-preview={previewImageMap[project.previewImage]} role="button" id={`${project.id}-label`} aria-expanded="false" aria-controls={`${project.id}-content`}>
                                 <div class="titel-box">
                                     <div class="cloumn-box">
                                         <h4>{project.label}</h4>
-                                        <ul class="technology-list">
+                                        <ul class="technology-list preview">
                                             {project.techstack.map( tech => (<li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>))}
                                         </ul>
 
@@ -48,7 +48,7 @@ const previewImageMap: Record<string, string> = {
                                     <hr>
                                     <p>{project.descriptions[0]}</p>
                                 </div>
-                                <span aria-hidden="true"><img loading="lazy" src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" alt="" /></span>
+                                <span aria-hidden="true"><img class="checkbox-arrow" loading="lazy" src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" alt="" /></span>
 
                             </label>
                             <div class="project-content-wrapper" id={`${project.id}-content`} role="region" aria-labelledby={`${project.id}-label`}>
@@ -86,14 +86,12 @@ const previewImageMap: Record<string, string> = {
 
     section{
         position: relative;
-
     }
 
     [project-section]{
         --background-color:#fff;
         --text-color: #320105;
         background-color: var(--background-color);
-        transition: background-color 0.25s ease-in-out;
         p{
             color:var(--text-color);
         }
@@ -243,10 +241,18 @@ const previewImageMap: Record<string, string> = {
                 z-index: 300;
             }
 
-            img, .technology-list{
+            .technology-list.preview{
                 user-select: none;
-                opacity: 0.6;
-                transition: opacity 0.125s ease-in-out;
+                filter: brightness(0) invert(0) saturate(0);
+                opacity: 0.3;
+                transition: opacity 0.125s ease-in-out filter 0.125s ease-in-out;
+            }
+
+            .checkbox-arrow{
+                filter: brightness(0%) invert(0) saturate(0);
+                opacity: 0.3;
+                rotate: (-90deg);
+                transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out, rotate 0.125s ease-in-out;
             }
 
             &:hover{
@@ -259,10 +265,16 @@ const previewImageMap: Record<string, string> = {
                     color: #fff;
                 }
 
-                img, .technology-list{
-                    filter: brightness(1000%);
+                .technology-list.preview{
+                    filter: brightness(0%) invert(1) saturate(0);
                     opacity: 1;
                 }
+
+                .checkbox-arrow{
+                    filter: brightness(0%) invert(1) saturate(0);
+                    opacity: 1;
+                }
+
 
                 border-color:#ececec;
 
@@ -275,10 +287,56 @@ const previewImageMap: Record<string, string> = {
             }
         }
 
+        label.dark-color-scheme {
+            background-color: $box-grey-1200;
+            border-color: $box-grey-900;
+
+ 
+            .technology-list.preview{
+                filter: brightness(0%) invert(1) saturate(0);
+                opacity: 0.3;
+                transition: opacity 0.125s ease-in-out;
+            }
+
+            p{
+                opacity: 0.7;
+                transition: opacity 0.125s ease-in-out;
+            }
+
+            .checkbox-arrow{
+                filter: brightness(0%) invert(1) saturate(0);
+                opacity: 0.3;
+                transition: opacity 0.125s ease-in-out;
+            }
+
+            h4{
+                color:#fff;
+                opacity: 0.6;
+                transition: opacity 0.125s ease-in-out;
+            }
+
+            &:hover{
+                h4{
+                    opacity: 1;
+                }
+
+                p{
+                   opacity: 1; 
+                }
+
+                .checkbox-arrow{
+                    filter: brightness(0%) invert(1) saturate(0);
+                    opacity: 1;
+                }
+                .technology-list.preview{
+                    opacity: 1;
+                }
+            }
+        }
+
         .technology-list{
             margin-top: 1rem;
-
-
+            
             li{
                 width: 32px;
                 height: 32px;
@@ -300,12 +358,6 @@ const previewImageMap: Record<string, string> = {
             aspect-ratio: 1 / 1;
         }
 
-        span > img{
-            object-position: center;
-            transform: rotate(-90deg);
-            transition: transform 0.25s ease-in-out;
-        }
-
 
         .project-content-wrapper{
             display: grid;
@@ -319,13 +371,16 @@ const previewImageMap: Record<string, string> = {
             box-sizing: border-box;
             padding: 0rem 2rem;
             transition: padding 0.4s ease-in-out;
-
             p{
                 max-width: 75ch;
             }
 
             p:not(:first-child){
                 margin-bottom: 1.5rem;
+            }
+
+            @media screen and (max-width:600px) {
+                padding: 0rem 0rem;
             }
         }
 
@@ -336,29 +391,41 @@ const previewImageMap: Record<string, string> = {
 
         input[type="checkbox"]:checked ~ label{
             background-color: var(--project-color);
+            .checkbox-arrow{
+                filter: brightness(0%) invert(1) saturate(0);
+                opacity: 0.3;
+                rotate: (90deg);
+                transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out, rotate 0.125s ease-in-out;
+            }
+
+            .technology-list.preview{
+                opacity: 1;
+                filter: brightness(0%) invert(1) saturate(0);
+            }
+
+            .checkbox-arrow{
+                opacity: 1;
+            }
 
             &:hover{
                 filter: brightness(115%);
+                transition: filter 0.125s ease-in-out;
             }
             p,h4{
                 color:#fff;
                 opacity: 1;
             }
-            img, .technology-list{
-                    filter: brightness(1000%);
-                    opacity: 1;
-            }
-
-
-
-            span > img{
-                transform: rotate(90deg);
-            }
         }
 
         input[type="checkbox"]:checked ~ .project-content-wrapper .project-content-inner{
             padding: 4rem 2rem;
+
+            @media screen and (max-width:600px) {
+                padding: 2rem 0rem;
+            }
         }
+
+
     }
 
     .curtain-wrapper{
@@ -415,23 +482,24 @@ const previewImageMap: Record<string, string> = {
         --circle-color:#fff;
         z-index: 99;
         position: absolute;
-        top: 50%;
+        bottom: 50%;
         left: 50%;
         width: 32px;
         height: 32px;
         aspect-ratio: 1 / 1;
         flex-shrink: 0;
         background-color: var(--circle-color);
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, 50%);
         border-radius: 50%;
     }
+
+
 </style>
 
 <script>
 
     // ## Accordion
     const checkboxes = document.querySelectorAll<HTMLInputElement>('.projects-list input[type="checkbox"]');
-
         
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
@@ -446,9 +514,14 @@ const previewImageMap: Record<string, string> = {
                 ScrollTrigger.getById('curtain')?.refresh();
                 ScrollTrigger.getById('testimonial-curtain')?.refresh();
                 ScrollTrigger.getById('contact-section')?.refresh();
+                ScrollTrigger.getById('refresh-area')?.refresh();
             }, 420);
     }
 
+    document.addEventListener("resize", () => {
+        refreshScrollTrigger();
+        ScrollTrigger.getById("project-section")?.refresh();
+    })
 
     function refreshAriaExpanded(checkbox:HTMLInputElement){
                     if (checkbox.checked) {
@@ -529,20 +602,42 @@ const previewImageMap: Record<string, string> = {
         const arrayProject = Array.from(document.querySelectorAll<HTMLElement>(`[single-project]`));
         const curtainBlack = document.querySelector<HTMLElement>(`[project-curtain-black]`);
         const whiteSkillCurtain = document.querySelector<HTMLElement>('[white-skill-curtain]');
-        const projectsInputsArray:HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[projejct-checkbox]'));
+        const projectsInputsArray:HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[project-checkbox]'));
         const circleCurtain = document.querySelector<HTMLElement>('[circle-curtain]');
+        const projectsCardsArray:HTMLElement[] = gsap.utils.toArray(document.querySelectorAll('[project-card]'))
 
        async function circleGrowing(currentColor:string){
             if(!circleCurtain) return;
             const darkerColor = darkenColor(currentColor);
             circleCurtain.style.setProperty('--circle-color', darkerColor);
-            const contentActive = await checkIsAkkodeonActive();
+            const isAnyInputActive = await checkIsAkkodeonActive();
+            setDarkThemeToInputs(isAnyInputActive)
             const newColorScheme:ColorScheme = {
-                backgroundColor : contentActive ? darkerColor : '#fff',
-                textColor : contentActive ? '#fff' : "#320105",
+                backgroundColor : isAnyInputActive ? darkerColor : '#fff',
+                textColor : isAnyInputActive ? '#fff' : "#320105",
             };
             circleCurtain.style.setProperty('--circle-color', newColorScheme.backgroundColor);
             animationCircle(currentColor, newColorScheme);
+        }
+
+        function setDarkThemeToInputs(isAnyInputActive:boolean){
+            if(isAnyInputActive){
+                setTimeout(() => {
+                    projectsInputsArray.forEach( (input, index) => {
+                    if(input.checked){
+                        projectsCardsArray[index].classList.remove("dark-color-scheme");
+                    }
+                    else {
+                        projectsCardsArray[index].classList.add("dark-color-scheme")
+                    }
+                });
+                },0)
+            }
+            else {
+                projectsCardsArray.forEach(card => {
+                    card.classList.remove("dark-color-scheme");
+                })
+            }
         }
 
         function animationCircle(oldColor:string, newColorScheme:ColorScheme){
@@ -563,10 +658,13 @@ const previewImageMap: Record<string, string> = {
                 onStart:(() => {
                     setNewColorScheme(oldColor, newColorScheme.textColor);
                 }),
-                onComplete: (()=> {
+
+            })
+            .to(circleCurtain, {
+                onStart: (()=> {
                     setNewColorScheme(newColorScheme.backgroundColor, newColorScheme.textColor);
                 })
-            })
+            },"-=0.75" )
             .to(circleCurtain,{
                 opacity:0,
                 duration:0.3,
@@ -579,11 +677,10 @@ const previewImageMap: Record<string, string> = {
         }
         
         function setNewColorScheme(backgroundColor:string, textColor:string){
-             if(!whiteSkillCurtain || !porjectsSection) return;{
+             if(!whiteSkillCurtain || !porjectsSection) return;
                 whiteSkillCurtain.style.setProperty('--background-color', backgroundColor);
                 porjectsSection.style.setProperty('--background-color', backgroundColor);
                 porjectsSection.style.setProperty('--text-color', textColor);
-            }
         }
 
         function darkenColor(currentColor:string){
@@ -596,9 +693,35 @@ const previewImageMap: Record<string, string> = {
                 l = Number(match[3]);
                 darkerColor = `hsla(${h - 5}, ${s + 34 }%, ${l - 32}%, 100%)`;
                 }
+            else {
+                 darkerColor = `hsla(230, 26%, 9%, 100%)`
+            }
             return darkerColor
         }
 
+        function resetSection(){
+            gsap.killTweensOf(circleCurtain);
+            gsap.set(circleCurtain,{
+                width:0,
+                height:0, 
+                opacity:0,
+                duration:0,
+            })
+            setNewColorScheme("#fff", "#320105");
+            setDarkThemeToInputs(false);
+            projectsInputsArray.forEach(input => {
+                input.checked = false;
+            });
+            refreshScrollTrigger();
+        }
+
+        ScrollTrigger.create({
+            id:"refresh-area",
+            trigger: porjectsSection,
+            start: "200px 50%",
+            end: "bottom 75%", 
+            onLeaveBack: () => resetSection(),
+        });
 
         gsap.set(curtainBlack,{
             y:"+=100vh",
@@ -620,6 +743,7 @@ const previewImageMap: Record<string, string> = {
 
         const tlContent = gsap.timeline({
         scrollTrigger: {
+            id:"project-section",
             trigger: porjectsSection,
             start: 'top 66%',
             end: '55% 75%',
