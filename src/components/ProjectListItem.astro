@@ -1,0 +1,304 @@
+---
+import SingleProjectComponent from "./SingleProjectComponent.astro"
+import { iconMap } from "../types/types-icon-map"
+
+interface Props {
+    id: string;
+    label: string;
+    subtitle: string;
+    title: string;
+    descriptions: string[];
+    previewImage: string;
+    techstack: string[];
+    demo: string;
+    github: string;
+    mainColor: string;
+    previewImageSrc: string;
+}
+
+const { id, label, subtitle, title, descriptions, previewImage, techstack, demo, github, mainColor, previewImageSrc } = Astro.props;
+---
+
+<li style={{ "--project-color": mainColor }} single-project>
+    <input type="checkbox" name={id} id={id} project-checkbox />
+    <label for={id} project-card data-preview={previewImageSrc} role="button" id={`${id}-label`} aria-expanded="false" aria-controls={`${id}-content`}>
+        <div class="titel-box">
+            <div class="cloumn-box">
+                <h4>{label}</h4>
+                <ul class="technology-list preview">
+                    {techstack.map(tech => (
+                        <li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>
+                    ))}
+                </ul>
+            </div>
+            <hr>
+            <p>{descriptions[0]}</p>
+        </div>
+        <span aria-hidden="true">
+            <img class="checkbox-arrow" loading="lazy" src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" alt="" />
+        </span>
+    </label>
+    <div class="project-content-wrapper" id={`${id}-content`} role="region" aria-labelledby={`${id}-label`}>
+        <div class="project-content-inner">
+            <SingleProjectComponent
+                subtitle={subtitle}
+                title={title}
+                descriptions={descriptions}
+                previewImage={previewImage}
+                techstack={techstack}
+                demo={demo}
+                github={github}
+                mainColor={mainColor}
+            />
+        </div>
+    </div>
+</li>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    .titel-box {
+        display: flex;
+        width: 100%;
+
+        hr {
+            opacity: 0.5;
+            margin: 0px 1.75rem;
+
+            @media screen and (max-width: 818px) {
+                display: none;
+            }
+        }
+
+        p {
+            max-width: 60ch;
+            box-sizing: border-box;
+            padding-right: 3rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            opacity: 0.6;
+
+            @media screen and (max-width: 880px) {
+                padding-right: 0rem;
+            }
+            @media screen and (max-width: 818px) {
+                display: none;
+            }
+        }
+    }
+
+    .cloumn-box {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        min-width: 260px;
+
+        @media screen and (max-width: 767px) {
+            min-width: auto;
+        }
+    }
+
+    label {
+        position: relative;
+        width: 100%;
+        font-weight: 300;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0.75rem 2rem;
+        border-radius: 4px;
+        border: 1px solid #f2f2f2;
+        gap: 1.5rem;
+        background-color: $box-grey-100;
+        user-select: none;
+        transition: background-color 0.125s ease-in-out;
+
+        p {
+            color: var(--text-color);
+            user-select: none;
+            position: relative;
+            z-index: 300;
+            transition: color 0.125s ease-in-out;
+        }
+
+        h4 {
+            user-select: none;
+            font-weight: 300;
+            margin: 0px;
+            margin-bottom: 1rem;
+            font-size: clamp(1rem, 8vw, 3em);
+            position: relative;
+            z-index: 300;
+        }
+
+        .technology-list.preview {
+            user-select: none;
+            filter: brightness(0) invert(0) saturate(0);
+            opacity: 0.3;
+            transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out;
+        }
+
+        .checkbox-arrow {
+            filter: brightness(0%) invert(0) saturate(0);
+            opacity: 0.3;
+            rotate: -90deg;
+            transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out, rotate 0.125s ease-in-out;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--project-color);
+            color: #fff;
+
+            p {
+                color: #fff;
+            }
+
+            .technology-list.preview {
+                filter: brightness(0%) invert(1) saturate(0);
+                opacity: 1;
+            }
+
+            .checkbox-arrow {
+                filter: brightness(0%) invert(1) saturate(0);
+                opacity: 1;
+            }
+
+            border-color: #ececec;
+
+            .titel-box p {
+                opacity: 1;
+            }
+        }
+    }
+
+    label.dark-color-scheme {
+        background-color: $box-grey-1200;
+        border-color: $box-grey-900;
+
+        .technology-list.preview {
+            filter: brightness(0%) invert(1) saturate(0);
+            opacity: 0.3;
+            transition: opacity 0.125s ease-in-out;
+        }
+
+        p {
+            opacity: 0.7;
+            transition: opacity 0.125s ease-in-out;
+        }
+
+        .checkbox-arrow {
+            filter: brightness(0%) invert(1) saturate(0);
+            opacity: 0.3;
+            transition: opacity 0.125s ease-in-out;
+        }
+
+        h4 {
+            color: #fff;
+            opacity: 0.6;
+            transition: opacity 0.125s ease-in-out;
+        }
+
+        &:hover {
+            h4 { opacity: 1; }
+            p { opacity: 1; }
+            .checkbox-arrow {
+                filter: brightness(0%) invert(1) saturate(0);
+                opacity: 1;
+            }
+            .technology-list.preview { opacity: 1; }
+        }
+    }
+
+    .technology-list {
+        margin-top: 1rem;
+
+        li {
+            width: 32px;
+            height: 32px;
+
+            img { height: 100%; }
+        }
+
+        li:not(:first-child) {
+            margin-left: 1rem;
+        }
+    }
+
+    span {
+        display: flex;
+        height: clamp(16px, 6vw, 32px);
+        aspect-ratio: 1 / 1;
+    }
+
+    .project-content-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.4s ease-in-out, opacity 0.3s ease-in-out;
+        opacity: 0;
+    }
+
+    .project-content-inner {
+        overflow: hidden;
+        box-sizing: border-box;
+        padding: 0rem 2rem;
+        transition: padding 0.4s ease-in-out;
+
+        p { max-width: 75ch; }
+
+        p:not(:first-child) { margin-bottom: 1.5rem; }
+
+        @media screen and (max-width: 600px) {
+            padding: 0rem 0rem;
+        }
+    }
+
+    input[type="checkbox"]:checked ~ .project-content-wrapper {
+        grid-template-rows: 1fr;
+        opacity: 1;
+    }
+
+    input[type="checkbox"]:checked ~ label {
+        background-color: var(--project-color);
+
+        .checkbox-arrow {
+            filter: brightness(0%) invert(1) saturate(0);
+            opacity: 0.3;
+            rotate: 90deg;
+            transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out, rotate 0.125s ease-in-out;
+        }
+
+        .technology-list.preview {
+            opacity: 1;
+            filter: brightness(0%) invert(1) saturate(0);
+        }
+
+        .checkbox-arrow { opacity: 1; }
+
+        &:hover {
+            filter: brightness(115%);
+            transition: filter 0.125s ease-in-out;
+        }
+
+        p, h4 {
+            color: #fff;
+            opacity: 1;
+        }
+    }
+
+    input[type="checkbox"]:checked ~ .project-content-wrapper .project-content-inner {
+        padding: 4rem 2rem;
+
+        @media screen and (max-width: 600px) {
+            padding: 2rem 0rem;
+        }
+    }
+</style>

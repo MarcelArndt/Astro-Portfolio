@@ -1,0 +1,92 @@
+---
+---
+
+<div class="project-preview" id="project-preview">
+    <img id="project-preview-img" src="" alt="Projekt Vorschau" />
+</div>
+
+<style lang="scss">
+    .project-preview {
+        box-sizing: border-box;
+        padding: 1rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: clamp(18.75rem, 24vw, 28.75rem);
+        aspect-ratio: 16 / 9;
+        border-radius: 4px;
+        overflow: hidden;
+        pointer-events: none;
+        border: 1px solid #f6f6f6;
+        z-index: 9999;
+        opacity: 0;
+        scale: 0.85;
+        transition: opacity 0.2s ease-in-out, scale 0.2s ease-in-out;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        backdrop-filter: blur(20px);
+
+        &.visible {
+            opacity: 1;
+            scale: 1;
+        }
+
+        img {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+    }
+</style>
+
+<script>
+    const preview = document.getElementById('project-preview') as HTMLDivElement;
+    const previewImg = document.getElementById('project-preview-img') as HTMLImageElement;
+    const labels = document.querySelectorAll<HTMLLabelElement>('[data-preview]');
+
+    const mouseOffsetX = 15;
+    const mouseOffsetY = 15;
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let animating = false;
+
+    function lerp(a: number, b: number, t: number) {
+        return a + (b - a) * t;
+    }
+
+    function isTouchDevice(): boolean {
+        return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    }
+
+    function animate() {
+        if (isTouchDevice()) return;
+        currentX = lerp(currentX, mouseX, 0.7);
+        currentY = lerp(currentY, mouseY, 0.7);
+        preview.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        animating = true;
+        requestAnimationFrame(animate);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX + mouseOffsetX;
+        mouseY = e.clientY + mouseOffsetY;
+        if (!animating) animate();
+    });
+
+    labels.forEach((label) => {
+        label.addEventListener('mouseenter', () => {
+            if (isTouchDevice()) return;
+            const src = label.dataset.preview;
+            if (src) previewImg.src = src;
+            preview.classList.add('visible');
+        });
+        label.addEventListener('mouseleave', () => {
+            preview.classList.remove('visible');
+        });
+    });
+</script>

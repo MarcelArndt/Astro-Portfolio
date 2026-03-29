@@ -1,11 +1,11 @@
 ---
-import SingleProjectComponent from "./SingleProjectComponent.astro"
+import ProjectListItem from "./ProjectListItem.astro"
+import ProjectPreview from "./ProjectPreview.astro"
 import projects from "../data/projects.json"
 import projectPictureOne from "../../public/assets/pictures/projects/project_one.jpg"
 import projectPictureTwo from "../../public/assets/pictures/projects/project_two.jpg"
 import projectPictureThree from "../../public/assets/pictures/projects/project_three.jpg"
 import projectPictureFour from "../../public/assets/pictures/projects/project_four.jpg"
-import { iconMap } from "../types/types-icon-map"
 
 const previewImageMap: Record<string, string> = {
     "project_one": projectPictureOne.src,
@@ -13,11 +13,10 @@ const previewImageMap: Record<string, string> = {
     "project_three": projectPictureThree.src,
     "project_four": projectPictureFour.src,
 };
-
 ---
 
-<section >
-    <div class="project-section-wrapper" project-section id="projects"> 
+<section>
+    <div class="project-section-wrapper" project-section id="projects">
         <div class="cirlce-window-wrapper">
             <div class="circle-wrapper">
                 <div circle-curtain></div>
@@ -26,46 +25,18 @@ const previewImageMap: Record<string, string> = {
 
         <div class="content-box">
             <div>
-                <p  project-head-aera>Dies ist eine Auswahl</p>
-                <h2  project-head-aera>Meine Projekte</h2>
-                <p class="sub-text"  project-head-aera >die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
+                <p project-head-aera>Dies ist eine Auswahl</p>
+                <h2 project-head-aera>Meine Projekte</h2>
+                <p class="sub-text" project-head-aera>die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
             </div>
 
             <div>
                 <ul class="projects-list">
-                    {projects.map((project, index) => (
-                        <li style={{ "--project-color": project.mainColor }} single-project>
-                            <input type="checkbox" name={project.id} id={project.id} project-checkbox/>
-                            <label for={project.id} project-card data-preview={previewImageMap[project.previewImage]} role="button" id={`${project.id}-label`} aria-expanded="false" aria-controls={`${project.id}-content`}>
-                                <div class="titel-box">
-                                    <div class="cloumn-box">
-                                        <h4>{project.label}</h4>
-                                        <ul class="technology-list preview">
-                                            {project.techstack.map( tech => (<li><img loading="lazy" src={iconMap[tech].src} alt={iconMap[tech].alt} /></li>))}
-                                        </ul>
-
-                                    </div>
-                                    <hr>
-                                    <p>{project.descriptions[0]}</p>
-                                </div>
-                                <span aria-hidden="true"><img class="checkbox-arrow" loading="lazy" src="./assets/icons/ui/goggle-mat-arrow-forward-ios.svg" alt="" /></span>
-
-                            </label>
-                            <div class="project-content-wrapper" id={`${project.id}-content`} role="region" aria-labelledby={`${project.id}-label`}>
-                                <div class="project-content-inner">
-                                    <SingleProjectComponent
-                                        subtitle={project.subtitle}
-                                        title={project.title}
-                                        descriptions={project.descriptions}
-                                        previewImage={project.previewImage}
-                                        techstack={project.techstack}
-                                        demo={project.demo}
-                                        github={project.github}
-                                        mainColor={project.mainColor}
-                                    />
-                                </div>
-                            </div>
-                        </li>
+                    {projects.map((project) => (
+                        <ProjectListItem
+                            {...project}
+                            previewImageSrc={previewImageMap[project.previewImage]}
+                        />
                     ))}
                 </ul>
             </div>
@@ -73,372 +44,64 @@ const previewImageMap: Record<string, string> = {
     </div>
 
     <div class="curtain-wrapper">
-        <div class="black-box" project-curtain-black ></div>
+        <div class="black-box" project-curtain-black></div>
     </div>
 </section>
 
-<div class="project-preview" id="project-preview">
-    <img id="project-preview-img" src="" alt="Projekt Vorschau" />
-</div>
+<ProjectPreview />
 
 <style lang="scss">
     @use "../styles/index.scss" as *;
 
-    section{
+    section {
         position: relative;
     }
 
-    [project-section]{
-        --background-color:#fff;
+    [project-section] {
+        --background-color: #fff;
         --text-color: #320105;
         background-color: var(--background-color);
-        p{
-            color:var(--text-color);
-        }
+
+        p { color: var(--text-color); }
     }
 
-    .project-section-wrapper{
+    .project-section-wrapper {
         padding-bottom: 460px;
     }
 
-    p{
+    p {
         max-width: 75ch;
     }
 
-    .sub-text{
+    .sub-text {
         margin-bottom: 3rem;
     }
 
-    .content-box{
+    .content-box {
         box-sizing: border-box;
         position: relative;
         z-index: 99;
         width: 100%;
-        padding: 96px $inner-padding; 
+        padding: 96px $inner-padding;
     }
 
-    .project-preview{
-        box-sizing:border-box;
-        padding: 1rem 2rem;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: clamp(18.75rem, 24vw, 28.75rem);
-        aspect-ratio: 16 / 9;
-        border-radius: 4px;
-        overflow: hidden;
-        pointer-events: none;
-        border: 1px solid #f6f6f6;
-        z-index: 9999;
-        opacity: 0;
-        scale: 0.85;
-        transition: opacity 0.2s ease-in-out, scale 0.2s ease-in-out;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-        backdrop-filter: blur(20px);
-
-        &.visible{
-            opacity: 1;
-            scale: 1;
-        }
-
-        img{
-            display: flex;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-            height: 100%;
-            object-fit: contain;
-            object-position: center;
-        }
-    }
-
-    .projects-list{
+    .projects-list {
         list-style: none;
-
-         li:not(:first-child){
-            margin-top: 1.5rem;
-        }
-
-        input[type="checkbox"]{
-            display: none;
-        }
-
-        .titel-box{
-            display: flex;
-            width: 100%;
-
-            hr{
-                opacity: 0.5;
-                margin: 0px 1.75rem; 
-
-                @media screen and (max-width:818px) {
-                    display: none;
-                }
-            }
-
-            p{
-                max-width: 60ch;
-                box-sizing: border-box;
-                padding-right: 3rem;
-                display: -webkit-box;
-                -webkit-line-clamp: 3;
-                -webkit-box-orient: vertical;
-                overflow: hidden; 
-                opacity: 0.6;
-                
-
-                @media screen and (max-width:880px){
-                    padding-right: 0rem;
-                }
-                @media screen and (max-width:818px) {
-                    display: none;
-                }
-            }
-        }
-
-        .cloumn-box{
-            display: flex;
-            flex-direction: column;
-            align-items: start; 
-            min-width: 260px;
-            @media screen and (max-width:767px) {
-                min-width: auto;
-            }
-        }
-
-        label {
-            position: relative;
-            width: 100%;
-            font-weight: 300;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
-            padding: 0.75rem 2rem;
-            border-radius: 4px;
-            border: 1px solid #f2f2f2;
-            gap: 1.5rem;
-            background-color: $box-grey-100;
-            user-select: none;
-            transition: background-color 0.125s ease-in-out;
-
-            p{
-                user-select: none;
-                position: relative;
-                z-index: 300;
-                
-                transition: color 0.125s ease-in-out;
-            }
-
-
-            h4{
-                user-select: none;
-                font-weight: 300;
-                margin: 0px;
-                margin-bottom: 1rem;
-                font-size: clamp(1rem, 8vw, 3em);
-                position: relative;
-                z-index: 300;
-            }
-
-            .technology-list.preview{
-                user-select: none;
-                filter: brightness(0) invert(0) saturate(0);
-                opacity: 0.3;
-                transition: opacity 0.125s ease-in-out filter 0.125s ease-in-out;
-            }
-
-            .checkbox-arrow{
-                filter: brightness(0%) invert(0) saturate(0);
-                opacity: 0.3;
-                rotate: (-90deg);
-                transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out, rotate 0.125s ease-in-out;
-            }
-
-            &:hover{
-                cursor: pointer;
-                background-color: var(--project-color);
-                color:#fff;
-                
-
-                p{
-                    color: #fff;
-                }
-
-                .technology-list.preview{
-                    filter: brightness(0%) invert(1) saturate(0);
-                    opacity: 1;
-                }
-
-                .checkbox-arrow{
-                    filter: brightness(0%) invert(1) saturate(0);
-                    opacity: 1;
-                }
-
-
-                border-color:#ececec;
-
-                .titel-box{
-                    p{
-                        opacity: 1;
-                    }
-
-                }
-            }
-        }
-
-        label.dark-color-scheme {
-            background-color: $box-grey-1200;
-            border-color: $box-grey-900;
-
- 
-            .technology-list.preview{
-                filter: brightness(0%) invert(1) saturate(0);
-                opacity: 0.3;
-                transition: opacity 0.125s ease-in-out;
-            }
-
-            p{
-                opacity: 0.7;
-                transition: opacity 0.125s ease-in-out;
-            }
-
-            .checkbox-arrow{
-                filter: brightness(0%) invert(1) saturate(0);
-                opacity: 0.3;
-                transition: opacity 0.125s ease-in-out;
-            }
-
-            h4{
-                color:#fff;
-                opacity: 0.6;
-                transition: opacity 0.125s ease-in-out;
-            }
-
-            &:hover{
-                h4{
-                    opacity: 1;
-                }
-
-                p{
-                   opacity: 1; 
-                }
-
-                .checkbox-arrow{
-                    filter: brightness(0%) invert(1) saturate(0);
-                    opacity: 1;
-                }
-                .technology-list.preview{
-                    opacity: 1;
-                }
-            }
-        }
-
-        .technology-list{
-            margin-top: 1rem;
-            
-            li{
-                width: 32px;
-                height: 32px;
-
-                img{
-                    height: 100%;
-                }
-            }
-
-            li:not(:first-child){
-                margin-left: 1rem;
-            }
-            
-        }
-
-        span{
-            display: flex;
-            height: clamp(16px, 6vw, 32px);
-            aspect-ratio: 1 / 1;
-        }
-
-
-        .project-content-wrapper{
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.4s ease-in-out, opacity 0.3s ease-in-out;
-            opacity: 0;
-        }
-
-        .project-content-inner{
-            overflow: hidden;
-            box-sizing: border-box;
-            padding: 0rem 2rem;
-            transition: padding 0.4s ease-in-out;
-            p{
-                max-width: 75ch;
-            }
-
-            p:not(:first-child){
-                margin-bottom: 1.5rem;
-            }
-
-            @media screen and (max-width:600px) {
-                padding: 0rem 0rem;
-            }
-        }
-
-        input[type="checkbox"]:checked ~ .project-content-wrapper{
-            grid-template-rows: 1fr;
-            opacity: 1;
-        }
-
-        input[type="checkbox"]:checked ~ label{
-            background-color: var(--project-color);
-            .checkbox-arrow{
-                filter: brightness(0%) invert(1) saturate(0);
-                opacity: 0.3;
-                rotate: (90deg);
-                transition: opacity 0.125s ease-in-out, filter 0.125s ease-in-out, rotate 0.125s ease-in-out;
-            }
-
-            .technology-list.preview{
-                opacity: 1;
-                filter: brightness(0%) invert(1) saturate(0);
-            }
-
-            .checkbox-arrow{
-                opacity: 1;
-            }
-
-            &:hover{
-                filter: brightness(115%);
-                transition: filter 0.125s ease-in-out;
-            }
-            p,h4{
-                color:#fff;
-                opacity: 1;
-            }
-        }
-
-        input[type="checkbox"]:checked ~ .project-content-wrapper .project-content-inner{
-            padding: 4rem 2rem;
-
-            @media screen and (max-width:600px) {
-                padding: 2rem 0rem;
-            }
-        }
-
-
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
-    .curtain-wrapper{
-
+    .curtain-wrapper {
         position: absolute;
         top: -500px;
         left: 0px;
         width: 100%;
         height: calc(100% + 500px);
         overflow: hidden;
-        }
+    }
 
-    .black-box{
+    .black-box {
         z-index: 222;
         position: absolute;
         bottom: calc(-100% - 300px);
@@ -446,19 +109,19 @@ const previewImageMap: Record<string, string> = {
         width: 100%;
         background-color: $grey-background;
 
-        &::before{
-        content: "";
-        position: absolute;
-        top: -24%;
-        right: 0px;
-        width: 200%;
-        height: 100%;
-        rotate: 6deg;
-        background-color: $grey-background;;
-    }
+        &::before {
+            content: "";
+            position: absolute;
+            top: -24%;
+            right: 0px;
+            width: 200%;
+            height: 100%;
+            rotate: 6deg;
+            background-color: $grey-background;
+        }
     }
 
-    .cirlce-window-wrapper{
+    .cirlce-window-wrapper {
         position: fixed;
         width: 100%;
         height: 100%;
@@ -470,7 +133,7 @@ const previewImageMap: Record<string, string> = {
         top: 0px;
     }
 
-    .circle-wrapper{
+    .circle-wrapper {
         width: 100%;
         height: 100%;
         max-width: 1920px;
@@ -478,8 +141,8 @@ const previewImageMap: Record<string, string> = {
         position: relative;
     }
 
-    [circle-curtain]{
-        --circle-color:#fff;
+    [circle-curtain] {
+        --circle-color: #fff;
         z-index: 99;
         position: absolute;
         bottom: 50%;
@@ -492,280 +155,181 @@ const previewImageMap: Record<string, string> = {
         transform: translate(-50%, 50%);
         border-radius: 50%;
     }
-
-
 </style>
 
 <script>
+    import { gsap, ScrollTrigger } from "../lip/gsap";
 
     // ## Accordion
     const checkboxes = document.querySelectorAll<HTMLInputElement>('.projects-list input[type="checkbox"]');
-        
+
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            refreshAriaExpanded(checkbox)
-            refreshScrollTrigger()
+            refreshAriaExpanded(checkbox);
+            refreshScrollTrigger();
         });
     });
 
-
-    function refreshScrollTrigger(){
-         setTimeout(() => {
-                ScrollTrigger.getById('curtain')?.refresh();
-                ScrollTrigger.getById('testimonial-curtain')?.refresh();
-                ScrollTrigger.getById('contact-section')?.refresh();
-                ScrollTrigger.getById('refresh-area')?.refresh();
-            }, 420);
+    function refreshScrollTrigger() {
+        setTimeout(() => {
+            ScrollTrigger.getById('curtain')?.refresh();
+            ScrollTrigger.getById('testimonial-curtain')?.refresh();
+            ScrollTrigger.getById('contact-section')?.refresh();
+            ScrollTrigger.getById('refresh-area')?.refresh();
+        }, 420);
     }
 
-    document.addEventListener("resize", () => {
+    window.addEventListener("resize", () => {
         refreshScrollTrigger();
         ScrollTrigger.getById("project-section")?.refresh();
-    })
-
-    function refreshAriaExpanded(checkbox:HTMLInputElement){
-                    if (checkbox.checked) {
-                checkboxes.forEach(other => {
-                    if (other !== checkbox) {
-                        other.checked = false;
-                        document.getElementById(`${other.id}-label`)?.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-            const label = document.getElementById(`${checkbox.id}-label`);
-            label?.setAttribute('aria-expanded', checkbox.checked ? 'true' : 'false');
-    }
-
-    // ## Cursor Preview
-    const preview = document.getElementById('project-preview') as HTMLDivElement;
-    const previewImg = document.getElementById('project-preview-img') as HTMLImageElement;
-    const labels = document.querySelectorAll<HTMLLabelElement>('.projects-list label[data-preview]');
-
-    const mouseOffsetX = 15;
-    const mouseOffsetY = 15;
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let animating = false;
-
-
-    function lerp(currentValue: number, targetValue: number, time: number) {
-        return currentValue + (targetValue - currentValue) * time;
-    }
-
-    function checkForMobilDevice():boolean{
-        return window.matchMedia('(hover: none) and (pointer: coarse)').matches
-    }
-
-    function animate() {
-        if (checkForMobilDevice()) return;
-        currentX = lerp(currentX, mouseX, 0.7);
-        currentY = lerp(currentY, mouseY, 0.7);
-        preview.style.transform = `translate(${currentX}px, ${currentY}px)`;
-        animating = true;
-        requestAnimationFrame(animate);
-    }
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX + mouseOffsetX;
-        mouseY = e.clientY + mouseOffsetY;
-        if (!animating) animate();
     });
 
-    labels.forEach((label, index) => {
-        label.addEventListener('mouseenter', () => {
-            if (checkForMobilDevice()) return;
-            const src = label.dataset.preview;
-            if (src) previewImg.src = src;
-            preview.classList.add('visible');
-        });
-        label.addEventListener('mouseleave', () => {
-            preview.classList.remove('visible');
-        });
-        label.addEventListener("click", () => {
-            const currentProject = arrayProject[index];
-            const currentColor = getComputedStyle(currentProject).getPropertyValue('--project-color').trim();
+    function refreshAriaExpanded(checkbox: HTMLInputElement) {
+        if (checkbox.checked) {
+            checkboxes.forEach(other => {
+                if (other !== checkbox) {
+                    other.checked = false;
+                    document.getElementById(`${other.id}-label`)?.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+        const label = document.getElementById(`${checkbox.id}-label`);
+        label?.setAttribute('aria-expanded', checkbox.checked ? 'true' : 'false');
+    }
+
+    const porjectsSection = document.querySelector<HTMLElement>(`[project-section]`);
+    const projectHeadAera = Array.from(document.querySelectorAll<HTMLElement>(`[project-head-aera]`));
+    const arrayProject = Array.from(document.querySelectorAll<HTMLElement>(`[single-project]`));
+    const curtainBlack = document.querySelector<HTMLElement>(`[project-curtain-black]`);
+    const whiteSkillCurtain = document.querySelector<HTMLElement>('[white-skill-curtain]');
+    const projectsInputsArray: HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[project-checkbox]'));
+    const circleCurtain = document.querySelector<HTMLElement>('[circle-curtain]');
+    const projectsCardsArray: HTMLElement[] = gsap.utils.toArray(document.querySelectorAll('[project-card]'));
+
+    type ColorScheme = {
+        backgroundColor: string;
+        textColor: string;
+    }
+
+    // ## Circle Growing Effect
+    arrayProject.forEach((project, index) => {
+        const label = projectsCardsArray[index];
+        label?.addEventListener("click", () => {
+            const currentColor = getComputedStyle(project).getPropertyValue('--project-color').trim();
             circleGrowing(currentColor);
         });
     });
 
-    type ColorScheme = {
-        backgroundColor :string,
-        textColor : string,
+    async function circleGrowing(currentColor: string) {
+        if (!circleCurtain) return;
+        const darkerColor = darkenColor(currentColor);
+        circleCurtain.style.setProperty('--circle-color', darkerColor);
+        const isAnyInputActive = await checkIsAkkodeonActive();
+        setDarkThemeToInputs(isAnyInputActive);
+        const newColorScheme: ColorScheme = {
+            backgroundColor: isAnyInputActive ? darkerColor : '#fff',
+            textColor: isAnyInputActive ? '#fff' : "#320105",
+        };
+        circleCurtain.style.setProperty('--circle-color', newColorScheme.backgroundColor);
+        animationCircle(currentColor, newColorScheme);
     }
 
-    // ## GSAP Animation
-        import { gsap, ScrollTrigger } from "../lip/gsap";
-        const porjectsSection = document.querySelector<HTMLElement>(`[project-section]`);
-        const projectHeadAera = Array.from(document.querySelectorAll<HTMLElement>(`[project-head-aera]`));
-        const arrayProject = Array.from(document.querySelectorAll<HTMLElement>(`[single-project]`));
-        const curtainBlack = document.querySelector<HTMLElement>(`[project-curtain-black]`);
-        const whiteSkillCurtain = document.querySelector<HTMLElement>('[white-skill-curtain]');
-        const projectsInputsArray:HTMLInputElement[] = gsap.utils.toArray(document.querySelectorAll('[project-checkbox]'));
-        const circleCurtain = document.querySelector<HTMLElement>('[circle-curtain]');
-        const projectsCardsArray:HTMLElement[] = gsap.utils.toArray(document.querySelectorAll('[project-card]'))
-
-       async function circleGrowing(currentColor:string){
-            if(!circleCurtain) return;
-            const darkerColor = darkenColor(currentColor);
-            circleCurtain.style.setProperty('--circle-color', darkerColor);
-            const isAnyInputActive = await checkIsAkkodeonActive();
-            setDarkThemeToInputs(isAnyInputActive)
-            const newColorScheme:ColorScheme = {
-                backgroundColor : isAnyInputActive ? darkerColor : '#fff',
-                textColor : isAnyInputActive ? '#fff' : "#320105",
-            };
-            circleCurtain.style.setProperty('--circle-color', newColorScheme.backgroundColor);
-            animationCircle(currentColor, newColorScheme);
-        }
-
-        function setDarkThemeToInputs(isAnyInputActive:boolean){
-            if(isAnyInputActive){
-                setTimeout(() => {
-                    projectsInputsArray.forEach( (input, index) => {
-                    if(input.checked){
+    function setDarkThemeToInputs(isAnyInputActive: boolean) {
+        if (isAnyInputActive) {
+            setTimeout(() => {
+                projectsInputsArray.forEach((input, index) => {
+                    if (input.checked) {
                         projectsCardsArray[index].classList.remove("dark-color-scheme");
-                    }
-                    else {
-                        projectsCardsArray[index].classList.add("dark-color-scheme")
+                    } else {
+                        projectsCardsArray[index].classList.add("dark-color-scheme");
                     }
                 });
-                },0)
-            }
-            else {
-                projectsCardsArray.forEach(card => {
-                    card.classList.remove("dark-color-scheme");
-                })
-            }
+            }, 0);
+        } else {
+            projectsCardsArray.forEach(card => card.classList.remove("dark-color-scheme"));
         }
+    }
 
-        function animationCircle(oldColor:string, newColorScheme:ColorScheme){
-            gsap.killTweensOf(circleCurtain);
+    function animationCircle(oldColor: string, newColorScheme: ColorScheme) {
+        gsap.killTweensOf(circleCurtain);
+        gsap.set(circleCurtain, { width: 0, height: 0, opacity: 1 });
 
-            gsap.set(circleCurtain,{
-               width:0,
-               height:0, 
-               opacity:1,
-            });
-
-            const circleTl = gsap.timeline();
-            circleTl
-            .to(circleCurtain,{
-                width:3600,
-                height:3600,
-                duration:1.25,
-                onStart:(() => {
-                    setNewColorScheme(oldColor, newColorScheme.textColor);
-                }),
-
+        const circleTl = gsap.timeline();
+        circleTl
+            .to(circleCurtain, {
+                width: 3600,
+                height: 3600,
+                duration: 1.25,
+                onStart: () => setNewColorScheme(oldColor, newColorScheme.textColor),
             })
             .to(circleCurtain, {
-                onStart: (()=> {
-                    setNewColorScheme(newColorScheme.backgroundColor, newColorScheme.textColor);
-                })
-            },"-=0.75" )
-            .to(circleCurtain,{
-                opacity:0,
-                duration:0.3,
-            },"+=0.3")
+                onStart: () => setNewColorScheme(newColorScheme.backgroundColor, newColorScheme.textColor),
+            }, "-=0.75")
+            .to(circleCurtain, { opacity: 0, duration: 0.3 }, "+=0.3");
+    }
+
+    async function checkIsAkkodeonActive(): Promise<boolean> {
+        await new Promise(resolve => setTimeout(resolve, 0));
+        return projectsInputsArray.some(input => input.checked === true);
+    }
+
+    function setNewColorScheme(backgroundColor: string, textColor: string) {
+        if (!whiteSkillCurtain || !porjectsSection) return;
+        whiteSkillCurtain.style.setProperty('--background-color', backgroundColor);
+        porjectsSection.style.setProperty('--background-color', backgroundColor);
+        porjectsSection.style.setProperty('--text-color', textColor);
+    }
+
+    function darkenColor(currentColor: string) {
+        const match = currentColor.match(/hsla?\((\d+),\s*([\d.]+)%,\s*([\d.]+)%/);
+        if (match) {
+            const h = Number(match[1]);
+            const s = Number(match[2]);
+            const l = Number(match[3]);
+            return `hsla(${h - 5}, ${s + 34}%, ${l - 32}%, 100%)`;
         }
+        return `hsla(230, 26%, 9%, 100%)`;
+    }
 
-        async function checkIsAkkodeonActive(): Promise<boolean> {
-            await new Promise(resolve => setTimeout(resolve, 0));     
-            return projectsInputsArray.some(input => input.checked === true);
-        }
-        
-        function setNewColorScheme(backgroundColor:string, textColor:string){
-             if(!whiteSkillCurtain || !porjectsSection) return;
-                whiteSkillCurtain.style.setProperty('--background-color', backgroundColor);
-                porjectsSection.style.setProperty('--background-color', backgroundColor);
-                porjectsSection.style.setProperty('--text-color', textColor);
-        }
+    function resetSection() {
+        gsap.killTweensOf(circleCurtain);
+        gsap.set(circleCurtain, { width: 0, height: 0, opacity: 0, duration: 0 });
+        setNewColorScheme("#fff", "#320105");
+        setDarkThemeToInputs(false);
+        projectsInputsArray.forEach(input => { input.checked = false; });
+        refreshScrollTrigger();
+    }
 
-        function darkenColor(currentColor:string){
-            const match = currentColor.match(/hsla?\((\d+),\s*([\d.]+)%,\s*([\d.]+)%/); 
-            let h,s,l = 0;
-            let darkerColor = ""
-            if (match) {
-                h = Number(match[1]);
-                s = Number(match[2]);
-                l = Number(match[3]);
-                darkerColor = `hsla(${h - 5}, ${s + 34 }%, ${l - 32}%, 100%)`;
-                }
-            else {
-                 darkerColor = `hsla(230, 26%, 9%, 100%)`
-            }
-            return darkerColor
-        }
+    // ## ScrollTrigger
+    ScrollTrigger.create({
+        id: "refresh-area",
+        trigger: porjectsSection,
+        start: "200px 50%",
+        end: "bottom 75%",
+        onLeaveBack: () => resetSection(),
+    });
 
-        function resetSection(){
-            gsap.killTweensOf(circleCurtain);
-            gsap.set(circleCurtain,{
-                width:0,
-                height:0, 
-                opacity:0,
-                duration:0,
-            })
-            setNewColorScheme("#fff", "#320105");
-            setDarkThemeToInputs(false);
-            projectsInputsArray.forEach(input => {
-                input.checked = false;
-            });
-            refreshScrollTrigger();
-        }
+    gsap.set(curtainBlack, { y: "+=100vh" });
 
-        ScrollTrigger.create({
-            id:"refresh-area",
-            trigger: porjectsSection,
-            start: "200px 50%",
-            end: "bottom 75%", 
-            onLeaveBack: () => resetSection(),
-        });
-
-        gsap.set(curtainBlack,{
-            y:"+=100vh",
-        });
-
-        const tlcurtainBlack = gsap.timeline({
+    gsap.timeline({
         scrollTrigger: {
             id: 'curtain',
             trigger: porjectsSection,
             start: 'bottom-=600 75%',
             end: 'bottom 50%',
             scrub: 1,
-        } });
+        }
+    }).to(curtainBlack, { y: "-=200vh", ease: "power1.out" });
 
-        tlcurtainBlack.to(curtainBlack,{
-             y:"-=200vh",
-             ease: "power1.out",
-        })
-
-        const tlContent = gsap.timeline({
+    gsap.timeline({
         scrollTrigger: {
-            id:"project-section",
+            id: "project-section",
             trigger: porjectsSection,
             start: 'top 66%',
             end: '55% 75%',
             scrub: 1,
-        } });
-
-        tlContent
-        .from(projectHeadAera,{
-            y:"+=50px",
-            opacity:0,
-            ease: "power1.out",
-            stagger:1,
-        })
-        .from(arrayProject,{
-            y:"+=70px",
-            opacity:0,
-            ease: "power1.out",
-            stagger:1,  
-        },"+=2.5")
-
-
-
-
-
+        }
+    })
+    .from(projectHeadAera, { y: "+=50px", opacity: 0, ease: "power1.out", stagger: 1 })
+    .from(arrayProject, { y: "+=70px", opacity: 0, ease: "power1.out", stagger: 1 }, "+=2.5");
 </script>
