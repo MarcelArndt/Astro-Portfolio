@@ -331,15 +331,11 @@ const redCurtain = document.querySelector<HTMLElement>('[red-navi-curtain]');
 const whiteCurtain = document.querySelector<HTMLElement>('[white-navi-curtain]');
 const textNaviContainer = document.querySelector<HTMLElement>('[text-navi-container]');
 const naviCurtainWrapper =  document.querySelector<HTMLElement>('[navi-curtain-wrapper]');
-const naviListAsULElement = document.querySelector<HTMLElement>('[navi-list]');
-const NaviListAllChildren = gsap.utils.toArray(naviListAsULElement!.querySelectorAll<HTMLElement>('li'));
 
 
 whiteCurtain?.addEventListener("click", () => {
     closeCurtain();
 });
-
-
 
 
 function openCurtain(){
