@@ -59,9 +59,10 @@ const previewImageMap: Record<string, string> = {
 
     [project-section] {
         --background-color: #fff;
+        --transition-timer:0.25s;
         --text-color: #320105;
         background-color: var(--background-color);
-
+        transition: background-color var(--transition-timer) ease-out;
         p { color: var(--text-color); }
     }
 
@@ -122,6 +123,8 @@ const previewImageMap: Record<string, string> = {
     }
 
     .cirlce-window-wrapper {
+        pointer-events: none;
+        user-select: none;
         position: fixed;
         width: 100%;
         height: 100%;
@@ -260,10 +263,10 @@ const previewImageMap: Record<string, string> = {
                 width: 3600,
                 height: 3600,
                 duration: 1.25,
-                onStart: () => setNewColorScheme(oldColor, newColorScheme.textColor),
+                onStart: () => setNewColorScheme(oldColor, newColorScheme.textColor, "0s"),
             })
             .to(circleCurtain, {
-                onStart: () => setNewColorScheme(newColorScheme.backgroundColor, newColorScheme.textColor),
+                onStart: () => setNewColorScheme(newColorScheme.backgroundColor, newColorScheme.textColor, "0s"),
             }, "-=0.75")
             .to(circleCurtain, { opacity: 0, duration: 0.3 }, "+=0.3");
     }
@@ -273,10 +276,12 @@ const previewImageMap: Record<string, string> = {
         return projectsInputsArray.some(input => input.checked === true);
     }
 
-    function setNewColorScheme(backgroundColor: string, textColor: string) {
+    function setNewColorScheme(backgroundColor: string, textColor: string, transitionTimer:string) {
         if (!whiteSkillCurtain || !porjectsSection) return;
         whiteSkillCurtain.style.setProperty('--background-color', backgroundColor);
+        whiteSkillCurtain.style.setProperty('--transition-timer', transitionTimer);
         porjectsSection.style.setProperty('--background-color', backgroundColor);
+        porjectsSection.style.setProperty('--transition-timer', transitionTimer);
         porjectsSection.style.setProperty('--text-color', textColor);
     }
 
@@ -294,13 +299,12 @@ const previewImageMap: Record<string, string> = {
     function resetSection() {
         gsap.killTweensOf(circleCurtain);
         gsap.set(circleCurtain, { width: 0, height: 0, opacity: 0, duration: 0 });
-        setNewColorScheme("#fff", "#320105");
+        setNewColorScheme("#fff", "#320105", "0.5s");
         setDarkThemeToInputs(false);
         projectsInputsArray.forEach(input => { input.checked = false; });
         refreshScrollTrigger();
     }
 
-    // ## ScrollTrigger
     ScrollTrigger.create({
         id: "refresh-area",
         trigger: porjectsSection,
@@ -326,7 +330,7 @@ const previewImageMap: Record<string, string> = {
             id: "project-section",
             trigger: porjectsSection,
             start: 'top 66%',
-            end: '55% 75%',
+            end: '675 75%',
             scrub: 1,
         }
     })

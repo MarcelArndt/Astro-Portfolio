@@ -218,12 +218,14 @@ import { Image } from 'astro:assets';
 
     [white-skill-curtain]{
         --background-color:#ffffff;
+        --transition-timer:0.25s;
         background-color: var(--background-color);
+        transition: background-color var(--transition-timer) ease-out;
 
 
         &::before{
-           background-color: var(--background-color); 
-
+            background-color: var(--background-color); 
+            transition: background-color var(--transition-timer) ease-out;
         }
     }
 

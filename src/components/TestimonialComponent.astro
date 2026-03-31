@@ -1,8 +1,8 @@
 ---
 import TestimonialCardTemplate from "./TestimonialCardTemplate.astro";
 import Text from "../data/testimonial.json";
-const cardMaxWidth:number = 372;
-const cardMinWidth:number = 260;
+const cardMaxWidth:number = 432;
+const cardMinWidth:number = 250;
 ---
 
 <section id="testimonial" testimonial-section>
@@ -175,7 +175,7 @@ const cardMinWidth:number = 260;
         scrollTrigger: {
             trigger: testimonialSection,
             start: 'top 50%',
-            end: '50% 75%',
+            end: 'bottom-=650px 78%',
             scrub: 1,
     } });
 
@@ -271,13 +271,7 @@ const cardMinWidth:number = 260;
         }
 
         @media screen and (max-width: 600px) {
-            mask-image: linear-gradient(
-                to right,
-                transparent 0%
-                black 0%,
-                black 100%,
-                transparent 100%
-            );
+            mask-image: none;
         }
     }
 

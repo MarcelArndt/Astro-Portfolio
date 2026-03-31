@@ -13,7 +13,7 @@
 
         <!--  ADD MENU POINTS HERE   -->
           
-        <ul>
+        <ul navi-list>
             <li><a href="/#start" aria-label="Startseite">Start</a></li>
             <li><a href="/#about_me" aria-label="Über_mich">Über Mich</a></li>
             <li><a href="/#skills" aria-label="Skills">Skills</a></li>
@@ -317,33 +317,29 @@
   }
 
   function lockScroll() {
-    const scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
 }
 
 function unlockScroll() {
-    const scrollY = parseInt(document.body.style.top || '0') * -1;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, scrollY);
+    document.body.style.overflow = '';
 }
 
 /* GSAP */
 import { gsap } from "../lip/gsap";
+import ScrollTrigger from "gsap/src/ScrollTrigger";
 const redCurtain = document.querySelector<HTMLElement>('[red-navi-curtain]');
 const whiteCurtain = document.querySelector<HTMLElement>('[white-navi-curtain]');
 const textNaviContainer = document.querySelector<HTMLElement>('[text-navi-container]');
 const naviCurtainWrapper =  document.querySelector<HTMLElement>('[navi-curtain-wrapper]');
-whiteCurtain?.addEventListener("click", () => {
-    closeCurtain();
-});
+const naviListAsULElement = document.querySelector<HTMLElement>('[navi-list]');
+const NaviListAllChildren = gsap.utils.toArray(naviListAsULElement!.querySelectorAll<HTMLElement>('li'));
+
 
 whiteCurtain?.addEventListener("click", () => {
     closeCurtain();
 });
+
+
 
 
 function openCurtain(){
@@ -394,6 +390,7 @@ function closeCurtain(){
         x:"0%",
         duration:0.25,
         ease: "power1.out",
+        onComplete: () => ScrollTrigger.refresh(),
     },"<")
 }
 
