@@ -145,13 +145,13 @@ const previewImageMap: Record<string, string> = {
     }
 
     [circle-curtain] {
-        --circle-color: #fff;
+        --circle-color: transparent;
         z-index: 99;
         position: absolute;
         bottom: 50%;
         left: 50%;
-        width: 32px;
-        height: 32px;
+        width: 0px;
+        height: 0px;
         aspect-ratio: 1 / 1;
         flex-shrink: 0;
         background-color: var(--circle-color);
@@ -179,12 +179,15 @@ const previewImageMap: Record<string, string> = {
             ScrollTrigger.getById('testimonial-curtain')?.refresh();
             ScrollTrigger.getById('contact-section')?.refresh();
             ScrollTrigger.getById('refresh-area')?.refresh();
+            ScrollTrigger.getById('testimonial-section')?.refresh();
         }, 420);
     }
 
     window.addEventListener("resize", () => {
         refreshScrollTrigger();
-        ScrollTrigger.getById("project-section")?.refresh();
+        setTimeout(() => {
+            ScrollTrigger.getById("project-section")?.refresh();
+        });
     });
 
     function refreshAriaExpanded(checkbox: HTMLInputElement) {
@@ -330,7 +333,7 @@ const previewImageMap: Record<string, string> = {
             id: "project-section",
             trigger: porjectsSection,
             start: 'top 66%',
-            end: '45% 65%',
+            end: '500px 50%',
             scrub: 1,
         }
     })
