@@ -1,11 +1,13 @@
 ---
+import AboutMeHeadComponent from "./AboutMeHeadComponent.astro"
+import AboutMeStatsComponent from "./AboutMeStatsComponent.astro"
 ---
 <section id="about_me" about-me-section>
     <div class="white-box" curtain-white ></div>
     <div class="content-box">
-        <p>Dies sind</p>
-        <h2>About Me</h2>
-        <ul></ul>
+        <AboutMeHeadComponent/>
+        <AboutMeStatsComponent / >
+        
     </div>
     <div class="curtain-wrapper">
         <div class="black-box" curtain-black ></div>
@@ -19,9 +21,9 @@
         box-sizing: border-box;
         padding-top: 96px;
         width: 100%;
-        height: 100vh;
         position: relative;
         z-index: 200;
+        padding-bottom: 24rem;
     }
 
     .content-box{
@@ -30,6 +32,7 @@
         display: flex;
         align-items: start;
         justify-content: center;
+        flex-direction: column;
     }
 
     .white-box{
@@ -90,14 +93,14 @@
     });
 
     tlWhiteCurtain.to(whiteCurtain,{
-        y:"-=400px"
+        y:"-=800px"
     })
 
     let tlBlackCurtain = gsap.timeline({
         scrollTrigger: {
             trigger: aboutMeSection,
-            start: '70% 80%',
-            end: 'bottom 50%',
+            start: '90% 50%',
+            end: 'bottom 10%',
             scrub: 1, 
         }
     });

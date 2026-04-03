@@ -1,0 +1,91 @@
+---
+import portrait from "../../public/assets/pictures/about-me-portrait.webp"
+---
+
+<div class="about-me-head-wrapper">
+    <div class="about-me-head-text-wrapper">
+        <strong class="subline">Was musst du wissen</strong>
+        <h2>Über Mich.</h2>
+        <div class="about-me-head-picture-wrapper" >
+            <picture>
+                <source media="(min-width: 1450px)" srcset="./public/assets/pictures/about-me-portrait.webp">
+                <source media="(max-width: 1449px)" srcset="./public/assets/pictures/about-me-landscape.webp">
+                <img alt="" loading="lazy" src="./public/assets/pictures/about-me-portrait.webp">
+            </picture>
+
+        </div>
+        <p>Hi, ich bin Marcel Arndt.</p>
+        <p>Komme aus Bad Salzuflen und, wer hätte es anders gedacht entwickle Software für Webauftritte als auch Anwendungen.</p>
+        <p>Meine Stärke liegt darin, Software zu bauen, die niemandem gehört außer dir. Keine Abhängigkeit von großen Plattformen, keine versteckten Fesseln — ich entscheide, was auf den Teller kommt. </p>
+        <p>Genau das ist mein Versprechen als Hobbykoch sowie als Entwickler. Ich arbeite lieber mit frischen Zutaten als mit Fertigprodukten.</p>
+        <a class="button" href="/#skills">Mein Tech-Stack</a>
+    </div>
+
+</div>
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    .about-me-head-wrapper{
+        width: 100%;
+        padding: 0px $inner-padding;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        box-sizing: border-box;
+        padding-bottom: clamp(3rem, 14vw, 15rem);
+    }
+
+    .about-me-head-text-wrapper{
+        width: 100%;
+        
+
+        p{
+            color: $dark-red;
+            margin-bottom: 1.5rem;
+            max-width: clamp(30ch , 46vw, 60ch);
+        }
+        
+        @media screen and (max-width:1450px) {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            max-width: 100%;
+            p{
+                max-width: 50ch;
+                text-align: center;
+            }
+        }
+    }
+
+    .about-me-head-picture-wrapper{
+        position: absolute;
+        right: $inner-padding;
+        top: 0px;
+
+        img{
+            max-width: 520px;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.25);
+            border-radius: 8px;
+        }
+
+        @media screen and (max-width:1449px) {
+            position: static;
+            margin: 1.5rem 0px;
+            width: 100%;
+            background-color: aqua;
+            height: 460px;
+
+            img{
+                object-position: center;
+                object-fit: cover;
+                height: 100%;
+                width: 100%;
+                max-width: none;
+
+            }
+        }
+    }
+
+</style>

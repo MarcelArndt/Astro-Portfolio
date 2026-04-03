@@ -1,0 +1,155 @@
+---
+import AboutMeCardComponent from "./AboutMeCardComponent.astro"
+import codeIcon from "../../public/assets/icons/stats/code.svg"
+import designIcon from "../../public/assets/icons/stats/design.svg"
+import tempoIcon from "../../public/assets/icons/stats/tempo.svg"
+---
+
+<div class="about-me-stats-wrapper">
+
+    <div class="about-me-stats-content-wrapper">
+        <div class="about-me-expertise-card">
+            <h4>Expertise</h4>
+            <p>Spezialisiert auf JavaScript-Frameworks. Ich betrachte Programmieren als Handwerk, wo jedes Detail zählt. Geschwindikeit bis zur Skalierung von großen Architektur</p>
+            <ul>
+                <li><img src={codeIcon.src} alt="" loading="lazy"><p>Angular, Astro & Django </p></li>
+                 <li><img src={designIcon.src} alt="" loading="lazy"><p>UI/UX Design System</p></li>
+                  <li><img src={tempoIcon.src} alt="" loading="lazy"><p>Perfomance Engineering</p></li>
+            </ul>
+        </div>
+        <div class="about-me-cards-grid">
+            <AboutMeCardComponent text="Erfolgreiche Projekte" stats="15+"/>
+            <AboutMeCardComponent text="Jahre Erfahrung" stats="3"/>
+            <AboutMeCardComponent text="Leidenschaft & Präzision" stats="100%"/>
+            <AboutMeCardComponent text="Kreative Neugier" stats="infinity"/>
+        </div>
+    </div>
+</div>
+
+
+<style lang="scss">
+    @use "../styles/index.scss" as *;
+
+    .about-me-stats-wrapper{
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+        height: 100%;
+        padding: 6rem 0px;
+        background-color: #eee6e6;
+
+        &::before{
+            content: '';
+            background-image: url("../../public/assets/pictures/stats-edge/edge-top.png");
+            height: 105px;
+            width: 100%;
+            position: absolute;
+            left: 0px;
+            background-repeat: none;
+            top: -105px;
+        }
+
+        &::after{
+            content: '';
+            background-image: url("../../public/assets/pictures/stats-edge/edge-button.png");
+            height: 151px;
+            width: 100%;
+            position: absolute;
+            left: 0px;
+            background-repeat: none;
+            bottom: -151px;
+        }
+    }
+
+    .about-me-stats-content-wrapper {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 3rem $inner-padding;;
+        display: grid;
+        grid-template-columns: clamp(490px, 36vw, 640px) 1fr;
+
+        @media screen and (max-width:1300px) {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    .about-me-expertise-card {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        background-color: #edd9d9;
+        box-sizing: border-box;
+        padding: 3rem clamp(1.25rem, 3vw, 2rem);
+        border-radius: 8px;
+
+        @media screen and (max-width:1300px) {
+            margin-bottom: 2rem;
+        }
+
+        h4{
+            font-size: 2.625rem;
+            font-weight: 400;
+            color: $font-color;
+            margin: 0px;
+            margin-bottom: 1rem;
+        }
+
+        p{
+            line-height: 140%;
+            max-width: 45ch;
+        }
+
+        ul{
+            margin-top: 1.5rem;
+            list-style: none;
+            li{
+                display: flex;
+                img{
+                    margin-right: 1.5rem;
+                    width: 32px;
+                    object-fit: contain;
+                    object-position: center;
+                }
+
+                p{
+                    opacity: 0.6;
+                    font-weight: 300;
+                    text-transform: uppercase;
+                }
+            }
+
+            li:not(:first-child){
+                margin-top: 0.75rem;
+            }
+        }
+        
+
+        p{
+            color: $font-color;
+        }
+    }
+
+    .about-me-cards-grid {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-left: 2rem;
+
+        @media screen and (max-width:1300px) {
+            margin-left: 0rem;
+        }
+
+        @media screen and (max-width:680px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+
+</style>
