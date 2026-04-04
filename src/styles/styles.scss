@@ -27,6 +27,7 @@ p{
     margin-inline-end: 0px;
     box-sizing: border-box;
     line-height: clamp(0.75rem, 12vw, 2.5rem);
+    text-wrap: pretty;
 }
 
 h1 {

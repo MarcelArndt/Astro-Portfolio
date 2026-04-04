@@ -1,13 +1,13 @@
 ---
 import AboutMeHeadComponent from "./AboutMeHeadComponent.astro"
 import AboutMeStatsComponent from "./AboutMeStatsComponent.astro"
+import AboutMeAnalogyComponent from "./AboutMeAnalogyComponent.astro"
 ---
 <section id="about_me" about-me-section>
-    <div class="white-box" curtain-white ></div>
     <div class="content-box">
         <AboutMeHeadComponent/>
-        <AboutMeStatsComponent / >
-        
+        <AboutMeStatsComponent />
+        <AboutMeAnalogyComponent />
     </div>
     <div class="curtain-wrapper">
         <div class="black-box" curtain-black ></div>
@@ -24,6 +24,7 @@ import AboutMeStatsComponent from "./AboutMeStatsComponent.astro"
         position: relative;
         z-index: 200;
         padding-bottom: 24rem;
+        anchor-name: --about-me-section-anchor;
     }
 
     .content-box{
@@ -37,22 +38,25 @@ import AboutMeStatsComponent from "./AboutMeStatsComponent.astro"
 
     .white-box{
         width: 100%;
-        height: 600px;
+        height: 100vh;
         position: absolute;
-        top: 100px;
+        top: 50px;
         left: 0px;
-        background-color: white;
+        background-color: #fff;
         z-index: -1;
     }
 
     .curtain-wrapper{
         pointer-events: none;
-        position: absolute;
-        top: -500px;
-        left: 0px;
-        width: 100%;
-        height: calc(100% + 500px);
+        position: fixed;
+        position-anchor: --about-me-section-anchor;
+        top: anchor(bottom);
+        left: anchor(left);
+        width: min(1920px, 100%);
+        height: 100%;
         overflow: hidden;
+        z-index: 9999;
+        transform: translateY(-100%);
         }
 
     .black-box{
@@ -79,27 +83,13 @@ import AboutMeStatsComponent from "./AboutMeStatsComponent.astro"
 
 <script>
     import { gsap } from "../lip/gsap";
-    const whiteCurtain = document.querySelectorAll("[curtain-white]");
     const blackCurtain = document.querySelectorAll("[curtain-black]");
     const aboutMeSection = document.querySelectorAll("[about-me-section]");
-
-    let tlWhiteCurtain = gsap.timeline({
-        scrollTrigger: {
-            trigger: aboutMeSection,
-            start: 'top 80%',
-            end: 'bottom 50%',
-            scrub: 1, 
-        }
-    });
-
-    tlWhiteCurtain.to(whiteCurtain,{
-        y:"-=800px"
-    })
 
     let tlBlackCurtain = gsap.timeline({
         scrollTrigger: {
             trigger: aboutMeSection,
-            start: '90% 50%',
+            start: '75% 50%',
             end: 'bottom 10%',
             scrub: 1, 
         }

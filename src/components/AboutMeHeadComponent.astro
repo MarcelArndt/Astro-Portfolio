@@ -1,24 +1,25 @@
 ---
 import portrait from "../../public/assets/pictures/about-me-portrait.webp"
+import landscape from "../../public/assets/pictures/about-me-landscape.webp"
 ---
 
-<div class="about-me-head-wrapper">
+<div class="about-me-head-wrapper" about-me-head-section>
     <div class="about-me-head-text-wrapper">
-        <strong class="subline">Was musst du wissen</strong>
-        <h2>Über Mich.</h2>
-        <div class="about-me-head-picture-wrapper" >
+        <strong about-me-head-text class="subline">Was musst du wissen</strong>
+        <h2 about-me-head-text>Über Mich.</h2>
+        <div about-me-self-portrait class="about-me-head-picture-wrapper" >
             <picture>
-                <source media="(min-width: 1450px)" srcset="./public/assets/pictures/about-me-portrait.webp">
-                <source media="(max-width: 1449px)" srcset="./public/assets/pictures/about-me-landscape.webp">
-                <img alt="" loading="lazy" src="./public/assets/pictures/about-me-portrait.webp">
+                <source media="(min-width: 1450px)" srcset={portrait.src}>
+                <source media="(max-width: 1449px)" srcset={landscape.src}>
+                <img  alt="" loading="lazy" src="./public/assets/pictures/about-me-portrait.webp">
             </picture>
-
         </div>
-        <p>Hi, ich bin Marcel Arndt.</p>
-        <p>Komme aus Bad Salzuflen und, wer hätte es anders gedacht entwickle Software für Webauftritte als auch Anwendungen.</p>
-        <p>Meine Stärke liegt darin, Software zu bauen, die niemandem gehört außer dir. Keine Abhängigkeit von großen Plattformen, keine versteckten Fesseln — ich entscheide, was auf den Teller kommt. </p>
-        <p>Genau das ist mein Versprechen als Hobbykoch sowie als Entwickler. Ich arbeite lieber mit frischen Zutaten als mit Fertigprodukten.</p>
-        <a class="button" href="/#skills">Mein Tech-Stack</a>
+
+        <p about-me-head-text>Hi, ich bin Marcel Arndt.</p>
+        <p about-me-head-text>Komme aus Bad Salzuflen und, wer hätte es anders gedacht entwickle Software für Webauftritte als auch Anwendungen.</p>
+        <p about-me-head-text>Meine Stärke liegt darin, Software zu bauen, die niemandem gehört außer dir. Keine Abhängigkeit von großen Plattformen, keine versteckten Fesseln — ich entscheide, was auf den Teller kommt. </p>
+        <p about-me-head-text>Genau das ist mein Versprechen als Hobbykoch sowie als Entwickler. Ich arbeite lieber mit frischen Zutaten als mit Fertigprodukten.</p>
+        <a about-me-head-text class="button" href="/#skills">Mein Tech-Stack</a>
     </div>
 
 </div>
@@ -74,7 +75,6 @@ import portrait from "../../public/assets/pictures/about-me-portrait.webp"
             position: static;
             margin: 1.5rem 0px;
             width: 100%;
-            background-color: aqua;
             height: 460px;
 
             img{
@@ -89,3 +89,37 @@ import portrait from "../../public/assets/pictures/about-me-portrait.webp"
     }
 
 </style>
+
+<script>
+    import { gsap } from "../lip/gsap";
+    const aboutMeHeadSectionSection =  document.querySelector<HTMLElement>('[about-me-head-section]');
+    const selfPortrait = document.querySelector<HTMLElement>('[about-me-self-portrait]');
+    const textArray:HTMLElement[] = gsap.utils.toArray(document.querySelectorAll<HTMLElement>('[about-me-head-text]'));
+    const subline = textArray[0];
+    const headline = textArray[1];
+    const bodyText = textArray.slice(2);
+        
+        gsap.set(selfPortrait,{
+            opacity:0,
+            pointerEvents: "none",
+        });
+
+        const tlHeadSection = gsap.timeline({
+            scrollTrigger: {
+                trigger: aboutMeHeadSectionSection,
+                start: 'top+=100p 75%',
+                end: 'bottom-=600 55%',
+                scrub: 1,
+            }
+        });
+
+        tlHeadSection
+        .from(subline, { opacity: 0, y: 50 })
+        .from(headline, { opacity: 0, y: 50 })
+        .to(selfPortrait, {
+            opacity: 1,
+            onComplete: () => { gsap.set(selfPortrait, { pointerEvents: "auto" }) }
+        })
+        .from(bodyText, { opacity: 0, y: 50, stagger: 0.25 }, "+=0.1")
+
+</script>

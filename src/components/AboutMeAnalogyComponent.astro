@@ -1,10 +1,151 @@
-<div class="">
-    <div>
-        <div></div>
-    </div>
-</div>
+---
+import carvingBoard from "../../public/assets/pictures/carving-board.webp"
+---
 
+<div class="about-me-analogy-wrapper" about-me-analogy-section>
+
+    <div class="about-me-analogy-content-wrapper">
+        <div class="about-me-analogy-text-wrapper">
+            <strong analogy-text-element class="subline">Meine Analogie</strong>
+            <h4 analogy-text-element>Software&shy;entwicklung ist wie Kochen nach Rezept.</h4>
+        </div>
+        <div class="about-me-analogy-picture-wrapper" picture-wrapper>
+            <img src={carvingBoard.src} alt="Carving Board" loading="lazy">
+        </div>
+        <div class="about-me-analogy-text-wrapper">
+        <p analogy-text-element>Das Enwtickeln von Software ist nichts anderes als ein Rezept: Ein Plan, eine Abfolge von Schritten, die aus rohen Zutaten etwas Funktionierendes machen.</p>
+        <p analogy-text-element>Die Wahl des Tech-Stacks ist die Wahl der richtigen Zutaten. Wer dies zu ungeduldig überspringt, bekommt Geschmacks-Chaos auf dem Teller oder einen Bug im Produktionssystem.</p>
+        <p analogy-text-element>Beides sind für mich echtes Handwerk. Nicht nur Hobbys, sondern Dinge, die ich wirklich beherrsche und mit denen ich täglich wachse. Genau das treibt mich an.</p>
+        <a class="button" href="/#contact" analogy-text-element>Let Us Cook</a>
+        </div>
+    </div>
+
+
+</div>
 
 <style lang="scss">
     @use "../styles/index.scss" as *;
+    .about-me-analogy-wrapper{
+        margin-top: 15rem;
+        box-sizing: border-box;
+        padding-bottom: 10rem;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        position: relative;
+        anchor-name: --analogy-wrapper-anchor;
+        overflow: hidden;
+    }
+
+    h3, p, strong{
+        display: block;
+        width: 100%;
+    }
+
+    .about-me-analogy-content-wrapper{
+        width: 100%;
+        display: flex;
+        align-items: end;
+        flex-direction: column;
+
+         @media screen and (max-width:1170px) {
+            align-items: start;
+        }
+    }
+
+    .about-me-analogy-picture-wrapper{
+        width: 50%;
+        height: 100%;
+        position: fixed;
+        top: anchor(top);
+        left: anchor(left);
+        position-anchor: --analogy-wrapper-anchor;
+        z-index: -1;
+
+        img{
+            width: 100%;
+            max-width: 920px;
+        }
+
+        @media screen and (max-width:1170px) {
+            position: relative;
+            width: 100%;
+            img{
+                width: 100%;
+            }
+        }
+    }
+
+    .about-me-analogy-text-wrapper{
+        box-sizing: border-box;
+        width: 50%;
+        padding-right: $inner-padding;
+        p{
+            max-width: 55ch;
+        }
+        @media screen and (max-width:1170px) {
+            width: 100%;
+            padding: 0px $inner-padding;
+        }
+
+
+    }
+
+    h4{
+        font-size: 2.625rem;
+        font-weight: 400;
+        color: $font-color;
+        margin: 0px;
+        margin-bottom: 1rem;
+        max-width: 21ch;
+    }
+
+    p{
+        margin-bottom: 2rem;
+        color:$font-color;
+    }
 </style>
+<script>
+
+    import { gsap } from "../lip/gsap";
+    const aboutMeAnalogySectionSection =  document.querySelector<HTMLElement>('[about-me-analogy-section]');
+    const pictureElement = document.querySelector<HTMLElement>('[picture-wrapper]');
+    const textArray:HTMLElement[] = gsap.utils.toArray(document.querySelectorAll<HTMLElement>('[analogy-text-element]'));
+    const subline = textArray[0];
+    const headline = textArray[1];
+    const bodyText = textArray.slice(2);
+
+
+     const tlAnalogy = gsap.timeline({
+            scrollTrigger: {
+                trigger: aboutMeAnalogySectionSection,
+                start: 'top 80%',
+                end: '40% 60%',
+                scrub: 1,
+              }
+    });
+
+    tlAnalogy
+    .from(subline,{
+        opacity:0,
+        y:70
+    })
+    .from(headline,{
+        opacity:0,
+        y:70 
+    })
+    .from(pictureElement,{
+        x:"-=100%",
+        opacity:0,
+        ease: "slow(0.7,0.7,false)",
+    })
+    .from(bodyText,{
+        opacity:0,
+        y:70,
+        stagger:0.25,
+    })
+
+
+
+</script>
+

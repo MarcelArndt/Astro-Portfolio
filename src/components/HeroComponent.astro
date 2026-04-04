@@ -13,11 +13,12 @@ import portrait from "../../public/assets/pictures/portrait.webp"
         <p>Hi, ich bin Marcel Arndt</p>
         <h1>Web & App<br>Entwickler</h1>
         <p>Mit Angular und Django setze ich meine Projekte in die Realität um. Dabei ist Programmieren längst mehr geworden als nur ein Hobby.</p>
-        <button>Mehr über mich!</button>
+        <a class="button" href="/#about_me">Mehr über mich!</a>
     </div>
     <div class="image-container" image-container>
           <Image loading="eager" fetchpriority="high" alt="Portraitbild" src={portrait}/>
     </div>
+    <div class="white-curtain-blending"></div>
     <div class="curtain-wrapper" curtain-wrapper>
         <div class="curtain inner red" red-curtain></div>
         <div class="curtain white" white-curtain></div>
@@ -160,6 +161,7 @@ import portrait from "../../public/assets/pictures/portrait.webp"
     height: 100%;
     width: 100%;
     overflow: hidden;
+    anchor-name: --curtain-wrapper-anchor;
 }
 
     .curtain{
@@ -198,6 +200,18 @@ import portrait from "../../public/assets/pictures/portrait.webp"
             background-color: $main-color; 
         }
     }
+
+    .white-curtain-blending{
+        width: min(1920px, 100%);
+        height: 50vh;
+        position: fixed;
+        position-anchor: --curtain-wrapper-anchor;
+        top: anchor(bottom);
+        z-index: 5;
+        background-color: #fff;
+        transform: translateY(-50px);
+    }
+
 </style>
 
 <script>
@@ -223,7 +237,7 @@ import portrait from "../../public/assets/pictures/portrait.webp"
                 trigger: heroSection,
                 start: 'top top',
                 end: 'bottom 30%',
-                scrub: 1, 
+                scrub: 1,
             }
         });
 

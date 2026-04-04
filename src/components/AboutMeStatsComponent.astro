@@ -3,25 +3,31 @@ import AboutMeCardComponent from "./AboutMeCardComponent.astro"
 import codeIcon from "../../public/assets/icons/stats/code.svg"
 import designIcon from "../../public/assets/icons/stats/design.svg"
 import tempoIcon from "../../public/assets/icons/stats/tempo.svg"
+
+const cardContent = {
+    cardOne: ["Erfolgreiche Projekte", "15+"],
+    cardTwo: ["Jahre Erfahrung", "2"],
+    cardThree: ["Leidenschaft & Präzision", "100%"],
+    cardFour: ["Kreative Neugier", "infinity"],
+}
 ---
 
-<div class="about-me-stats-wrapper">
-
+<div class="about-me-stats-wrapper" about-me-stats-section>
     <div class="about-me-stats-content-wrapper">
-        <div class="about-me-expertise-card">
-            <h4>Expertise</h4>
-            <p>Spezialisiert auf JavaScript-Frameworks. Ich betrachte Programmieren als Handwerk, wo jedes Detail zählt. Geschwindikeit bis zur Skalierung von großen Architektur</p>
+        <div class="about-me-expertise-card" about-me-expertise-card>
+            <h4 about-me-expertise-card-text>Expertise</h4>
+            <p about-me-expertise-card-text>Spezialisiert auf JavaScript-Frameworks. Ich betrachte Programmieren als Handwerk, wo jedes Detail zählt. Geschwindikeit bis zur Skalierung von großen Architekturen.</p>
             <ul>
-                <li><img src={codeIcon.src} alt="" loading="lazy"><p>Angular, Astro & Django </p></li>
-                 <li><img src={designIcon.src} alt="" loading="lazy"><p>UI/UX Design System</p></li>
-                  <li><img src={tempoIcon.src} alt="" loading="lazy"><p>Perfomance Engineering</p></li>
+                <li about-me-expertise-card-text><img src={codeIcon.src} alt="" loading="lazy"><p>Angular, Astro & Django </p></li>
+                 <li about-me-expertise-card-text><img src={designIcon.src} alt="" loading="lazy"><p>UI/UX Design System</p></li>
+                  <li about-me-expertise-card-text><img src={tempoIcon.src} alt="" loading="lazy"><p>Perfomance Engineering</p></li>
             </ul>
         </div>
         <div class="about-me-cards-grid">
-            <AboutMeCardComponent text="Erfolgreiche Projekte" stats="15+"/>
-            <AboutMeCardComponent text="Jahre Erfahrung" stats="3"/>
-            <AboutMeCardComponent text="Leidenschaft & Präzision" stats="100%"/>
-            <AboutMeCardComponent text="Kreative Neugier" stats="infinity"/>
+            <AboutMeCardComponent text={cardContent.cardOne[0]} stats={cardContent.cardOne[1]}/>
+            <AboutMeCardComponent text={cardContent.cardTwo[0]} stats={cardContent.cardTwo[1]}/>
+            <AboutMeCardComponent text={cardContent.cardThree[0]} stats={cardContent.cardThree[1]}/>
+            <AboutMeCardComponent text={cardContent.cardFour[0]} stats={cardContent.cardFour[1]}/>
         </div>
     </div>
 </div>
@@ -49,7 +55,7 @@ import tempoIcon from "../../public/assets/icons/stats/tempo.svg"
             position: absolute;
             left: 0px;
             background-repeat: none;
-            top: -105px;
+            top: -104px;
         }
 
         &::after{
@@ -60,7 +66,7 @@ import tempoIcon from "../../public/assets/icons/stats/tempo.svg"
             position: absolute;
             left: 0px;
             background-repeat: none;
-            bottom: -151px;
+            bottom: -150px;
         }
     }
 
@@ -151,5 +157,46 @@ import tempoIcon from "../../public/assets/icons/stats/tempo.svg"
     }
 
 
-
 </style>
+
+<script>
+    import { gsap } from "../lip/gsap";
+    const aboutMeStatsSection = document.querySelector<HTMLElement>('[about-me-stats-section]');
+    const aboutMeExpertiseCard = document.querySelector<HTMLElement>('[about-me-expertise-card]');
+    const aboutMeExpertiseCardText = gsap.utils.toArray(document.querySelectorAll<HTMLElement>('[about-me-expertise-card-text]'));
+    const aboutMeStatscards = gsap.utils.toArray(document.querySelectorAll<HTMLElement>('[about-me-stats-card]'));
+
+    gsap.set(aboutMeStatsSection,{
+        y:500,
+        opacity:0,
+    });
+
+    const tlAboutMeStatsSection = gsap.timeline({
+        scrollTrigger: {
+            trigger: aboutMeStatsSection,
+            start: 'top-=600 55%',
+            end: '25% 90%',
+            scrub: 1, 
+        }
+    });
+
+    tlAboutMeStatsSection
+    .to(aboutMeStatsSection,{
+        y:0,
+        opacity:1,
+    })
+    .from(aboutMeExpertiseCard,{
+        opacity:0,
+    },)
+    .from(aboutMeExpertiseCardText,{
+        opacity:0,
+        y:25,
+        stagger:0.15,
+    })
+    .from(aboutMeStatscards,{
+        opacity:0,
+        y:25,
+        stagger:0.15,
+    })
+
+</script>
