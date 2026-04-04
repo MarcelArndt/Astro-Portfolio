@@ -9,8 +9,8 @@ import carvingBoard from "../../public/assets/pictures/carving-board.webp"
             <strong analogy-text-element class="subline">Meine Analogie</strong>
             <h4 analogy-text-element>Software&shy;entwicklung ist wie Kochen nach Rezept.</h4>
         </div>
-        <div class="about-me-analogy-picture-wrapper" picture-wrapper>
-            <img src={carvingBoard.src} alt="Carving Board" loading="lazy">
+        <div class="about-me-analogy-picture-wrapper">
+            <img src={carvingBoard.src} alt="Carving Board" loading="lazy" picture-element>
         </div>
         <div class="about-me-analogy-text-wrapper">
         <p analogy-text-element>Das Enwtickeln von Software ist nichts anderes als ein Rezept: Ein Plan, eine Abfolge von Schritten, die aus rohen Zutaten etwas Funktionierendes machen.</p>
@@ -61,6 +61,7 @@ import carvingBoard from "../../public/assets/pictures/carving-board.webp"
         left: anchor(left);
         position-anchor: --analogy-wrapper-anchor;
         z-index: -1;
+        overflow: hidden;
 
         img{
             width: 100%;
@@ -109,7 +110,7 @@ import carvingBoard from "../../public/assets/pictures/carving-board.webp"
 
     import { gsap } from "../lip/gsap";
     const aboutMeAnalogySectionSection =  document.querySelector<HTMLElement>('[about-me-analogy-section]');
-    const pictureElement = document.querySelector<HTMLElement>('[picture-wrapper]');
+    const pictureElement = document.querySelector<HTMLElement>('[picture-element]');
     const textArray:HTMLElement[] = gsap.utils.toArray(document.querySelectorAll<HTMLElement>('[analogy-text-element]'));
     const subline = textArray[0];
     const headline = textArray[1];
