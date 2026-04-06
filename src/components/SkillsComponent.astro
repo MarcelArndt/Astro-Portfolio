@@ -61,8 +61,8 @@ import { Image } from 'astro:assets';
             <div skill-section-box>
                 <p> Du vermisst eine bestimmte Technologie in meinem Stack?<br>Ich bin offen für neue Tools und lerne schnell dazu.</p>
             </div>
-             <div skill-section-box>
-                <button>Schreib mir</button>
+             <div class="button-box" skill-section-box>
+                <a href="/#contact" class="button">Schreib mir</a>
             </div>
 
     </div>
@@ -78,7 +78,18 @@ import { Image } from 'astro:assets';
         padding: 124px 0px 0px 0px;
         position: relative;
         z-index: 300;
-        padding-bottom: 696px;
+        box-sizing: border-box;
+        padding-bottom: 50rem;
+
+        &:before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 6px;
+            top: -3px;
+            left: 0pc;
+            background-color: $grey-background;
+        }
     }
 
     .content-box{
@@ -149,6 +160,13 @@ import { Image } from 'astro:assets';
         }
     }
 
+    .button-box{
+        @media screen and (max-width:1020px){
+            display: flex;
+            justify-content: center;
+        }
+    }
+
 
     .skill-category-container li{
         display: flex;
@@ -204,7 +222,7 @@ import { Image } from 'astro:assets';
         &::before{
             content: "";
             position: absolute;
-            top:-24%;
+            top:-28%;
             left: 0%;
             width: 200%;
             height: 100%;
@@ -325,7 +343,7 @@ import { Image } from 'astro:assets';
         const tlcurtain = gsap.timeline({
         scrollTrigger: {
             trigger: skillSection,
-            start: "80% bottom",
+            start: "bottom-=600 100%",
             end:"bottom 50%",
             scrub:1,
         },

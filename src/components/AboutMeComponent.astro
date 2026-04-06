@@ -24,7 +24,6 @@ import AboutMeAnalogyComponent from "./AboutMeAnalogyComponent.astro"
         position: relative;
         z-index: 200;
         padding-bottom: 24rem;
-        anchor-name: --about-me-section-anchor;
     }
 
     .content-box{
@@ -48,21 +47,21 @@ import AboutMeAnalogyComponent from "./AboutMeAnalogyComponent.astro"
 
     .curtain-wrapper{
         pointer-events: none;
-        position: fixed;
-        position-anchor: --about-me-section-anchor;
-        top: anchor(bottom);
-        left: anchor(left);
+        position: absolute;
+        bottom: -100%;
+        left: 0px;
         width: min(1920px, 100%);
         height: 100%;
         overflow: hidden;
-        z-index: 9999;
+        z-index: 999;
         transform: translateY(-100%);
+
         }
 
     .black-box{
         z-index: 222;
         position: absolute;
-        bottom: calc(-100% - 300px);
+        bottom: -200%;
         height: 100%;
         width: 100%;
         background-color: $grey-background;
@@ -75,7 +74,7 @@ import AboutMeAnalogyComponent from "./AboutMeAnalogyComponent.astro"
         width: 200%;
         height: 100%;
         rotate: 6deg;
-        background-color: $grey-background;;
+        background-color: $grey-background;
     }
     }
 
@@ -89,14 +88,14 @@ import AboutMeAnalogyComponent from "./AboutMeAnalogyComponent.astro"
     let tlBlackCurtain = gsap.timeline({
         scrollTrigger: {
             trigger: aboutMeSection,
-            start: '75% 50%',
-            end: 'bottom 10%',
+            start: 'bottom-=1000 75%',
+            end: 'bottom-=100 50%',
             scrub: 1, 
         }
     });
 
     tlBlackCurtain.to(blackCurtain,{
-        y:"-=100vh"
+        y:"-=100%"
     })
 
 
