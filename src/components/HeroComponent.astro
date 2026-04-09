@@ -112,7 +112,8 @@ import portrait from "../../public/assets/pictures/portrait.webp"
 
         @media screen  and (max-width:1024px) and (orientation: portrait) {
             justify-content: end;
-            padding-bottom: clamp(5rem, 3vw, 11rem);
+            padding-bottom: clamp(0rem, 3vw, 1rem);
+            background: linear-gradient(0deg,rgba(48, 1, 5, 0.5) 0%, rgba(48, 1, 5, 0) 100%);
 
             p{
                 line-height: 1.75rem;
@@ -220,11 +221,11 @@ import portrait from "../../public/assets/pictures/portrait.webp"
     const curtainWrapper = document.querySelectorAll("[curtain-wrapper]");
 
     gsap.set(whiteCurtain,{
-        y:"+=100%",
+        y:"+=105%",
     })
 
     gsap.set(redCurtain,{
-        y:"+=100%"
+        y:"+=105%"
     })
 
 
@@ -239,11 +240,11 @@ import portrait from "../../public/assets/pictures/portrait.webp"
 
         tlOne
         .to(whiteCurtain,{
-            y:"-=100%",
+            y:"-=105%",
             ease: "power1.out",
         },"<")
         .to(redCurtain,{
-            y:"-=100%",
+            y:"-=105%",
             ease: "power3.out",
         },"<")
         .to(textBlock,{
