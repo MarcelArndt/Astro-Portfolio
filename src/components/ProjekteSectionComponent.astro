@@ -27,7 +27,8 @@ const previewImageMap: Record<string, string> = {
             <div>
                 <strong class="subline" project-head-aera>Dies ist eine Auswahl</strong>
                 <h2 project-head-aera>Meine Projekte.</h2>
-                <p class="sub-text" project-head-aera>die meinen Weg sowie meine Leidenschaft für das Programmieren zeigt.</p>
+                <p class="sub-text" project-head-aera>Jedes dieser Projekte war ein Meilenstein in meiner Entwicklung. Von ersten Experimenten bis hin zu komplexen Architekturen zeigt diese Auswahl meinen Weg und meinen Anspruch an präzise, funktionale Software.</p>
+               
             </div>
 
             <div>
@@ -75,7 +76,17 @@ const previewImageMap: Record<string, string> = {
     }
 
     .sub-text {
+        max-width: 50ch;
         margin-bottom: 3rem;
+    }
+
+    .horizontal-line{
+        margin: clamp(1rem, 2vw, 4rem) 0px clamp(1rem, 12vw, 4rem) 0px;
+        height: 1px;
+        width: 100%;
+        border: none;
+        border-top: 1px solid var(--text-color);
+        opacity: 0.6;
     }
 
     .content-box {
@@ -204,6 +215,7 @@ const previewImageMap: Record<string, string> = {
     }
 
     const porjectsSection = document.querySelector<HTMLElement>(`[project-section]`);
+    const projectHRLine = document.querySelector<HTMLElement>(`[project-head-hr]`);
     const projectHeadAera = Array.from(document.querySelectorAll<HTMLElement>(`[project-head-aera]`));
     const arrayProject = Array.from(document.querySelectorAll<HTMLElement>(`[single-project]`));
     const curtainBlack = document.querySelector<HTMLElement>(`[project-curtain-black]`);
@@ -338,5 +350,6 @@ const previewImageMap: Record<string, string> = {
         }
     })
     .from(projectHeadAera, { y: "+=50px", opacity: 0, ease: "power1.out", stagger: 1 })
-    .from(arrayProject, { y: "+=70px", opacity: 0, ease: "power1.out", stagger: 1 }, "+=2.5");
+    .from(projectHRLine, {opacity:0})
+    .from(arrayProject, { y: "+=70px", opacity: 0, ease: "power1.out", stagger: 1 }, );
 </script>
